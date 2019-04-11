@@ -1,11 +1,7 @@
-# template
-[![Build Status](http://wells-family.xyz:8080/jenkins/buildStatus/icon?job=template)](https://wells-family.xyz/jenkins/job/template/)
+# empty-castle
+[![Build Status](http://wells-family.xyz:8080/jenkins/buildStatus/icon?job=empty-castle)](https://wells-family.xyz/jenkins/job/empty-castle/)
 
-Template project for use with the Cheese Engine
-https://github.com/darkoppressor/cheese-engine
-
-This template is a complete project for use with the Cheese Engine. Before being used, it should be properly initialized
-using the rename-template tool: https://github.com/darkoppressor/rename-template
+This is a prototype game.
 
 ## License
 This project's source code is licensed under the MIT License. See [LICENSE.txt](docs/LICENSE.txt) for the full license text.
