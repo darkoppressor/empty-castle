@@ -11,37 +11,50 @@
 using namespace std;
 
 #ifdef GAME_OS_ANDROID
-    extern "C"{
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityCreated(JNIEnv *env,jobject thiz,jobject activity,jobject saved_instance_state){
-            gpg::AndroidSupport::OnActivityCreated(env,activity,saved_instance_state);
+    extern "C" {
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityCreated (JNIEnv* env, jobject thiz,
+                                                                                        jobject activity,
+                                                                                        jobject saved_instance_state) {
+            gpg::AndroidSupport::OnActivityCreated(env, activity, saved_instance_state);
         }
 
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityDestroyed(JNIEnv *env,jobject thiz,jobject activity){
-           gpg::AndroidSupport::OnActivityDestroyed(env,activity);
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityDestroyed (JNIEnv* env, jobject thiz,
+                                                                                          jobject activity) {
+            gpg::AndroidSupport::OnActivityDestroyed(env, activity);
         }
 
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityPaused(JNIEnv *env,jobject thiz,jobject activity){
-           gpg::AndroidSupport::OnActivityPaused(env,activity);
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityPaused (JNIEnv* env, jobject thiz,
+                                                                                       jobject activity) {
+            gpg::AndroidSupport::OnActivityPaused(env, activity);
         }
 
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityResumed(JNIEnv *env,jobject thiz,jobject activity){
-           gpg::AndroidSupport::OnActivityResumed(env,activity);
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityResumed (JNIEnv* env, jobject thiz,
+                                                                                        jobject activity) {
+            gpg::AndroidSupport::OnActivityResumed(env, activity);
         }
 
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivitySaveInstanceState(JNIEnv *env,jobject thiz,jobject activity,jobject out_state){
-           gpg::AndroidSupport::OnActivitySaveInstanceState(env,activity,out_state);
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivitySaveInstanceState (JNIEnv* env,
+                                                                                                  jobject thiz,
+                                                                                                  jobject activity,
+                                                                                                  jobject out_state) {
+            gpg::AndroidSupport::OnActivitySaveInstanceState(env, activity, out_state);
         }
 
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityStarted(JNIEnv *env,jobject thiz,jobject activity){
-           gpg::AndroidSupport::OnActivityStarted(env,activity);
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityStarted (JNIEnv* env, jobject thiz,
+                                                                                        jobject activity) {
+            gpg::AndroidSupport::OnActivityStarted(env, activity);
         }
 
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityStopped(JNIEnv *env,jobject thiz,jobject activity){
-           gpg::AndroidSupport::OnActivityStopped(env,activity);
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityStopped (JNIEnv* env, jobject thiz,
+                                                                                        jobject activity) {
+            gpg::AndroidSupport::OnActivityStopped(env, activity);
         }
 
-        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityResult(JNIEnv *env,jobject thiz,jobject activity,jint request_code,jint result_code,jobject data){
-           gpg::AndroidSupport::OnActivityResult(env,activity,request_code,result_code,data);
+        JNIEXPORT void JNICALL Java_org_libsdl_app_SDLActivity_nativeOnActivityResult (JNIEnv* env, jobject thiz,
+                                                                                       jobject activity,
+                                                                                       jint request_code,
+                                                                                       jint result_code, jobject data) {
+            gpg::AndroidSupport::OnActivityResult(env, activity, request_code, result_code, data);
         }
     }
 #endif
