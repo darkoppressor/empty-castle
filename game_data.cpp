@@ -50,8 +50,6 @@ void Game_Data::loadMap (File_IO_Load* load) {
 
         if (Data_Reader::check_prefix(line, "name:")) {
             maps.back().name = line;
-        } else if (Data_Reader::check_prefix(line, "padding:")) {
-            maps.back().padding = Strings::string_to_unsigned_long(line);
         } else if (Data_Reader::check_prefix(line, "<tiles>")) {
             i = loadMapTiles(lines, i + 1);
         } else if (Data_Reader::check_prefix(line, "<mapCharacter>")) {

@@ -11,6 +11,7 @@
 using namespace std;
 
 /// BEGIN SCRIPT-GENERATED CONSTANT INITIALIZATIONS
+uint32_t Game_Constants::MAP_PADDING=0;
 uint8_t Game_Constants::MAP_CHARACTER_ERROR=0;
 string Game_Constants::MAP_CHARACTER_ERROR_COLOR="";
 string Game_Constants::MAP_CHARACTER_ERROR_BACKGROUND_COLOR="";
@@ -22,6 +23,7 @@ bool Game_Constants::MAP_CHARACTER_PADDING_SOLID=false;
 string Game_Constants::DISPLAY_FONT="";
 int32_t Game_Constants::CREATURE_COLLISION_REDUCTION=0;
 int32_t Game_Constants::CREATURE_COLLISION_STEPS=0;
+string Game_Constants::INITIAL_MAP="";
 /// END SCRIPT-GENERATED CONSTANT INITIALIZATIONS
 
 void Game_Constants_Loader::set_game_constant (string name, string value) {
@@ -34,6 +36,9 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     }
 
     /// BEGIN SCRIPT-GENERATED CONSTANT SETUP
+    else if(name=="map_padding"){
+        Game_Constants::MAP_PADDING=Strings::string_to_unsigned_long(value);
+    }
     else if(name=="map_character_error"){
         Game_Constants::MAP_CHARACTER_ERROR=Strings::string_to_unsigned_long(value);
     }
@@ -66,6 +71,9 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     }
     else if(name=="creature_collision_steps"){
         Game_Constants::CREATURE_COLLISION_STEPS=Strings::string_to_long(value);
+    }
+    else if(name=="initial_map"){
+        Game_Constants::INITIAL_MAP=value;
     }
     /// END SCRIPT-GENERATED CONSTANT SETUP
 }

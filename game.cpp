@@ -57,20 +57,22 @@ void Game::clear_world () {
 void Game::generate_world () {
     clear_world();
 
-    Map* map = Game_Data::getMap("test");
+    Map* map = Game_Data::getMap(Game_Constants::INITIAL_MAP);
 
-    worldWidth = map->tiles.size() + map->padding * 2;
-    worldHeight = map->tiles[0].size() + map->padding * 2;
+    worldWidth = map->tiles.size() + Game_Constants::MAP_PADDING * 2;
+    worldHeight = map->tiles[0].size() + Game_Constants::MAP_PADDING * 2;
 
     tiles.resize(worldWidth, vector<Tile>(worldHeight));
 
     for (uint32_t x = 0; x < worldWidth; x++) {
         for (uint32_t y = 0; y < worldHeight; y++) {
-            if (x < map->padding || y < map->padding || x >= map->tiles.size() + map->padding ||
-                y >= map->tiles[0].size() + map->padding) {
+            if (x < Game_Constants::MAP_PADDING || y < Game_Constants::MAP_PADDING ||
+                x >= map->tiles.size() + Game_Constants::MAP_PADDING ||
+                y >= map->tiles[0].size() + Game_Constants::MAP_PADDING) {
                 tiles[x][y].setToPadding();
             } else {
-                tiles[x][y].readFromMap(map->mapCharacters, map->tiles[x - map->padding][y - map->padding]);
+                tiles[x][y].readFromMap(map->mapCharacters,
+                                        map->tiles[x - Game_Constants::MAP_PADDING][y - Game_Constants::MAP_PADDING]);
 
                 if (creatures.size() == 0 && tiles[x][y].isPlayerSpawn()) {
                     Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<uint32_t>(x, y));

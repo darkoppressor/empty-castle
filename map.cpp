@@ -8,5 +8,4 @@ using namespace std;
 
 Map::Map () {
     name = "";
-    padding = 0;
 }

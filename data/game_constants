@@ -44,6 +44,12 @@
 </game_constant>
 
 <game_constant>
+	name:map_padding
+	value:256
+	type:uint32_t
+</game_constant>
+
+<game_constant>
 	name:map_character_error
 	value:69
 	type:uint8_t
@@ -107,4 +113,10 @@
 	name:creature_collision_steps
 	value:1
 	type:int32_t
+</game_constant>
+
+<game_constant>
+	name:initial_map
+	value:castleEntrance
+	type:string
 </game_constant>

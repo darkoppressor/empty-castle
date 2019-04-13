@@ -13,7 +13,6 @@
 class Map {
     public:
         std::string name;
-        std::uint32_t padding;
         std::vector<MapCharacter> mapCharacters;
         std::vector<std::vector<unsigned char>> tiles;
 

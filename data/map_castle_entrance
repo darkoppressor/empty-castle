@@ -1,6 +1,5 @@
 <map>
-    name:test
-    padding:256
+    name:castleEntrance
 
     <mapCharacter>
         character:.
