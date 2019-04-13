@@ -5,29 +5,46 @@
 #ifndef game_h
 #define game_h
 
-///#include "example_object.h"
+#include "tile.h"
+#include "creature.h"
 
+#include <coords.h>
+#include <quadtree.h>
+
+#include <cstdint>
 #include <vector>
+#include <string>
 
-class Game{
-public:
+class Game {
+    private:
+        // tiles
+        static std::uint32_t worldWidth;
+        // tiles
+        static std::uint32_t worldHeight;
+        static std::vector<std::vector<Tile>> tiles;
+        // creatures[0] represets the player
+        static std::vector<Creature> creatures;
 
-    ///static std::vector<Example_Object> example_objects;
-
-    static void clear_world();
-    static void generate_world();
-
-    static void tick();
-    static void ai();
-    static void movement();
-    static void events();
-    static void animate();
-    static void render();
-
-    static void render_to_textures();
-
-    static void update_background();
-    static void render_background();
+    public:
+        // tile coordinates
+        static Coords<std::uint32_t> getWorldDimensions();
+        // pixel coordinates
+        static Coords<std::int32_t> getWorldDimensionsPixels();
+        static std::vector<std::vector<Tile>>& getTiles();
+        static Creature& getPlayer();
+        static void clear_world();
+        static void generate_world();
+        static void tick();
+        static void ai();
+        static void movement();
+        static void events();
+        static void animate();
+        static void render();
+        static void render_to_textures();
+        static void update_background();
+        static void render_background();
+        static void playerThrust(const std::string& direction);
+        static bool moveInputState(const std::string& direction);
 };
 
 #endif

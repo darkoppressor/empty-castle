@@ -1,6 +1,14 @@
 //** Game Colors **//
 
+<color>
+	name:default_white
+	rgb:230,230,230
+</color>
 
+<color>
+	name:background_color
+	rgb:26,26,26
+</color>
 
 //** Engine Colors **//
 

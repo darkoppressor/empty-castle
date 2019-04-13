@@ -2,6 +2,8 @@
 /* This file is licensed under the MIT License. */
 /* See the file docs/LICENSE.txt for the full license text. */
 
+#include "game.h"
+
 #include <game_manager.h>
 #include <network_engine.h>
 #include <network_server.h>
@@ -34,7 +36,7 @@ void Game_Manager::handle_command_states_multiplayer () {
                     // Example multiplayer command state
                     /**if(Network_Engine::clients[i].game_command_state("some_command")){
                         ///Deal with command state here
-                    }*/
+                       }*/
                 }
             }
         }
@@ -52,7 +54,7 @@ void Game_Manager::handle_game_commands_multiplayer () {
                         // Example multiplayer command
                         /**if(command_name=="some_command"){
                             ///Deal with command here
-                        }*/
+                           }*/
                     }
                 }
 
@@ -86,7 +88,74 @@ void Game_Manager::handle_input_states () {
             // Example multiplayer command state
             /**if(Object_Manager::game_command_state("some_command")){
                 command_states.push_back("some_command");
-            }*/
+               }*/
+
+            // Move the ship via directional keys
+            if (Game::moveInputState("left")) {
+                Game::playerThrust("left");
+            }
+
+            if (Game::moveInputState("up")) {
+                Game::playerThrust("up");
+            }
+
+            if (Game::moveInputState("right")) {
+                Game::playerThrust("right");
+            }
+
+            if (Game::moveInputState("down")) {
+                Game::playerThrust("down");
+            }
+
+            if (Game::moveInputState("left") && Game::moveInputState("up")) {
+                Game::playerThrust("left_up");
+            }
+
+            if (Game::moveInputState("up") && Game::moveInputState("right")) {
+                Game::playerThrust("right_up");
+            }
+
+            if (Game::moveInputState("right") && Game::moveInputState("down")) {
+                Game::playerThrust("right_down");
+            }
+
+            if (Game::moveInputState("down") && Game::moveInputState("left")) {
+                Game::playerThrust("left_down");
+            }
+
+            if (Game::moveInputState("left") && Game::moveInputState("right")) {
+                Game::playerThrust("left");
+            }
+
+            if (Game::moveInputState("up") && Game::moveInputState("down")) {
+                Game::playerThrust("up");
+            }
+
+            if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("right")) {
+                Game::playerThrust("left_up");
+            }
+
+            if (Game::moveInputState("left") && Game::moveInputState("down") && Game::moveInputState("right")) {
+                Game::playerThrust("left_down");
+            }
+
+            if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("down")) {
+                Game::playerThrust("left_up");
+            }
+
+            if (Game::moveInputState("up") && Game::moveInputState("right") && Game::moveInputState("down")) {
+                Game::playerThrust("right_up");
+            }
+
+            if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("right") &&
+                Game::moveInputState("down")) {
+                Game::playerThrust("left_up");
+            }
+
+            if (!Game::moveInputState("left") && !Game::moveInputState("up") && !Game::moveInputState("right") &&
+                !Game::moveInputState("down")) {
+                Game::playerThrust("none");
+            }
         }
     }
 }
@@ -107,7 +176,7 @@ bool Game_Manager::handle_game_command_gui (string command_name) {
         }
 
         return true;
-    }*/
+       }*/
     // Toggle chat box
     else if (command_name == "chat") {
         Engine::chat.toggle_on();
@@ -128,7 +197,7 @@ bool Game_Manager::handle_game_command (string command_name) {
             ///Dev command here.
 
             return true;
-        }*/
+           }*/
     }
 
     ///END OF DEV COMMANDS
@@ -139,14 +208,14 @@ bool Game_Manager::handle_game_command (string command_name) {
             ///Command here
 
             return true;
-        }*/
+           }*/
 
         // Example multiplayer command input
         /**if(command_name=="some_command"){
             Network_Engine::add_command(command_name);
 
             return true;
-        }*/
+           }*/
     }
 
     return false;

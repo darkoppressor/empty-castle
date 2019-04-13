@@ -5,6 +5,8 @@ set(SOURCE_FILES
 android_native_functions.cpp
 button_events_game.cpp
 console_commands_defs.cpp
+creature.cpp
+creature_template.cpp
 data_manager_defs.cpp
 dev_info.cpp
 directories_defs.cpp
@@ -17,8 +19,11 @@ game_input_defs.cpp
 game_manager_defs.cpp
 game_options.cpp
 main.cpp
+map.cpp
+map_character.cpp
 network_game.cpp
 special_info.cpp
+tile.cpp
 version.cpp
 window_close_function.cpp
 window_scrolling_buttons.cpp

@@ -5,7 +5,8 @@
 #ifndef game_data_h
 #define game_data_h
 
-///#include "example_game_tag.h"
+#include "map.h"
+#include "creature_template.h"
 
 #include <progress_bar.h>
 #include <file_io.h>
@@ -14,7 +15,8 @@
 
 class Game_Data {
     private:
-    ///static std::vector<Example_Game_Tag> example_game_tags;
+        static std::vector<Map> maps;
+        static std::vector<CreatureTemplate> creatureTemplates;
 
     public:
         // The total number of progress bar items in load_data_game()
@@ -25,9 +27,12 @@ class Game_Data {
         // Returns true otherwise
         static void load_data_tag_game(std::string tag, File_IO_Load* load);
         static void unload_data_game();
-
-        ///static void load_example_game_tag(File_IO_Load* load);
-        ///static Example_Game_Tag* get_example_game_tag(std::string name);
+        static void loadMap(File_IO_Load* load);
+        static size_t loadMapCharacter(std::vector<std::string>& lines, size_t lineIndex);
+        static size_t loadMapTiles(std::vector<std::string>& lines, size_t lineIndex);
+        static Map* getMap(std::string name);
+        static void loadCreatureTemplate(File_IO_Load* load);
+        static CreatureTemplate* getCreatureTemplate(std::string name);
 };
 
 #endif

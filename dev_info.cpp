@@ -2,6 +2,8 @@
 /* This file is licensed under the MIT License. */
 /* See the file docs/LICENSE.txt for the full license text. */
 
+#include "game.h"
+
 #include <engine.h>
 #include <game_manager.h>
 #include <font.h>
@@ -19,9 +21,14 @@ void Engine::render_dev_info () {
     if (Game_Manager::in_progress) {
         msg += "Camera Position: " + Strings::num_to_string(Game_Manager::camera.x) + "," + Strings::num_to_string(
             Game_Manager::camera.y) + "\n";
-        msg += "Camera Size: " + Strings::num_to_string(Game_Manager::camera.w / Game_Manager::camera_zoom) + "," +
+        msg += "Camera Dimenions: " + Strings::num_to_string(Game_Manager::camera.w / Game_Manager::camera_zoom) + "," +
                Strings::num_to_string(Game_Manager::camera.h / Game_Manager::camera_zoom) + "\n";
         msg += "Camera Zoom: " + Strings::num_to_string(Game_Manager::camera_zoom) + "\n";
+
+        msg += "\nPlayer Position: " + Strings::num_to_string(Game::getPlayer().getBox().x) + ", " +
+               Strings::num_to_string(Game::getPlayer().getBox().y) + "\n";
+        msg += "Player Dimensions: " + Strings::num_to_string(Game::getPlayer().getBox().w) + ", " +
+               Strings::num_to_string(Game::getPlayer().getBox().h) + "\n";
     }
 
     if (msg.length() > 0) {

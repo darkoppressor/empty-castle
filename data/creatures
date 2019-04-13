@@ -1,0 +1,8 @@
+<creature>
+    name:player
+    character:@
+    characterColor:default_white
+    moveForce:2048
+    mass:70
+    maximumSpeed:96
+</creature>

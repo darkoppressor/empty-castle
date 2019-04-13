@@ -43,8 +43,68 @@
 	type:double
 </game_constant>
 
-/*<game_constant>
-	name:example_constant
-	value:1.0
-	type:double
-</game_constant>*/
+<game_constant>
+	name:map_character_error
+	value:69
+	type:uint8_t
+</game_constant>
+
+<game_constant>
+	name:map_character_error_color
+	value:red
+	type:string
+</game_constant>
+
+<game_constant>
+	name:map_character_error_background_color
+	value:background_color
+	type:string
+</game_constant>
+
+<game_constant>
+	name:map_character_error_solid
+	value:false
+	type:bool
+</game_constant>
+
+<game_constant>
+	name:map_character_padding
+	value:32
+	type:uint8_t
+</game_constant>
+
+<game_constant>
+	name:map_character_padding_color
+	value:background_color
+	type:string
+</game_constant>
+
+<game_constant>
+	name:map_character_padding_background_color
+	value:background_color
+	type:string
+</game_constant>
+
+<game_constant>
+	name:map_character_padding_solid
+	value:true
+	type:bool
+</game_constant>
+
+<game_constant>
+	name:display_font
+	value:standard
+	type:string
+</game_constant>
+
+<game_constant>
+	name:creature_collision_reduction
+	value:1
+	type:int32_t
+</game_constant>
+
+<game_constant>
+	name:creature_collision_steps
+	value:1
+	type:int32_t
+</game_constant>

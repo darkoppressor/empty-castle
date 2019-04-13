@@ -2,6 +2,8 @@
 /* This file is licensed under the MIT License. */
 /* See the file docs/LICENSE.txt for the full license text. */
 
+#include "game.h"
+
 #include <game_manager.h>
 #include <options.h>
 #include <music_manager.h>
@@ -40,7 +42,7 @@ void Game_Manager::manage_music () {
        }
        else{
         music_to_play="";
-    }*/
+       }*/
 
     if (music_to_play.length() > 0) {
         if (music_to_play != current_music) {
@@ -61,7 +63,13 @@ void Game_Manager::set_camera () {
 
     Screen_Shake::update_camera_before(camera);
 
-    if (false /**Something to follow*/) {} else {
+    if (in_progress) {
+        const Creature& player = Game::getPlayer();
+        Collision_Rect<int32_t> playerBox = player.getBox();
+        Collision_Rect<double> boxPlayer(playerBox.x, playerBox.y, playerBox.w, playerBox.h);
+
+        center_camera(boxPlayer);
+    } else {
         if (cam_state == "left") {
             camera.x -= camera_speed / (double) Engine::UPDATE_RATE;
         } else if (cam_state == "up") {
@@ -85,21 +93,23 @@ void Game_Manager::set_camera () {
         }
     }
 
+    Coords<int32_t> worldDimensions = Game::getWorldDimensionsPixels();
+
     // If the camera goes past the bounds of the world, set it back in the bounds.
     if (camera.x < 0.0) {
         camera.x = 0.0;
     }
 
-    if (camera.x + camera.w > 0 /**World size x*/ * camera_zoom) {
-        camera.x = 0 /**World size x*/ * camera_zoom - camera.w;
+    if (camera.x + camera.w > worldDimensions.x * camera_zoom) {
+        camera.x = worldDimensions.x * camera_zoom - camera.w;
     }
 
     if (camera.y < 0.0) {
         camera.y = 0.0;
     }
 
-    if (camera.y + camera.h > 0 /**World size y*/ * camera_zoom) {
-        camera.y = 0 /**World size y*/ * camera_zoom - camera.h;
+    if (camera.y + camera.h > worldDimensions.y * camera_zoom) {
+        camera.y = worldDimensions.y * camera_zoom - camera.h;
     }
 
     Screen_Shake::update_camera_after(camera);
