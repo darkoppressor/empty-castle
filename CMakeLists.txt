@@ -31,7 +31,7 @@ tile.cpp
 version.cpp
 window_close_function.cpp
 window_scrolling_buttons.cpp
-dependencies/libtcod/bresenham_c.c
+dependencies/libtcod/bresenham.cpp
 )
 
 ########################################################################################################################
