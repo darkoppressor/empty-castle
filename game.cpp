@@ -20,10 +20,15 @@
 
 using namespace std;
 
+RNG Game::rng;
 int32_t Game::worldWidth = 0;
 int32_t Game::worldHeight = 0;
 vector<vector<Tile>> Game::tiles;
 vector<Creature> Game::creatures;
+RNG& Game::getRng () {
+    return rng;
+}
+
 Coords<int32_t> Game::getWorldDimensions () {
     return Coords<int32_t>(worldWidth, worldHeight);
 }
@@ -57,6 +62,9 @@ void Game::clear_world () {
 
 void Game::generate_world () {
     clear_world();
+
+    RNG rngSeeder;
+    rng.seed(rngSeeder.random_range(0, numeric_limits<uint32_t>::max()));
 
     Map* map = Game_Data::getMap(Game_Constants::INITIAL_MAP);
 
@@ -103,26 +111,31 @@ void Game::movement () {
         creature.movement();
     }
 
-    FieldOfView::prepareToComputeFov(worldWidth, worldHeight, tiles);
-
     Collision_Rect<int32_t> cameraTileBox = getCameraTileBox(Game_Constants::TILE_LIGHT_SOURCE_CHECK_PADDING);
+
+    FieldOfView::prepareToComputeFov(cameraTileBox, worldWidth, worldHeight, tiles);
 
     for (int32_t x = cameraTileBox.x; x < cameraTileBox.w; x++) {
         for (int32_t y = cameraTileBox.y; y < cameraTileBox.h; y++) {
             if (x >= 0 && y >= 0 && x < worldWidth && y < worldHeight) {
-                if (tiles[x][y].isLightSource()) {
+                LightTemplate* light = tiles[x][y].updateLightSource();
+
+                if (light != 0) {
                     FieldOfView::computeFov(worldWidth, worldHeight, tiles, Coords<int32_t>(x,
-                                                                                            y), Game_Constants::TILE_MAXIMUM_LIGHT_RANGE,
-                                            true);
+                                                                                            y),
+                                            tiles[x][y].getLightSourceColor(), tiles[x][y].getLightRange(), true);
                 }
             }
         }
     }
 
-    for (size_t i = creatures.size() - 1; i >= 0; i--) {
-        if (creatures[i].isLightSource()) {
+    for (auto& creature : creatures) {
+        LightTemplate* light = creature.updateLightSource();
+
+        if (light != 0) {
             FieldOfView::computeFov(worldWidth, worldHeight, tiles,
-                                    creatures[i].getTilePosition(), Game_Constants::CREATURE_MAXIMUM_LIGHT_RANGE, true);
+                                    creature.getTilePosition(), creature.getLightSourceColor(),
+                                    creature.getLightRange(), true);
         }
     }
 }

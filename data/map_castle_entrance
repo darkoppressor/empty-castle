@@ -5,14 +5,12 @@
         character:.
         displayCharacter:.
         characterColor:stone
-        characterUnseenColor:stone_dark
     </mapCharacter>
 
     <mapCharacter>
         character:#
         displayCharacter:#
         characterColor:stone
-        characterUnseenColor:stone_dark
         <solid>
         <opaque>
     </mapCharacter>
@@ -21,15 +19,13 @@
         character:*
         displayCharacter:*
         characterColor:wood
-        characterUnseenColor:wood_dark
-        <lightSource>
+        light:torch
     </mapCharacter>
 
     <mapCharacter>
         character:@
         displayCharacter:+
         characterColor:wood
-        characterUnseenColor:wood_dark
         <playerSpawn>
     </mapCharacter>
 
@@ -58,17 +54,17 @@
 #.......................#
 #.......................#
 #.......................#
-#.......................#
-#.......................#
-#.......................#
-#.......................#
 #.##.................##.#
 #.##*...............*##.#
 #.##.................##.#
 #.......................#
-#.##.................##.#
-#.##*...............*##.#
-#.##.................##.#
+#.......................#
+#.......................#
+#.......................#
+#.......................#
+#.......................#
+#.......................#
+#.......................#
 #.......................#
 #.##.................##.#
 #.##*...............*##.#

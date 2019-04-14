@@ -6,18 +6,8 @@
 </color>
 
 <color>
-	name:stone_dark
-	rgb:19,16,19
-</color>
-
-<color>
 	name:stone
 	rgb:50,47,50
-</color>
-
-<color>
-	name:wood_dark
-	rgb:40,33,30
 </color>
 
 <color>
@@ -28,6 +18,11 @@
 <color>
 	name:player
 	rgb:164,155,134
+</color>
+
+<color>
+	name:torch
+	rgb:201,201,139
 </color>
 
 //** Engine Colors **//

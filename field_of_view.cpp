@@ -4,6 +4,7 @@
 /* This file incorporates code from libtcod. See the file docs/third-party-licenses/libtcod.txt. */
 
 #include "field_of_view.h"
+#include "game_constants.h"
 
 #include "libtcod/bresenham.h"
 
@@ -17,8 +18,14 @@ int32_t FieldOfView::minimum (int32_t a, int32_t b) {
     return a < b ? a : b;
 }
 
-void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vector<Tile>>& tiles, int32_t xo, int32_t yo,
-                           int32_t xd, int32_t yd, int32_t r2, bool lightWalls) {
+int16_t FieldOfView::getLightLevel (int32_t radius, int32_t maximumRadius) {
+    return Game_Constants::MAXIMUM_LIGHT_LEVEL -
+           (int16_t) ((double) radius / (double) maximumRadius * (double) Game_Constants::MAXIMUM_LIGHT_LEVEL);
+}
+
+void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vector<Tile>>& tiles,
+                           const string& lightColor, int32_t xo, int32_t yo, int32_t xd, int32_t yd, int32_t r2,
+                           bool lightWalls) {
     int32_t curx = xo;
     int32_t cury = yo;
     bool in = false;
@@ -28,10 +35,11 @@ void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vecto
 
     TCOD_line_init_mt(xo, yo, xd, yd, &bresenham_data);
     int32_t offset = curx + cury * worldWidth;
+    int32_t tileCount = worldWidth * worldHeight;
 
-    if (0 <= offset && offset < worldWidth * worldHeight) {
+    if (0 <= offset && offset < tileCount) {
         in = true;
-        tiles[curx][cury].setSeen(true);
+        tiles[curx][cury].applyLight(Game_Constants::MAXIMUM_LIGHT_LEVEL, lightColor);
         tiles[curx][cury].setExplored(true);
     }
 
@@ -39,17 +47,16 @@ void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vecto
         // Reached xd, yd
         end = TCOD_line_step_mt(&curx, &cury, &bresenham_data);
         offset = curx + cury * worldWidth;
+        // Check radius
+        int32_t cur_radius = (curx - xo) * (curx - xo) + (cury - yo) * (cury - yo);
 
         if (r2 > 0) {
-            // Check radius
-            int32_t cur_radius = (curx - xo) * (curx - xo) + (cury - yo) * (cury - yo);
-
             if (cur_radius > r2) {
                 return;
             }
         }
 
-        if (0 <= offset && offset < worldWidth * worldHeight) {
+        if (0 <= offset && offset < tileCount) {
             in = true;
 
             if (!blocked && tiles[curx][cury].isOpaque()) {
@@ -61,7 +68,7 @@ void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vecto
             }
 
             if (lightWalls || !blocked) {
-                tiles[curx][cury].setSeen(true);
+                tiles[curx][cury].applyLight(getLightLevel(cur_radius, r2), lightColor);
                 tiles[curx][cury].setExplored(true);
             }
         } else if (in) {
@@ -72,20 +79,26 @@ void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vecto
     }
 }
 
-void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<vector<Tile>>& tiles, int32_t x0,
+void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<vector<Tile>>& tiles,
+                               const Coords<int32_t>& sourcePosition, const string& lightColor, int32_t r2, int32_t x0,
                                int32_t y0, int32_t x1, int32_t y1, int32_t dx, int32_t dy) {
     for (int32_t cx = x0; cx <= x1; cx++) {
         for (int32_t cy = y0; cy <= y1; cy++) {
             int32_t x2 = cx + dx;
             int32_t y2 = cy + dy;
             uint32_t offset = cx + cy * worldWidth;
+            int32_t tileCount = worldWidth * worldHeight;
 
-            if (offset < (uint32_t) (worldWidth * worldHeight) && tiles[cx][cy].isSeen() && !tiles[cx][cy].isOpaque()) {
+            if (offset < (uint32_t) (tileCount) &&
+                tiles[cx][cy].getLightLevel() > Game_Constants::MINIMUM_LIGHT_LEVEL && !tiles[cx][cy].isOpaque()) {
+                int32_t cur_radius = (cx - sourcePosition.x) * (cx - sourcePosition.x) + (cy - sourcePosition.y) *
+                                     (cy - sourcePosition.y);
+
                 if (x2 >= x0 && x2 <= x1) {
                     uint32_t offset2 = x2 + cy * worldWidth;
 
-                    if (offset2 < (uint32_t) (worldWidth * worldHeight) && tiles[x2][cy].isOpaque()) {
-                        tiles[x2][cy].setSeen(true);
+                    if (offset2 < (uint32_t) (tileCount) && tiles[x2][cy].isOpaque()) {
+                        tiles[x2][cy].applyLight(getLightLevel(cur_radius, r2), lightColor);
                         tiles[x2][cy].setExplored(true);
                     }
                 }
@@ -93,8 +106,8 @@ void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<v
                 if (y2 >= y0 && y2 <= y1) {
                     uint32_t offset2 = cx + y2 * worldWidth;
 
-                    if (offset2 < (uint32_t) (worldWidth * worldHeight) && tiles[cx][y2].isOpaque()) {
-                        tiles[cx][y2].setSeen(true);
+                    if (offset2 < (uint32_t) (tileCount) && tiles[cx][y2].isOpaque()) {
+                        tiles[cx][y2].applyLight(getLightLevel(cur_radius, r2), lightColor);
                         tiles[cx][y2].setExplored(true);
                     }
                 }
@@ -102,8 +115,8 @@ void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<v
                 if (x2 >= x0 && x2 <= x1 && y2 >= y0 && y2 <= y1) {
                     uint32_t offset2 = x2 + y2 * worldWidth;
 
-                    if (offset2 < (uint32_t) (worldWidth * worldHeight) && tiles[x2][y2].isOpaque()) {
-                        tiles[x2][y2].setSeen(true);
+                    if (offset2 < (uint32_t) (tileCount) && tiles[x2][y2].isOpaque()) {
+                        tiles[x2][y2].applyLight(getLightLevel(cur_radius, r2), lightColor);
                         tiles[x2][y2].setExplored(true);
                     }
                 }
@@ -112,16 +125,21 @@ void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<v
     }
 }
 
-void FieldOfView::prepareToComputeFov (int32_t worldWidth, int32_t worldHeight, vector<vector<Tile>>& tiles) {
-    for (int32_t x = 0; x < worldWidth; x++) {
-        for (int32_t y = 0; y < worldHeight; y++) {
-            tiles[x][y].setSeen(false);
+void FieldOfView::prepareToComputeFov (const Collision_Rect<int32_t>& cameraTileBox, int32_t worldWidth,
+                                       int32_t worldHeight, vector<vector<Tile>>& tiles) {
+    for (int32_t x = cameraTileBox.x; x < cameraTileBox.w; x++) {
+        for (int32_t y = cameraTileBox.y; y < cameraTileBox.h; y++) {
+            if (x >= 0 && y >= 0 && x < worldWidth && y < worldHeight) {
+                tiles[x][y].setLightLevel(Game_Constants::MINIMUM_LIGHT_LEVEL);
+                tiles[x][y].clearLightColor();
+            }
         }
     }
 }
 
 void FieldOfView::computeFov (int32_t worldWidth, int32_t worldHeight, vector<vector<Tile>>& tiles,
-                              const Coords<int32_t>& sourcePosition, int32_t maxRadius, bool lightWalls) {
+                              const Coords<int32_t>& sourcePosition, const string& lightColor, int32_t maxRadius,
+                              bool lightWalls) {
     // Circular ray casting
     int32_t xmin = 0;
     int32_t ymin = 0;
@@ -140,35 +158,43 @@ void FieldOfView::computeFov (int32_t worldWidth, int32_t worldHeight, vector<ve
     int32_t yo = ymin;
 
     while (xo < xmax) {
-        castRay(worldWidth, worldHeight, tiles, sourcePosition.x, sourcePosition.y, xo++, yo, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, lightColor, sourcePosition.x, sourcePosition.y, xo++, yo, r2,
+                lightWalls);
     }
 
     xo = xmax - 1;
     yo = ymin + 1;
 
     while (yo < ymax) {
-        castRay(worldWidth, worldHeight, tiles, sourcePosition.x, sourcePosition.y, xo, yo++, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, lightColor, sourcePosition.x, sourcePosition.y, xo, yo++, r2,
+                lightWalls);
     }
 
     xo = xmax - 2;
     yo = ymax - 1;
 
     while (xo >= 0) {
-        castRay(worldWidth, worldHeight, tiles, sourcePosition.x, sourcePosition.y, xo--, yo, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, lightColor, sourcePosition.x, sourcePosition.y, xo--, yo, r2,
+                lightWalls);
     }
 
     xo = xmin;
     yo = ymax - 2;
 
     while (yo > 0) {
-        castRay(worldWidth, worldHeight, tiles, sourcePosition.x, sourcePosition.y, xo, yo--, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, lightColor, sourcePosition.x, sourcePosition.y, xo, yo--, r2,
+                lightWalls);
     }
 
     if (lightWalls) {
         // Post-processing artifact fix
-        postProcess(worldWidth, worldHeight, tiles, xmin, ymin, sourcePosition.x, sourcePosition.y, -1, -1);
-        postProcess(worldWidth, worldHeight, tiles, sourcePosition.x, ymin, xmax - 1, sourcePosition.y, 1, -1);
-        postProcess(worldWidth, worldHeight, tiles, xmin, sourcePosition.y, sourcePosition.x, ymax - 1, -1, 1);
-        postProcess(worldWidth, worldHeight, tiles, sourcePosition.x, sourcePosition.y, xmax - 1, ymax - 1, 1, 1);
+        postProcess(worldWidth, worldHeight, tiles, sourcePosition, lightColor, r2, xmin, ymin, sourcePosition.x,
+                    sourcePosition.y, -1, -1);
+        postProcess(worldWidth, worldHeight, tiles, sourcePosition, lightColor, r2, sourcePosition.x, ymin, xmax - 1,
+                    sourcePosition.y, 1, -1);
+        postProcess(worldWidth, worldHeight, tiles, sourcePosition, lightColor, r2, xmin, sourcePosition.y,
+                    sourcePosition.x, ymax - 1, -1, 1);
+        postProcess(worldWidth, worldHeight, tiles, sourcePosition, lightColor, r2, sourcePosition.x, sourcePosition.y,
+                    xmax - 1, ymax - 1, 1, 1);
     }
 }

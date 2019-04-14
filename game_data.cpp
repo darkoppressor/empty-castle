@@ -16,15 +16,19 @@ using namespace std;
 
 vector<Map> Game_Data::maps;
 vector<CreatureTemplate> Game_Data::creatureTemplates;
+vector<LightTemplate> Game_Data::lightTemplates;
 
 ///Don't forget to increment this for each progress item in load_data_game() below
-const int Game_Data::game_data_load_item_count = 2;
+const int Game_Data::game_data_load_item_count = 3;
 void Game_Data::load_data_game (Progress_Bar& bar) {
     bar.progress("Loading maps");
     Data_Manager::load_data("map");
 
     bar.progress("Loading creature templates");
     Data_Manager::load_data("creature");
+
+    bar.progress("Loading light templates");
+    Data_Manager::load_data("light");
 }
 
 void Game_Data::load_data_tag_game (string tag, File_IO_Load* load) {
@@ -32,12 +36,15 @@ void Game_Data::load_data_tag_game (string tag, File_IO_Load* load) {
         loadMap(load);
     } else if (tag == "creature") {
         loadCreatureTemplate(load);
+    } else if (tag == "light") {
+        loadLightTemplate(load);
     }
 }
 
 void Game_Data::unload_data_game () {
     maps.clear();
     creatureTemplates.clear();
+    lightTemplates.clear();
 }
 
 void Game_Data::loadMap (File_IO_Load* load) {
@@ -72,10 +79,6 @@ size_t Game_Data::loadMapCharacter (vector<string>& lines, size_t lineIndex) {
             maps.back().mapCharacters.back().characterColor = line;
         } else if (Data_Reader::check_prefix(line, "backgroundColor:")) {
             maps.back().mapCharacters.back().backgroundColor = line;
-        } else if (Data_Reader::check_prefix(line, "characterUnseenColor:")) {
-            maps.back().mapCharacters.back().characterUnseenColor = line;
-        } else if (Data_Reader::check_prefix(line, "backgroundUnseenColor:")) {
-            maps.back().mapCharacters.back().backgroundUnseenColor = line;
         } else if (Data_Reader::check_prefix(line, "<playerSpawn>")) {
             maps.back().mapCharacters.back().playerSpawn = true;
         } else if (Data_Reader::check_prefix(line, "doorTo:")) {
@@ -84,8 +87,8 @@ size_t Game_Data::loadMapCharacter (vector<string>& lines, size_t lineIndex) {
             maps.back().mapCharacters.back().solid = true;
         } else if (Data_Reader::check_prefix(line, "<opaque>")) {
             maps.back().mapCharacters.back().opaque = true;
-        } else if (Data_Reader::check_prefix(line, "<lightSource>")) {
-            maps.back().mapCharacters.back().lightSource = true;
+        } else if (Data_Reader::check_prefix(line, "light:")) {
+            maps.back().mapCharacters.back().light = line;
         } else if (Data_Reader::check_prefix(line, "</mapCharacter>")) {
             return i;
         }
@@ -186,8 +189,8 @@ void Game_Data::loadCreatureTemplate (File_IO_Load* load) {
             creatureTemplates.back().mass = Strings::string_to_long(line);
         } else if (Data_Reader::check_prefix(line, "maximumSpeed:")) {
             creatureTemplates.back().maximumSpeed = Strings::string_to_long(line);
-        } else if (Data_Reader::check_prefix(line, "<lightSource>")) {
-            creatureTemplates.back().lightSource = true;
+        } else if (Data_Reader::check_prefix(line, "light:")) {
+            creatureTemplates.back().light = line;
         }
     }
 }
@@ -205,6 +208,54 @@ CreatureTemplate* Game_Data::getCreatureTemplate (string name) {
 
     if (ptr_object == 0) {
         Log::add_error("Error accessing creature template '" + name + "'");
+    }
+
+    return ptr_object;
+}
+
+void Game_Data::loadLightTemplate (File_IO_Load* load) {
+    lightTemplates.push_back(LightTemplate());
+
+    vector<string> lines = Data_Reader::read_data(load, "</light>");
+
+    for (size_t i = 0; i < lines.size(); i++) {
+        string& line = lines[i];
+
+        if (Data_Reader::check_prefix(line, "name:")) {
+            lightTemplates.back().name = line;
+        } else if (Data_Reader::check_prefix(line, "flickerRateMin:")) {
+            lightTemplates.back().flickerRateMin = Strings::string_to_long(line);
+        } else if (Data_Reader::check_prefix(line, "flickerRateMax:")) {
+            lightTemplates.back().flickerRateMax = Strings::string_to_long(line);
+        } else if (Data_Reader::check_prefix(line, "glowRateMin:")) {
+            lightTemplates.back().glowRateMin = Strings::string_to_long(line);
+        } else if (Data_Reader::check_prefix(line, "glowRateMax:")) {
+            lightTemplates.back().glowRateMax = Strings::string_to_long(line);
+        } else if (Data_Reader::check_prefix(line, "colors:")) {
+            vector<string> colors;
+
+            boost::algorithm::split(colors, line, boost::algorithm::is_any_of(","));
+
+            for (const auto& color : colors) {
+                lightTemplates.back().colors.push_back(color);
+            }
+        }
+    }
+}
+
+LightTemplate* Game_Data::getLightTemplate (string name) {
+    LightTemplate* ptr_object = 0;
+
+    for (size_t i = 0; i < lightTemplates.size(); i++) {
+        if (lightTemplates[i].name == name) {
+            ptr_object = &lightTemplates[i];
+
+            break;
+        }
+    }
+
+    if (ptr_object == 0) {
+        Log::add_error("Error accessing light template '" + name + "'");
     }
 
     return ptr_object;

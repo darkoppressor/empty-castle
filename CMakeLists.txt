@@ -19,6 +19,9 @@ game_data.cpp
 game_input_defs.cpp
 game_manager_defs.cpp
 game_options.cpp
+lighting.cpp
+light_source.cpp
+light_template.cpp
 main.cpp
 map.cpp
 map_character.cpp

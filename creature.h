@@ -6,6 +6,8 @@
 #define creature_h
 
 #include "creature_template.h"
+#include "light_template.h"
+#include "light_source.h"
 
 #include <coords.h>
 #include <int_vector.h>
@@ -15,13 +17,16 @@
 #include <cstdint>
 #include <vector>
 
-class Creature {
+class Creature: public LightSource {
     private:
         std::string type;
         Coords<std::int32_t> position;
         Int_Vector velocity;
         Int_Vector force;
+
+        // type getters:
         CreatureTemplate* getType() const;
+        LightTemplate* getLightTemplate() const;
         unsigned char getCharacter() const;
         std::string getCharacterColor() const;
         std::int32_t getMoveForce() const;
@@ -38,8 +43,11 @@ class Creature {
         // pixel box
         Collision_Rect<std::int32_t> getCollisionBox() const;
 
-        bool isLightSource() const;
         bool isAlive() const;
+
+        // Returns the light template for convenience
+        LightTemplate* updateLightSource();
+        std::int32_t getLightRange() const;
 
         void setThrustAngle(const std::string& direction);
         void brake();

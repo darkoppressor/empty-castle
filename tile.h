@@ -6,6 +6,8 @@
 #define tile_h
 
 #include "map_character.h"
+#include "light_template.h"
+#include "light_source.h"
 
 #include <collision.h>
 
@@ -13,24 +15,26 @@
 #include <vector>
 #include <cstdint>
 
-class Tile {
+class Tile: public LightSource {
     private:
         unsigned char character;
         std::string characterColor;
         std::string backgroundColor;
-        std::string characterUnseenColor;
-        std::string backgroundUnseenColor;
         bool playerSpawn;
         std::string doorTo;
         bool solid;
         bool opaque;
-        bool lightSource;
+        std::string light;
 
         // other saved values:
         bool explored;
 
         // ephemeral values:
-        bool seen;
+        std::int16_t lightLevel;
+        std::string lightColor;
+
+        // getters:
+        LightTemplate* getLightTemplate() const;
 
     public:
         Tile ();
@@ -45,12 +49,18 @@ class Tile {
         std::string getDoorTo() const;
         bool isSolid() const;
         bool isOpaque() const;
-        bool isLightSource() const;
 
         void setExplored(bool explored);
 
-        bool isSeen() const;
-        void setSeen(bool seen);
+        // Returns the light template for convenience
+        LightTemplate* updateLightSource();
+        std::int32_t getLightRange() const;
+
+        // lighting
+        std::int16_t getLightLevel() const;
+        void setLightLevel(std::int16_t lightLevel);
+        void applyLight(std::int16_t lightLevel, const std::string& color);
+        void clearLightColor();
 
         void render(const Coords<std::int32_t>& tilePosition) const;
 };

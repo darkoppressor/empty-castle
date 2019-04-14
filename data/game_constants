@@ -135,15 +135,35 @@
 </game_constant>
 
 <game_constant>
+	name:maximum_light_level
+	value:255
+	type:int16_t
+</game_constant>
+
+<game_constant>
+	name:minimum_light_level
+	value:0
+	type:int16_t
+</game_constant>
+
+<game_constant>
+	name:light_dimming_factor
+	value:2
+	type:int16_t
+</game_constant>
+
+<game_constant>
 	// tiles
-	name:creature_maximum_light_range
+	// should be within [2, 15]
+	name:creature_light_range
 	value:12
 	type:int32_t
 </game_constant>
 
 <game_constant>
 	// tiles
-	name:tile_maximum_light_range
-	value:4
+	// should be within [2, 15]
+	name:tile_light_range
+	value:6
 	type:int32_t
 </game_constant>

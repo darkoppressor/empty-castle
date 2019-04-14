@@ -7,10 +7,6 @@ Player light radius becomes exception, depends on equipped light item
 Tile light items have concept of being on or off
 Player can "use" them to toggle their light state
 
-All lights use a light template
-Light templates have a range, flicker rate, and a set of colors
-When a light source calculates its fov, it also updates tiles within its light range
-The update rate for lighting is limited by the flicker rate (which can be 0 to never flicker)
-Tiles within the light range of the light source have a light background applied, causing them to render that color as
-their background instead of their normal background
-When a light source is toggled off, it clears the light background from all tiles within its range
+Creatures should be affected by lighting just like tiles
+
+Light color should have a separate range from fov range

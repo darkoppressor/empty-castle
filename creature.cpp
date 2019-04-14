@@ -19,6 +19,16 @@ CreatureTemplate* Creature::getType () const {
     return Game_Data::getCreatureTemplate(type);
 }
 
+LightTemplate* Creature::getLightTemplate () const {
+    string lightType = getType()->light;
+
+    if (lightType.length() > 0) {
+        return Game_Data::getLightTemplate(lightType);
+    } else {
+        return 0;
+    }
+}
+
 unsigned char Creature::getCharacter () const {
     return getType()->character;
 }
@@ -67,12 +77,20 @@ Collision_Rect<int32_t> Creature::getCollisionBox () const {
                                    Game_Constants::CREATURE_COLLISION_REDUCTION* 2);
 }
 
-bool Creature::isLightSource () const {
-    return getType()->lightSource;
-}
-
 bool Creature::isAlive () const {
     return true;
+}
+
+LightTemplate* Creature::updateLightSource () {
+    LightTemplate* lightTemplate = getLightTemplate();
+
+    LightSource::updateLightSource(lightTemplate);
+
+    return lightTemplate;
+}
+
+int32_t Creature::getLightRange () const {
+    return LightSource::getLightRange(Game_Constants::CREATURE_LIGHT_RANGE);
 }
 
 void Creature::setThrustAngle (const string& direction) {

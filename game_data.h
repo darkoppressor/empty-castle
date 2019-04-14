@@ -7,6 +7,7 @@
 
 #include "map.h"
 #include "creature_template.h"
+#include "light_template.h"
 
 #include <progress_bar.h>
 #include <file_io.h>
@@ -17,6 +18,7 @@ class Game_Data {
     private:
         static std::vector<Map> maps;
         static std::vector<CreatureTemplate> creatureTemplates;
+        static std::vector<LightTemplate> lightTemplates;
 
     public:
         // The total number of progress bar items in load_data_game()
@@ -33,6 +35,8 @@ class Game_Data {
         static Map* getMap(std::string name);
         static void loadCreatureTemplate(File_IO_Load* load);
         static CreatureTemplate* getCreatureTemplate(std::string name);
+        static void loadLightTemplate(File_IO_Load* load);
+        static LightTemplate* getLightTemplate(std::string name);
 };
 
 #endif

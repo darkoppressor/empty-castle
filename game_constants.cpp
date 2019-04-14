@@ -26,8 +26,11 @@ int32_t Game_Constants::CREATURE_COLLISION_REDUCTION=0;
 int32_t Game_Constants::CREATURE_COLLISION_STEPS=0;
 string Game_Constants::INITIAL_MAP="";
 int32_t Game_Constants::TILE_LIGHT_SOURCE_CHECK_PADDING=0;
-int32_t Game_Constants::CREATURE_MAXIMUM_LIGHT_RANGE=0;
-int32_t Game_Constants::TILE_MAXIMUM_LIGHT_RANGE=0;
+int16_t Game_Constants::MAXIMUM_LIGHT_LEVEL=0;
+int16_t Game_Constants::MINIMUM_LIGHT_LEVEL=0;
+int16_t Game_Constants::LIGHT_DIMMING_FACTOR=0;
+int32_t Game_Constants::CREATURE_LIGHT_RANGE=0;
+int32_t Game_Constants::TILE_LIGHT_RANGE=0;
 /// END SCRIPT-GENERATED CONSTANT INITIALIZATIONS
 
 void Game_Constants_Loader::set_game_constant (string name, string value) {
@@ -85,11 +88,20 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     else if(name=="tile_light_source_check_padding"){
         Game_Constants::TILE_LIGHT_SOURCE_CHECK_PADDING=Strings::string_to_long(value);
     }
-    else if(name=="creature_maximum_light_range"){
-        Game_Constants::CREATURE_MAXIMUM_LIGHT_RANGE=Strings::string_to_long(value);
+    else if(name=="maximum_light_level"){
+        Game_Constants::MAXIMUM_LIGHT_LEVEL=Strings::string_to_long(value);
     }
-    else if(name=="tile_maximum_light_range"){
-        Game_Constants::TILE_MAXIMUM_LIGHT_RANGE=Strings::string_to_long(value);
+    else if(name=="minimum_light_level"){
+        Game_Constants::MINIMUM_LIGHT_LEVEL=Strings::string_to_long(value);
+    }
+    else if(name=="light_dimming_factor"){
+        Game_Constants::LIGHT_DIMMING_FACTOR=Strings::string_to_long(value);
+    }
+    else if(name=="creature_light_range"){
+        Game_Constants::CREATURE_LIGHT_RANGE=Strings::string_to_long(value);
+    }
+    else if(name=="tile_light_range"){
+        Game_Constants::TILE_LIGHT_RANGE=Strings::string_to_long(value);
     }
     /// END SCRIPT-GENERATED CONSTANT SETUP
 }

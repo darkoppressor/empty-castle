@@ -10,6 +10,7 @@
 
 #include <coords.h>
 #include <collision.h>
+#include <rng.h>
 
 #include <cstdint>
 #include <vector>
@@ -17,6 +18,7 @@
 
 class Game {
     private:
+        static RNG rng;
         // tiles
         static std::int32_t worldWidth;
         // tiles
@@ -26,6 +28,7 @@ class Game {
         static std::vector<Creature> creatures;
 
     public:
+        static RNG& getRng();
         // tile coordinates
         static Coords<std::int32_t> getWorldDimensions();
         // pixel coordinates

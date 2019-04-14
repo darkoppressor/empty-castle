@@ -21,7 +21,7 @@ class CreatureTemplate {
         // meters/second
         // Note that this needs to be >= the logic update rate, because speeds below it are rounded down to 0
         std::int32_t maximumSpeed;
-        bool lightSource;
+        std::string light;
 
         CreatureTemplate ();
 };

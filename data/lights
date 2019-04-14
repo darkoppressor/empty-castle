@@ -1,0 +1,10 @@
+<light>
+    name:player
+</light>
+
+<light>
+    name:torch
+    glowRateMin:120
+    glowRateMax:240
+    colors:torch
+</light>
