@@ -68,6 +68,11 @@ Creature& Game::getPlayer () {
     }
 }
 
+void Game::castLight (const Coords<int32_t>& tilePosition) {
+    fieldOfViewMap->computeFov(tilePosition.x, tilePosition.y, Game_Constants::LIGHT_SOURCE_MAXIMUM_RANGE, true,
+                               FOV_BASIC);
+}
+
 bool Game::isInFov (const Coords<int32_t>& tilePosition) {
     return fieldOfViewMap->isInFov(tilePosition.x, tilePosition.y);
 }
@@ -134,6 +139,12 @@ void Game::movement () {
 
     fieldOfViewMap->computeFov(playerTilePosition.x, playerTilePosition.y,
                                Game_Constants::CREATURE_MAXIMUM_VISIBLE_RANGE, true, FOV_BASIC);
+
+    /*for (int32_t x = 0; x < worldWidth; x++) {
+        for (int32_t y = 0; y < worldHeight; y++) {
+            tiles[x][y].castLight(Coords<int32_t>(x, y));
+        }
+       }*/
 
     for (int32_t x = 0; x < worldWidth; x++) {
         for (int32_t y = 0; y < worldHeight; y++) {

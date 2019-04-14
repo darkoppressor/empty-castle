@@ -37,6 +37,7 @@ class Game {
         static Coords<std::int32_t> getWorldDimensionsPixels();
         static std::vector<std::vector<Tile>>& getTiles();
         static Creature& getPlayer();
+        static void castLight(const Coords<std::int32_t>& tilePosition);
         static bool isInFov(const Coords<std::int32_t>& tilePosition);
         static void clear_world();
         static void generate_world();

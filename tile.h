@@ -24,6 +24,7 @@ class Tile {
         std::string doorTo;
         bool solid;
         bool opaque;
+        bool lightSource;
         bool explored;
 
     public:
@@ -33,6 +34,7 @@ class Tile {
         void setToPadding();
 
         void explorationCheck(const Coords<std::int32_t>& tilePosition);
+        void castLight(const Coords<std::int32_t>& tilePosition);
 
         // pixel box
         static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);

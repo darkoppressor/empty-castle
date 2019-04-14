@@ -26,6 +26,7 @@ int32_t Game_Constants::CREATURE_COLLISION_REDUCTION=0;
 int32_t Game_Constants::CREATURE_COLLISION_STEPS=0;
 string Game_Constants::INITIAL_MAP="";
 int32_t Game_Constants::CREATURE_MAXIMUM_VISIBLE_RANGE=0;
+int32_t Game_Constants::LIGHT_SOURCE_MAXIMUM_RANGE=0;
 /// END SCRIPT-GENERATED CONSTANT INITIALIZATIONS
 
 void Game_Constants_Loader::set_game_constant (string name, string value) {
@@ -82,6 +83,9 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     }
     else if(name=="creature_maximum_visible_range"){
         Game_Constants::CREATURE_MAXIMUM_VISIBLE_RANGE=Strings::string_to_long(value);
+    }
+    else if(name=="light_source_maximum_range"){
+        Game_Constants::LIGHT_SOURCE_MAXIMUM_RANGE=Strings::string_to_long(value);
     }
     /// END SCRIPT-GENERATED CONSTANT SETUP
 }

@@ -23,6 +23,7 @@ Tile::Tile () {
     doorTo = "";
     solid = Game_Constants::MAP_CHARACTER_ERROR_SOLID;
     opaque = Game_Constants::MAP_CHARACTER_ERROR_OPAQUE;
+    lightSource = false;
     explored = false;
 }
 
@@ -38,6 +39,7 @@ void Tile::readFromMap (const vector<MapCharacter>& mapCharacters, unsigned char
             doorTo = mapCharacter.doorTo;
             solid = mapCharacter.solid;
             opaque = mapCharacter.opaque;
+            lightSource = mapCharacter.lightSource;
 
             return;
         }
@@ -57,6 +59,12 @@ void Tile::setToPadding () {
 void Tile::explorationCheck (const Coords<int32_t>& tilePosition) {
     if (!explored && Game::isInFov(tilePosition)) {
         explored = true;
+    }
+}
+
+void Tile::castLight (const Coords<int32_t>& tilePosition) {
+    if (lightSource) {
+        Game::castLight(tilePosition);
     }
 }
 

@@ -19,6 +19,7 @@ class MapCharacter {
         std::string doorTo;
         bool solid;
         bool opaque;
+        bool lightSource;
 
         MapCharacter ();
 };

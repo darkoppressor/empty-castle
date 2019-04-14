@@ -130,6 +130,13 @@
 <game_constant>
 	// tiles
 	name:creature_maximum_visible_range
-	value:24
+	value:12
+	type:int32_t
+</game_constant>
+
+<game_constant>
+	// tiles
+	name:light_source_maximum_range
+	value:4
 	type:int32_t
 </game_constant>

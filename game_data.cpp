@@ -84,6 +84,8 @@ size_t Game_Data::loadMapCharacter (vector<string>& lines, size_t lineIndex) {
             maps.back().mapCharacters.back().solid = true;
         } else if (Data_Reader::check_prefix(line, "<opaque>")) {
             maps.back().mapCharacters.back().opaque = true;
+        } else if (Data_Reader::check_prefix(line, "<lightSource>")) {
+            maps.back().mapCharacters.back().lightSource = true;
         } else if (Data_Reader::check_prefix(line, "</mapCharacter>")) {
             return i;
         }

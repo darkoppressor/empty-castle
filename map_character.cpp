@@ -18,4 +18,5 @@ MapCharacter::MapCharacter () {
     doorTo = "";
     solid = Game_Constants::MAP_CHARACTER_ERROR_SOLID;
     opaque = Game_Constants::MAP_CHARACTER_ERROR_OPAQUE;
+    lightSource = false;
 }
