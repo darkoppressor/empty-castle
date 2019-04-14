@@ -134,6 +134,12 @@ void Game::movement () {
 
     fieldOfViewMap->computeFov(playerTilePosition.x, playerTilePosition.y,
                                Game_Constants::CREATURE_MAXIMUM_VISIBLE_RANGE, true, FOV_BASIC);
+
+    for (int32_t x = 0; x < worldWidth; x++) {
+        for (int32_t y = 0; y < worldHeight; y++) {
+            tiles[x][y].explorationCheck(Coords<int32_t>(x, y));
+        }
+    }
 }
 
 void Game::events () {
@@ -172,7 +178,7 @@ void Game::render_to_textures () {
 void Game::update_background () {}
 
 void Game::render_background () {
-    Render::render_rectangle(0.0, 0.0, Game_Window::width(), Game_Window::height(), 1.0, "background_color");
+    Render::render_rectangle(0.0, 0.0, Game_Window::width(), Game_Window::height(), 1.0, "background");
 }
 
 void Game::playerThrust (const string& direction) {

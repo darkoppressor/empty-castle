@@ -14,7 +14,6 @@ using namespace std;
 int32_t Game_Constants::MAP_PADDING=0;
 uint8_t Game_Constants::MAP_CHARACTER_ERROR=0;
 string Game_Constants::MAP_CHARACTER_ERROR_COLOR="";
-string Game_Constants::MAP_CHARACTER_ERROR_BACKGROUND_COLOR="";
 bool Game_Constants::MAP_CHARACTER_ERROR_SOLID=false;
 bool Game_Constants::MAP_CHARACTER_ERROR_OPAQUE=false;
 uint8_t Game_Constants::MAP_CHARACTER_PADDING=0;
@@ -47,9 +46,6 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     }
     else if(name=="map_character_error_color"){
         Game_Constants::MAP_CHARACTER_ERROR_COLOR=value;
-    }
-    else if(name=="map_character_error_background_color"){
-        Game_Constants::MAP_CHARACTER_ERROR_BACKGROUND_COLOR=value;
     }
     else if(name=="map_character_error_solid"){
         Game_Constants::MAP_CHARACTER_ERROR_SOLID=Strings::string_to_bool(value);

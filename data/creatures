@@ -1,7 +1,7 @@
 <creature>
     name:player
     character:@
-    characterColor:default_white
+    characterColor:player
     moveForce:2048
     mass:70
     maximumSpeed:96

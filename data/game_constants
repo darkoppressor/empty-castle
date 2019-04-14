@@ -62,12 +62,6 @@
 </game_constant>
 
 <game_constant>
-	name:map_character_error_background_color
-	value:background_color
-	type:string
-</game_constant>
-
-<game_constant>
 	name:map_character_error_solid
 	value:false
 	type:bool
@@ -87,13 +81,13 @@
 
 <game_constant>
 	name:map_character_padding_color
-	value:background_color
+	value:background
 	type:string
 </game_constant>
 
 <game_constant>
 	name:map_character_padding_background_color
-	value:background_color
+	value:background
 	type:string
 </game_constant>
 

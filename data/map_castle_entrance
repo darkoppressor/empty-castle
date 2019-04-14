@@ -4,15 +4,15 @@
     <mapCharacter>
         character:.
         displayCharacter:.
-        characterColor:default_white
-        backgroundColor:background_color
+        characterColor:stone
+        characterUnseenColor:stone_dark
     </mapCharacter>
 
     <mapCharacter>
         character:#
         displayCharacter:#
-        characterColor:default_white
-        backgroundColor:background_color
+        characterColor:stone
+        characterUnseenColor:stone_dark
         <solid>
         <opaque>
     </mapCharacter>
@@ -20,8 +20,8 @@
     <mapCharacter>
         character:@
         displayCharacter:+
-        characterColor:default_white
-        backgroundColor:background_color
+        characterColor:wood
+        characterUnseenColor:wood_dark
         <playerSpawn>
     </mapCharacter>
 

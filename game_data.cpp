@@ -72,6 +72,10 @@ size_t Game_Data::loadMapCharacter (vector<string>& lines, size_t lineIndex) {
             maps.back().mapCharacters.back().characterColor = line;
         } else if (Data_Reader::check_prefix(line, "backgroundColor:")) {
             maps.back().mapCharacters.back().backgroundColor = line;
+        } else if (Data_Reader::check_prefix(line, "characterUnseenColor:")) {
+            maps.back().mapCharacters.back().characterUnseenColor = line;
+        } else if (Data_Reader::check_prefix(line, "backgroundUnseenColor:")) {
+            maps.back().mapCharacters.back().backgroundUnseenColor = line;
         } else if (Data_Reader::check_prefix(line, "<playerSpawn>")) {
             maps.back().mapCharacters.back().playerSpawn = true;
         } else if (Data_Reader::check_prefix(line, "doorTo:")) {

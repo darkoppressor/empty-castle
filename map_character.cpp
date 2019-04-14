@@ -11,7 +11,9 @@ MapCharacter::MapCharacter () {
     character = Game_Constants::MAP_CHARACTER_ERROR;
     displayCharacter = Game_Constants::MAP_CHARACTER_ERROR;
     characterColor = Game_Constants::MAP_CHARACTER_ERROR_COLOR;
-    backgroundColor = Game_Constants::MAP_CHARACTER_ERROR_BACKGROUND_COLOR;
+    backgroundColor = "";
+    characterUnseenColor = Game_Constants::MAP_CHARACTER_ERROR_COLOR;
+    backgroundUnseenColor = "";
     playerSpawn = false;
     doorTo = "";
     solid = Game_Constants::MAP_CHARACTER_ERROR_SOLID;

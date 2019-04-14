@@ -1,18 +1,33 @@
 //** Game Colors **//
 
 <color>
-	name:default_white
-	rgb:230,230,230
+	name:background
+	rgb:7,7,7
 </color>
 
 <color>
-	name:background_color
-	rgb:26,26,26
+	name:stone_dark
+	rgb:19,16,19
 </color>
 
 <color>
-	name:fog_of_war
-	rgb:64,64,64
+	name:stone
+	rgb:50,47,50
+</color>
+
+<color>
+	name:wood_dark
+	rgb:40,33,30
+</color>
+
+<color>
+	name:wood
+	rgb:125,103,86
+</color>
+
+<color>
+	name:player
+	rgb:164,155,134
 </color>
 
 //** Engine Colors **//

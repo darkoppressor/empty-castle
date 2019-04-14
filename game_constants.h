@@ -14,7 +14,6 @@ class Game_Constants {
     static std::int32_t MAP_PADDING;
     static std::uint8_t MAP_CHARACTER_ERROR;
     static std::string MAP_CHARACTER_ERROR_COLOR;
-    static std::string MAP_CHARACTER_ERROR_BACKGROUND_COLOR;
     static bool MAP_CHARACTER_ERROR_SOLID;
     static bool MAP_CHARACTER_ERROR_OPAQUE;
     static std::uint8_t MAP_CHARACTER_PADDING;

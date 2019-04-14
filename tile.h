@@ -18,16 +18,21 @@ class Tile {
         unsigned char character;
         std::string characterColor;
         std::string backgroundColor;
+        std::string characterUnseenColor;
+        std::string backgroundUnseenColor;
         bool playerSpawn;
         std::string doorTo;
         bool solid;
         bool opaque;
+        bool explored;
 
     public:
         Tile ();
 
         void readFromMap(const std::vector<MapCharacter>& mapCharacters, unsigned char character);
         void setToPadding();
+
+        void explorationCheck(const Coords<std::int32_t>& tilePosition);
 
         // pixel box
         static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);

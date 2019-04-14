@@ -13,6 +13,8 @@ class MapCharacter {
         unsigned char displayCharacter;
         std::string characterColor;
         std::string backgroundColor;
+        std::string characterUnseenColor;
+        std::string backgroundUnseenColor;
         bool playerSpawn;
         std::string doorTo;
         bool solid;
