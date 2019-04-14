@@ -4,6 +4,7 @@
 
 #include "tile.h"
 #include "game_constants.h"
+#include "game.h"
 
 #include <font.h>
 #include <object_manager.h>
@@ -19,6 +20,7 @@ Tile::Tile () {
     playerSpawn = false;
     doorTo = "";
     solid = Game_Constants::MAP_CHARACTER_ERROR_SOLID;
+    opaque = Game_Constants::MAP_CHARACTER_ERROR_OPAQUE;
 }
 
 void Tile::readFromMap (const vector<MapCharacter>& mapCharacters, unsigned char character) {
@@ -30,6 +32,7 @@ void Tile::readFromMap (const vector<MapCharacter>& mapCharacters, unsigned char
             playerSpawn = mapCharacter.playerSpawn;
             doorTo = mapCharacter.doorTo;
             solid = mapCharacter.solid;
+            opaque = mapCharacter.opaque;
 
             return;
         }
@@ -41,9 +44,10 @@ void Tile::setToPadding () {
     characterColor = Game_Constants::MAP_CHARACTER_PADDING_COLOR;
     backgroundColor = Game_Constants::MAP_CHARACTER_PADDING_BACKGROUND_COLOR;
     solid = Game_Constants::MAP_CHARACTER_PADDING_SOLID;
+    opaque = Game_Constants::MAP_CHARACTER_PADDING_OPAQUE;
 }
 
-Collision_Rect<int32_t> Tile::getBox (const Coords<uint32_t>& tilePosition) {
+Collision_Rect<int32_t> Tile::getBox (const Coords<int32_t>& tilePosition) {
     Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
     return Collision_Rect<int32_t>(
@@ -63,23 +67,34 @@ bool Tile::isSolid () const {
     return solid;
 }
 
-void Tile::render (const Coords<uint32_t>& tilePosition) const {
+bool Tile::isOpaque () const {
+    return opaque;
+}
+
+void Tile::render (const Coords<int32_t>& tilePosition) const {
     Collision_Rect<int32_t> box = getBox(tilePosition);
     Collision_Rect<double> boxRender(box.x, box.y, box.w, box.h);
 
     if (Collision::check_rect(boxRender * Game_Manager::camera_zoom, Game_Manager::camera)) {
-        if (backgroundColor != "background_color") {
+        if (Game::isInFov(tilePosition)) {
+            if (backgroundColor != "background_color") {
+                Render::render_rectangle(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
+                                         box.y * Game_Manager::camera_zoom - Game_Manager::camera.y,
+                                         box.w * Game_Manager::camera_zoom, box.h * Game_Manager::camera_zoom, 1.0,
+                                         backgroundColor);
+            }
+
+            Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
+
+            font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
+                       box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
+                                                                                          character), characterColor, 1.0, Game_Manager::camera_zoom,
+                       Game_Manager::camera_zoom);
+        } else {
             Render::render_rectangle(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
                                      box.y * Game_Manager::camera_zoom - Game_Manager::camera.y,
                                      box.w * Game_Manager::camera_zoom, box.h * Game_Manager::camera_zoom, 1.0,
-                                     backgroundColor);
+                                     "fog_of_war");
         }
-
-        Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
-
-        font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
-                   box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
-                                                                                      character), characterColor, 1.0, Game_Manager::camera_zoom,
-                   Game_Manager::camera_zoom);
     }
 }

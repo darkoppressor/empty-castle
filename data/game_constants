@@ -46,7 +46,7 @@
 <game_constant>
 	name:map_padding
 	value:256
-	type:uint32_t
+	type:int32_t
 </game_constant>
 
 <game_constant>
@@ -69,6 +69,12 @@
 
 <game_constant>
 	name:map_character_error_solid
+	value:false
+	type:bool
+</game_constant>
+
+<game_constant>
+	name:map_character_error_opaque
 	value:false
 	type:bool
 </game_constant>
@@ -98,6 +104,12 @@
 </game_constant>
 
 <game_constant>
+	name:map_character_padding_opaque
+	value:true
+	type:bool
+</game_constant>
+
+<game_constant>
 	name:display_font
 	value:standard
 	type:string
@@ -119,4 +131,11 @@
 	name:initial_map
 	value:castleEntrance
 	type:string
+</game_constant>
+
+<game_constant>
+	// tiles
+	name:creature_maximum_visible_range
+	value:24
+	type:int32_t
 </game_constant>

@@ -10,6 +10,11 @@
 	rgb:26,26,26
 </color>
 
+<color>
+	name:fog_of_war
+	rgb:64,64,64
+</color>
+
 //** Engine Colors **//
 
 <color>

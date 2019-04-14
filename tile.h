@@ -21,6 +21,7 @@ class Tile {
         bool playerSpawn;
         std::string doorTo;
         bool solid;
+        bool opaque;
 
     public:
         Tile ();
@@ -29,13 +30,14 @@ class Tile {
         void setToPadding();
 
         // pixel box
-        static Collision_Rect<std::int32_t> getBox(const Coords<std::uint32_t>& tilePosition);
+        static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);
 
         bool isPlayerSpawn() const;
         std::string getDoorTo() const;
         bool isSolid() const;
+        bool isOpaque() const;
 
-        void render(const Coords<std::uint32_t>& tilePosition) const;
+        void render(const Coords<std::int32_t>& tilePosition) const;
 };
 
 #endif

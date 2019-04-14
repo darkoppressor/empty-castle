@@ -13,6 +13,7 @@
 
 #include <string>
 #include <cstdint>
+#include <vector>
 
 class Creature {
     private:
@@ -33,7 +34,7 @@ class Creature {
         // pixel box
         Collision_Rect<std::int32_t> getBox() const;
         // tile coordinates
-        Coords<std::uint32_t> getTilePosition() const;
+        Coords<std::int32_t> getTilePosition() const;
         // pixel box
         Collision_Rect<std::int32_t> getCollisionBox() const;
 

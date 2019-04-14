@@ -16,6 +16,7 @@ class MapCharacter {
         bool playerSpawn;
         std::string doorTo;
         bool solid;
+        bool opaque;
 
         MapCharacter ();
 };

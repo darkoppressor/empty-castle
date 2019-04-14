@@ -27,6 +27,13 @@ tile.cpp
 version.cpp
 window_close_function.cpp
 window_scrolling_buttons.cpp
+dependencies/libtcod/fov.cpp
+dependencies/libtcod/fov_c.c
+dependencies/libtcod/fov_circular_raycasting.c
+dependencies/libtcod/bresenham.cpp
+dependencies/libtcod/bresenham_c.c
+dependencies/libtcod/fov_diamond_raycasting.c
+dependencies/libtcod/list_c.c
 )
 
 ########################################################################################################################
@@ -43,6 +50,7 @@ COMPILE_FLAGS "-fexpensive-optimizations -O2 -std=c++11 -Wall -Wextra -m64 -DGAM
 target_include_directories(Release-Linux-x86_64 PRIVATE
 /usr/include/
 /usr/include/x86_64-linux-gnu/
+dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/linux-x86_64/SDL2/include/
 /home/tails/build-server/linux-x86_64/SDL2_image/
@@ -90,6 +98,7 @@ COMPILE_FLAGS "-std=c++11 -Wall -Wextra -g -m64 -DGAME_OS_LINUX"
 target_include_directories(Debug-Linux-x86_64 PRIVATE
 /usr/include/
 /usr/include/x86_64-linux-gnu/
+dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/linux-x86_64/SDL2/include/
 /home/tails/build-server/linux-x86_64/SDL2_image/
@@ -139,6 +148,7 @@ COMPILE_FLAGS "-fexpensive-optimizations -O2 -std=c++11 -Wall -Wextra -m64 -DGAM
 
 target_include_directories(Release-Windows-x86_64 PRIVATE
 /usr/x86_64-w64-mingw32/include
+dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/windows-x86_64/SDL2/include/
 /home/tails/build-server/windows-x86_64/SDL2_image/
@@ -195,6 +205,7 @@ COMPILE_FLAGS "-fexpensive-optimizations -O2 -std=c++11 -Wall -Wextra -m64 -stdl
 
 target_include_directories(Release-macOS-x86_64 PRIVATE
 /home/tails/build-server/osx-x86_64/osxcross/target/SDK/MacOSX.sdk/usr/include/
+dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/osx-x86_64/SDL2/include/
 /home/tails/build-server/osx-x86_64/SDL2_image/
@@ -243,6 +254,7 @@ COMPILE_FLAGS "-fexpensive-optimizations -O2 -std=c++11 -Wall -Wextra -m64 -DGAM
 target_include_directories(Android-NoBuild PRIVATE
 /usr/include/
 /usr/include/x86_64-linux-gnu/
+dependencies/
 /home/tails/build-server/android/gpg-cpp-sdk/android/include
 /home/tails/build-server/android/SDL2/include/
 /home/tails/build-server/android/SDL2_image/

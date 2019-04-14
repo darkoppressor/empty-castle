@@ -11,19 +11,22 @@
 class Game_Constants {
     public:
     /// BEGIN SCRIPT-GENERATED CONSTANT DECLARATIONS
-    static std::uint32_t MAP_PADDING;
+    static std::int32_t MAP_PADDING;
     static std::uint8_t MAP_CHARACTER_ERROR;
     static std::string MAP_CHARACTER_ERROR_COLOR;
     static std::string MAP_CHARACTER_ERROR_BACKGROUND_COLOR;
     static bool MAP_CHARACTER_ERROR_SOLID;
+    static bool MAP_CHARACTER_ERROR_OPAQUE;
     static std::uint8_t MAP_CHARACTER_PADDING;
     static std::string MAP_CHARACTER_PADDING_COLOR;
     static std::string MAP_CHARACTER_PADDING_BACKGROUND_COLOR;
     static bool MAP_CHARACTER_PADDING_SOLID;
+    static bool MAP_CHARACTER_PADDING_OPAQUE;
     static std::string DISPLAY_FONT;
     static std::int32_t CREATURE_COLLISION_REDUCTION;
     static std::int32_t CREATURE_COLLISION_STEPS;
     static std::string INITIAL_MAP;
+    static std::int32_t CREATURE_MAXIMUM_VISIBLE_RANGE;
     /// END SCRIPT-GENERATED CONSTANT DECLARATIONS
 };
 

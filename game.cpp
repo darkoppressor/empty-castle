@@ -19,18 +19,39 @@
 
 using namespace std;
 
-uint32_t Game::worldWidth = 0;
-uint32_t Game::worldHeight = 0;
+int32_t Game::worldWidth = 0;
+int32_t Game::worldHeight = 0;
 vector<vector<Tile>> Game::tiles;
 vector<Creature> Game::creatures;
-Coords<uint32_t> Game::getWorldDimensions () {
-    return Coords<uint32_t>(worldWidth, worldHeight);
+TCODMap* Game::fieldOfViewMap;
+void Game::deleteFieldOfViewMap () {
+    if (fieldOfViewMap != 0) {
+        delete fieldOfViewMap;
+
+        fieldOfViewMap = 0;
+    }
+}
+
+void Game::createFieldOfViewMap () {
+    deleteFieldOfViewMap();
+
+    fieldOfViewMap = new TCODMap(worldWidth, worldHeight);
+
+    for (int32_t x = 0; x < worldWidth; x++) {
+        for (int32_t y = 0; y < worldHeight; y++) {
+            fieldOfViewMap->setProperties(x, y, !tiles[x][y].isOpaque(), !tiles[x][y].isSolid());
+        }
+    }
+}
+
+Coords<int32_t> Game::getWorldDimensions () {
+    return Coords<int32_t>(worldWidth, worldHeight);
 }
 
 Coords<int32_t> Game::getWorldDimensionsPixels () {
-    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<uint32_t>(0, 0));
+    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
 
-    return Coords<int32_t>(worldWidth * (uint32_t) tileBox.w, worldHeight * (uint32_t) tileBox.h);
+    return Coords<int32_t>(worldWidth * tileBox.w, worldHeight * tileBox.h);
 }
 
 vector<vector<Tile>>& Game::getTiles () {
@@ -47,11 +68,16 @@ Creature& Game::getPlayer () {
     }
 }
 
+bool Game::isInFov (const Coords<int32_t>& tilePosition) {
+    return fieldOfViewMap->isInFov(tilePosition.x, tilePosition.y);
+}
+
 void Game::clear_world () {
     worldWidth = 0;
     worldHeight = 0;
     tiles.clear();
     creatures.clear();
+    deleteFieldOfViewMap();
 }
 
 void Game::generate_world () {
@@ -64,8 +90,8 @@ void Game::generate_world () {
 
     tiles.resize(worldWidth, vector<Tile>(worldHeight));
 
-    for (uint32_t x = 0; x < worldWidth; x++) {
-        for (uint32_t y = 0; y < worldHeight; y++) {
+    for (int32_t x = 0; x < worldWidth; x++) {
+        for (int32_t y = 0; y < worldHeight; y++) {
             if (x < Game_Constants::MAP_PADDING || y < Game_Constants::MAP_PADDING ||
                 x >= map->tiles.size() + Game_Constants::MAP_PADDING ||
                 y >= map->tiles[0].size() + Game_Constants::MAP_PADDING) {
@@ -75,7 +101,7 @@ void Game::generate_world () {
                                         map->tiles[x - Game_Constants::MAP_PADDING][y - Game_Constants::MAP_PADDING]);
 
                 if (creatures.size() == 0 && tiles[x][y].isPlayerSpawn()) {
-                    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<uint32_t>(x, y));
+                    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(x, y));
                     creatures.push_back(Creature("player", Coords<int32_t>(tileBox.x, tileBox.y)));
                 }
             }
@@ -87,6 +113,8 @@ void Game::generate_world () {
 
         Button_Events::handle_button_event("stop_game", 0);
     }
+
+    createFieldOfViewMap();
 }
 
 void Game::tick () {}
@@ -101,6 +129,11 @@ void Game::movement () {
     for (auto& creature : creatures) {
         creature.movement();
     }
+
+    Coords<int32_t> playerTilePosition = getPlayer().getTilePosition();
+
+    fieldOfViewMap->computeFov(playerTilePosition.x, playerTilePosition.y,
+                               Game_Constants::CREATURE_MAXIMUM_VISIBLE_RANGE, true, FOV_BASIC);
 }
 
 void Game::events () {
@@ -110,7 +143,7 @@ void Game::events () {
 void Game::animate () {}
 
 void Game::render () {
-    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<uint32_t>(0, 0));
+    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
     int32_t cameraTileX = (int32_t) (Game_Manager::camera.x / (tileBox.w * Game_Manager::camera_zoom));
     int32_t cameraTileY = (int32_t) (Game_Manager::camera.y / (tileBox.h * Game_Manager::camera_zoom));
     int32_t endTileX = cameraTileX + (int32_t) (Game_Manager::camera.w / (tileBox.w * Game_Manager::camera_zoom)) + 2;
@@ -120,7 +153,7 @@ void Game::render () {
     for (int32_t x = cameraTileX; x < endTileX; x++) {
         for (int32_t y = cameraTileY; y < endTileY; y++) {
             if (x >= 0 && y >= 0 && x < worldWidth && y < worldHeight) {
-                tiles[x][y].render(Coords<uint32_t>(x, y));
+                tiles[x][y].render(Coords<int32_t>(x, y));
             }
         }
     }

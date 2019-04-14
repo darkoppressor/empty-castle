@@ -51,10 +51,10 @@ Collision_Rect<int32_t> Creature::getBox () const {
                                    (int32_t) font->get_letter_width(), (int32_t) font->get_letter_height());
 }
 
-Coords<uint32_t> Creature::getTilePosition () const {
+Coords<int32_t> Creature::getTilePosition () const {
     Collision_Rect<int32_t> box = getBox();
 
-    return Coords<uint32_t>((uint32_t) box.x / (uint32_t) box.w, (uint32_t) box.y / (uint32_t) box.h);
+    return Coords<int32_t>(box.x / box.w, box.y / box.h);
 }
 
 Collision_Rect<int32_t> Creature::getCollisionBox () const {
@@ -154,10 +154,12 @@ void Creature::movement () {
 
         if (position.x < 0) {
             position.x = 0;
+            brake();
         }
 
         if (position.y < 0) {
             position.y = 0;
+            brake();
         }
 
         Coords<int32_t> worldDimensionsPixels = Game::getWorldDimensionsPixels();
@@ -165,31 +167,31 @@ void Creature::movement () {
 
         if (box.x + box.w >= worldDimensionsPixels.x) {
             position.x = worldDimensionsPixels.x - box.w;
-            force *= 0;
+            brake();
         }
 
         if (box.y + box.h >= worldDimensionsPixels.y) {
             position.y = worldDimensionsPixels.y - box.h;
-            force *= 0;
+            brake();
         }
     }
 }
 
 bool Creature::tileCollision (const Coords<int32_t>& oldPosition) {
     const vector<vector<Tile>>& tiles = Game::getTiles();
-    Coords<uint32_t> tilePosition = getTilePosition();
-    Coords<uint32_t> worldDimensions = Game::getWorldDimensions();
+    Coords<int32_t> tilePosition = getTilePosition();
+    Coords<int32_t> worldDimensions = Game::getWorldDimensions();
 
     for (int32_t x = (int32_t) tilePosition.x - 1; x < (int32_t) tilePosition.x + 2; x++) {
         for (int32_t y = (int32_t) tilePosition.y - 1; y < (int32_t) tilePosition.y + 2; y++) {
             if (x >= 0 && y >= 0 && x < (int32_t) worldDimensions.x && y < (int32_t) worldDimensions.y) {
-                Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<uint32_t>(x, y));
+                Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(x, y));
 
                 if (Collision::check_rect(getCollisionBox(), tileBox)) {
                     if (tiles[x][y].isSolid()) {
                         position = oldPosition;
 
-                        force *= 0;
+                        brake();
 
                         return true;
                     }
