@@ -9,9 +9,7 @@
 #include "creature.h"
 
 #include <coords.h>
-#include <quadtree.h>
-
-#include <libtcod/fov.hpp>
+#include <collision.h>
 
 #include <cstdint>
 #include <vector>
@@ -26,9 +24,6 @@ class Game {
         static std::vector<std::vector<Tile>> tiles;
         // creatures[0] represets the player
         static std::vector<Creature> creatures;
-        static TCODMap* fieldOfViewMap;
-        static void deleteFieldOfViewMap();
-        static void createFieldOfViewMap();
 
     public:
         // tile coordinates
@@ -37,8 +32,6 @@ class Game {
         static Coords<std::int32_t> getWorldDimensionsPixels();
         static std::vector<std::vector<Tile>>& getTiles();
         static Creature& getPlayer();
-        static void castLight(const Coords<std::int32_t>& tilePosition);
-        static bool isInFov(const Coords<std::int32_t>& tilePosition);
         static void clear_world();
         static void generate_world();
         static void tick();
@@ -50,6 +43,12 @@ class Game {
         static void render_to_textures();
         static void update_background();
         static void render_background();
+        // The returned collision rectangle's values are:
+        // x => starting x tile (inclusive)
+        // y => starting y tile (inclusive)
+        // w => ending x tile (exclusive)
+        // h => ending y tile (exclusive)
+        static Collision_Rect<std::int32_t> getCameraTileBox(std::int32_t padding);
         static void playerThrust(const std::string& direction);
         static bool moveInputState(const std::string& direction);
 };

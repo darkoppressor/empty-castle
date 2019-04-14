@@ -25,6 +25,7 @@ Tile::Tile () {
     opaque = Game_Constants::MAP_CHARACTER_ERROR_OPAQUE;
     lightSource = false;
     explored = false;
+    seen = false;
 }
 
 void Tile::readFromMap (const vector<MapCharacter>& mapCharacters, unsigned char character) {
@@ -56,18 +57,6 @@ void Tile::setToPadding () {
     opaque = Game_Constants::MAP_CHARACTER_PADDING_OPAQUE;
 }
 
-void Tile::explorationCheck (const Coords<int32_t>& tilePosition) {
-    if (!explored && Game::isInFov(tilePosition)) {
-        explored = true;
-    }
-}
-
-void Tile::castLight (const Coords<int32_t>& tilePosition) {
-    if (lightSource) {
-        Game::castLight(tilePosition);
-    }
-}
-
 Collision_Rect<int32_t> Tile::getBox (const Coords<int32_t>& tilePosition) {
     Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
@@ -92,6 +81,22 @@ bool Tile::isOpaque () const {
     return opaque;
 }
 
+bool Tile::isLightSource () const {
+    return lightSource;
+}
+
+void Tile::setExplored (bool explored) {
+    this->explored = explored;
+}
+
+bool Tile::isSeen () const {
+    return seen;
+}
+
+void Tile::setSeen (bool seen) {
+    this->seen = seen;
+}
+
 void Tile::render (const Coords<int32_t>& tilePosition) const {
     Collision_Rect<int32_t> box = getBox(tilePosition);
     Collision_Rect<double> boxRender(box.x, box.y, box.w, box.h);
@@ -100,7 +105,7 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
         if (explored) {
             Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
-            if (Game::isInFov(tilePosition)) {
+            if (seen) {
                 if (backgroundColor.length() > 0 && backgroundColor != "background") {
                     Render::render_rectangle(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
                                              box.y * Game_Manager::camera_zoom - Game_Manager::camera.y,

@@ -14,4 +14,5 @@ CreatureTemplate::CreatureTemplate () {
     moveForce = 0;
     mass = 0;
     maximumSpeed = 0;
+    lightSource = false;
 }

@@ -25,16 +25,18 @@ class Tile {
         bool solid;
         bool opaque;
         bool lightSource;
+
+        // other saved values:
         bool explored;
+
+        // ephemeral values:
+        bool seen;
 
     public:
         Tile ();
 
         void readFromMap(const std::vector<MapCharacter>& mapCharacters, unsigned char character);
         void setToPadding();
-
-        void explorationCheck(const Coords<std::int32_t>& tilePosition);
-        void castLight(const Coords<std::int32_t>& tilePosition);
 
         // pixel box
         static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);
@@ -43,6 +45,12 @@ class Tile {
         std::string getDoorTo() const;
         bool isSolid() const;
         bool isOpaque() const;
+        bool isLightSource() const;
+
+        void setExplored(bool explored);
+
+        bool isSeen() const;
+        void setSeen(bool seen);
 
         void render(const Coords<std::int32_t>& tilePosition) const;
 };

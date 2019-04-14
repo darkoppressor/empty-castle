@@ -186,6 +186,8 @@ void Game_Data::loadCreatureTemplate (File_IO_Load* load) {
             creatureTemplates.back().mass = Strings::string_to_long(line);
         } else if (Data_Reader::check_prefix(line, "maximumSpeed:")) {
             creatureTemplates.back().maximumSpeed = Strings::string_to_long(line);
+        } else if (Data_Reader::check_prefix(line, "<lightSource>")) {
+            creatureTemplates.back().lightSource = true;
         }
     }
 }

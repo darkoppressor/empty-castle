@@ -32,10 +32,10 @@
 #ifndef LIBTCOD_PORTABILITY_H
 #define LIBTCOD_PORTABILITY_H
 /* uncomment to disable unicode support */
-/*#define NO_UNICODE */
+#define NO_UNICODE
 
 /* uncomment to disable opengl support */
-/*#define NO_OPENGL */
+#define NO_OPENGL
 
 /* os identification
    TCOD_WINDOWS : OS is windows
@@ -161,6 +161,8 @@
 
 /* bool type */
 #include <stdbool.h>
+
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {

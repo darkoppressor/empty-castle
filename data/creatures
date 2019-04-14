@@ -5,4 +5,5 @@
     moveForce:2048
     mass:70
     maximumSpeed:96
+    <lightSource>
 </creature>

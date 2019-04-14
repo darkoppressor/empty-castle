@@ -11,6 +11,7 @@ data_manager_defs.cpp
 dev_info.cpp
 directories_defs.cpp
 engine_glue.cpp
+field_of_view.cpp
 game.cpp
 game.rc
 game_constants.cpp
@@ -27,13 +28,7 @@ tile.cpp
 version.cpp
 window_close_function.cpp
 window_scrolling_buttons.cpp
-dependencies/libtcod/fov.cpp
-dependencies/libtcod/fov_c.c
-dependencies/libtcod/fov_circular_raycasting.c
-dependencies/libtcod/bresenham.cpp
 dependencies/libtcod/bresenham_c.c
-dependencies/libtcod/fov_diamond_raycasting.c
-dependencies/libtcod/list_c.c
 )
 
 ########################################################################################################################

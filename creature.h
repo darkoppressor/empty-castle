@@ -38,6 +38,7 @@ class Creature {
         // pixel box
         Collision_Rect<std::int32_t> getCollisionBox() const;
 
+        bool isLightSource() const;
         bool isAlive() const;
 
         void setThrustAngle(const std::string& direction);

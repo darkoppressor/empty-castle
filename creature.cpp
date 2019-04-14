@@ -67,6 +67,10 @@ Collision_Rect<int32_t> Creature::getCollisionBox () const {
                                    Game_Constants::CREATURE_COLLISION_REDUCTION* 2);
 }
 
+bool Creature::isLightSource () const {
+    return getType()->lightSource;
+}
+
 bool Creature::isAlive () const {
     return true;
 }
@@ -182,9 +186,9 @@ bool Creature::tileCollision (const Coords<int32_t>& oldPosition) {
     Coords<int32_t> tilePosition = getTilePosition();
     Coords<int32_t> worldDimensions = Game::getWorldDimensions();
 
-    for (int32_t x = (int32_t) tilePosition.x - 1; x < (int32_t) tilePosition.x + 2; x++) {
-        for (int32_t y = (int32_t) tilePosition.y - 1; y < (int32_t) tilePosition.y + 2; y++) {
-            if (x >= 0 && y >= 0 && x < (int32_t) worldDimensions.x && y < (int32_t) worldDimensions.y) {
+    for (int32_t x = tilePosition.x - 1; x < tilePosition.x + 2; x++) {
+        for (int32_t y = tilePosition.y - 1; y < tilePosition.y + 2; y++) {
+            if (x >= 0 && y >= 0 && x < worldDimensions.x && y < worldDimensions.y) {
                 Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(x, y));
 
                 if (Collision::check_rect(getCollisionBox(), tileBox)) {

@@ -5,6 +5,7 @@
 #include "game.h"
 #include "game_data.h"
 #include "game_constants.h"
+#include "field_of_view.h"
 
 #include <render.h>
 #include <game_window.h>
@@ -23,27 +24,6 @@ int32_t Game::worldWidth = 0;
 int32_t Game::worldHeight = 0;
 vector<vector<Tile>> Game::tiles;
 vector<Creature> Game::creatures;
-TCODMap* Game::fieldOfViewMap;
-void Game::deleteFieldOfViewMap () {
-    if (fieldOfViewMap != 0) {
-        delete fieldOfViewMap;
-
-        fieldOfViewMap = 0;
-    }
-}
-
-void Game::createFieldOfViewMap () {
-    deleteFieldOfViewMap();
-
-    fieldOfViewMap = new TCODMap(worldWidth, worldHeight);
-
-    for (int32_t x = 0; x < worldWidth; x++) {
-        for (int32_t y = 0; y < worldHeight; y++) {
-            fieldOfViewMap->setProperties(x, y, !tiles[x][y].isOpaque(), !tiles[x][y].isSolid());
-        }
-    }
-}
-
 Coords<int32_t> Game::getWorldDimensions () {
     return Coords<int32_t>(worldWidth, worldHeight);
 }
@@ -68,21 +48,11 @@ Creature& Game::getPlayer () {
     }
 }
 
-void Game::castLight (const Coords<int32_t>& tilePosition) {
-    fieldOfViewMap->computeFov(tilePosition.x, tilePosition.y, Game_Constants::LIGHT_SOURCE_MAXIMUM_RANGE, true,
-                               FOV_BASIC);
-}
-
-bool Game::isInFov (const Coords<int32_t>& tilePosition) {
-    return fieldOfViewMap->isInFov(tilePosition.x, tilePosition.y);
-}
-
 void Game::clear_world () {
     worldWidth = 0;
     worldHeight = 0;
     tiles.clear();
     creatures.clear();
-    deleteFieldOfViewMap();
 }
 
 void Game::generate_world () {
@@ -118,8 +88,6 @@ void Game::generate_world () {
 
         Button_Events::handle_button_event("stop_game", 0);
     }
-
-    createFieldOfViewMap();
 }
 
 void Game::tick () {}
@@ -135,20 +103,26 @@ void Game::movement () {
         creature.movement();
     }
 
-    Coords<int32_t> playerTilePosition = getPlayer().getTilePosition();
+    FieldOfView::prepareToComputeFov(worldWidth, worldHeight, tiles);
 
-    fieldOfViewMap->computeFov(playerTilePosition.x, playerTilePosition.y,
-                               Game_Constants::CREATURE_MAXIMUM_VISIBLE_RANGE, true, FOV_BASIC);
+    Collision_Rect<int32_t> cameraTileBox = getCameraTileBox(Game_Constants::TILE_LIGHT_SOURCE_CHECK_PADDING);
 
-    /*for (int32_t x = 0; x < worldWidth; x++) {
-        for (int32_t y = 0; y < worldHeight; y++) {
-            tiles[x][y].castLight(Coords<int32_t>(x, y));
+    for (int32_t x = cameraTileBox.x; x < cameraTileBox.w; x++) {
+        for (int32_t y = cameraTileBox.y; y < cameraTileBox.h; y++) {
+            if (x >= 0 && y >= 0 && x < worldWidth && y < worldHeight) {
+                if (tiles[x][y].isLightSource()) {
+                    FieldOfView::computeFov(worldWidth, worldHeight, tiles, Coords<int32_t>(x,
+                                                                                            y), Game_Constants::TILE_MAXIMUM_LIGHT_RANGE,
+                                            true);
+                }
+            }
         }
-       }*/
+    }
 
-    for (int32_t x = 0; x < worldWidth; x++) {
-        for (int32_t y = 0; y < worldHeight; y++) {
-            tiles[x][y].explorationCheck(Coords<int32_t>(x, y));
+    for (size_t i = creatures.size() - 1; i >= 0; i--) {
+        if (creatures[i].isLightSource()) {
+            FieldOfView::computeFov(worldWidth, worldHeight, tiles,
+                                    creatures[i].getTilePosition(), Game_Constants::CREATURE_MAXIMUM_LIGHT_RANGE, true);
         }
     }
 }
@@ -160,15 +134,11 @@ void Game::events () {
 void Game::animate () {}
 
 void Game::render () {
-    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
-    int32_t cameraTileX = (int32_t) (Game_Manager::camera.x / (tileBox.w * Game_Manager::camera_zoom));
-    int32_t cameraTileY = (int32_t) (Game_Manager::camera.y / (tileBox.h * Game_Manager::camera_zoom));
-    int32_t endTileX = cameraTileX + (int32_t) (Game_Manager::camera.w / (tileBox.w * Game_Manager::camera_zoom)) + 2;
-    int32_t endTileY = cameraTileY + (int32_t) (Game_Manager::camera.h / (tileBox.h * Game_Manager::camera_zoom)) + 2;
+    Collision_Rect<int32_t> cameraTileBox = getCameraTileBox(0);
 
     // Render each on-screen tile
-    for (int32_t x = cameraTileX; x < endTileX; x++) {
-        for (int32_t y = cameraTileY; y < endTileY; y++) {
+    for (int32_t x = cameraTileBox.x; x < cameraTileBox.w; x++) {
+        for (int32_t y = cameraTileBox.y; y < cameraTileBox.h; y++) {
             if (x >= 0 && y >= 0 && x < worldWidth && y < worldHeight) {
                 tiles[x][y].render(Coords<int32_t>(x, y));
             }
@@ -190,6 +160,17 @@ void Game::update_background () {}
 
 void Game::render_background () {
     Render::render_rectangle(0.0, 0.0, Game_Window::width(), Game_Window::height(), 1.0, "background");
+}
+
+Collision_Rect<int32_t> Game::getCameraTileBox (int32_t padding) {
+    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
+    int32_t cameraTileX = (int32_t) (Game_Manager::camera.x / (tileBox.w * Game_Manager::camera_zoom));
+    int32_t cameraTileY = (int32_t) (Game_Manager::camera.y / (tileBox.h * Game_Manager::camera_zoom));
+    int32_t endTileX = cameraTileX + (int32_t) (Game_Manager::camera.w / (tileBox.w * Game_Manager::camera_zoom)) + 2;
+    int32_t endTileY = cameraTileY + (int32_t) (Game_Manager::camera.h / (tileBox.h * Game_Manager::camera_zoom)) + 2;
+
+    return Collision_Rect<int32_t>(cameraTileX - padding, cameraTileY - padding, endTileX + padding,
+                                   endTileY + padding);
 }
 
 void Game::playerThrust (const string& direction) {

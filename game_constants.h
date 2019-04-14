@@ -25,8 +25,9 @@ class Game_Constants {
     static std::int32_t CREATURE_COLLISION_REDUCTION;
     static std::int32_t CREATURE_COLLISION_STEPS;
     static std::string INITIAL_MAP;
-    static std::int32_t CREATURE_MAXIMUM_VISIBLE_RANGE;
-    static std::int32_t LIGHT_SOURCE_MAXIMUM_RANGE;
+    static std::int32_t TILE_LIGHT_SOURCE_CHECK_PADDING;
+    static std::int32_t CREATURE_MAXIMUM_LIGHT_RANGE;
+    static std::int32_t TILE_MAXIMUM_LIGHT_RANGE;
     /// END SCRIPT-GENERATED CONSTANT DECLARATIONS
 };
 
