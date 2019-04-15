@@ -44,6 +44,7 @@
 </game_constant>
 
 <game_constant>
+	// tiles
 	name:map_padding
 	value:256
 	type:int32_t
@@ -105,7 +106,7 @@
 
 <game_constant>
 	name:display_font
-	value:standard
+	value:game
 	type:string
 </game_constant>
 
@@ -130,7 +131,7 @@
 <game_constant>
 	// tiles
 	name:tile_light_source_check_padding
-	value:8
+	value:16
 	type:int32_t
 </game_constant>
 
@@ -147,16 +148,16 @@
 </game_constant>
 
 <game_constant>
-	name:light_dimming_factor
-	value:2
-	type:int16_t
+	name:minimum_light_reduction
+	value:0.25
+	type:double
 </game_constant>
 
 <game_constant>
 	// tiles
 	// should be within [2, 15]
 	name:creature_light_range
-	value:12
+	value:10
 	type:int32_t
 </game_constant>
 
@@ -164,6 +165,6 @@
 	// tiles
 	// should be within [2, 15]
 	name:tile_light_range
-	value:6
+	value:5
 	type:int32_t
 </game_constant>

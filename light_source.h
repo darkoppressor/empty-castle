@@ -14,19 +14,17 @@ class LightSource {
     protected:
         // ephemeral values:
         // frames
-        std::int32_t flickerCounter;
-        // frames
         std::int32_t glowCounter;
         // a value of -127 indicates that glow has not yet been updated
         std::int32_t glow;
-        std::string lightSourceColor;
 
         void updateLightSource(LightTemplate* lightTemplate);
         std::int32_t getLightRange(std::int32_t baseRange) const;
 
     public:
         LightSource ();
-        std::string getLightSourceColor() const;
+
+        static std::string getColor(LightTemplate* lightTemplate);
 };
 
 #endif

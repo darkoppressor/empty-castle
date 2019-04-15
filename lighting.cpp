@@ -9,17 +9,26 @@
 
 using namespace std;
 
-Color Lighting::getColorDimmedByLightLevel (const string& initialColor, int16_t lightLevel) {
-    return getColorDimmedByLightLevel(Object_Manager::get_color(initialColor), lightLevel);
+Color Lighting::applyLightToColor (const string& initialColor, const BetterColor& lightColor) {
+    return applyLightToColor(Object_Manager::get_color(initialColor), lightColor);
 }
 
-Color Lighting::getColorDimmedByLightLevel (Color* initialColor, int16_t lightLevel) {
-    Color color = Color(initialColor->get_red(), initialColor->get_green(),
-                        initialColor->get_blue(), initialColor->get_alpha());
-    int16_t reduction = (Game_Constants::MAXIMUM_LIGHT_LEVEL - lightLevel) / Game_Constants::LIGHT_DIMMING_FACTOR;
+Color Lighting::applyLightToColor (Color* initialColor, const BetterColor& lightColor) {
+    BetterColor baseColor(initialColor->get_red(), initialColor->get_green(),
+                          initialColor->get_blue(), BetterColor::MINIMUM_CHANNEL_VALUE);
 
-    color.set((int16_t) (color.get_red() - reduction), (int16_t) (color.get_green() - reduction),
-              (int16_t) (color.get_blue() - reduction), (int16_t) color.get_alpha());
+    if (lightColor.getAlpha() > 0) {
+        baseColor.hdrAdd(lightColor.getRed(), lightColor.getGreen(), lightColor.getBlue(), lightColor.getAlpha());
 
-    return color;
+        baseColor = baseColor.getHdrRescaled();
+    }
+
+    double reductionFactor = (double) lightColor.getAlpha() / (double) Game_Constants::MAXIMUM_LIGHT_LEVEL;
+
+    if (reductionFactor < Game_Constants::MINIMUM_LIGHT_REDUCTION) {
+        reductionFactor = Game_Constants::MINIMUM_LIGHT_REDUCTION;
+    }
+
+    return Color(baseColor.getRed() * reductionFactor, baseColor.getGreen() * reductionFactor,
+                 baseColor.getBlue() * reductionFactor, initialColor->get_alpha());
 }

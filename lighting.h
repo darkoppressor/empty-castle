@@ -5,19 +5,16 @@
 #ifndef lighting_h
 #define lighting_h
 
+#include "better_color.h"
+
 #include <color.h>
 
 #include <string>
-#include <cstdint>
 
 class Lighting {
     public:
-        // lightLevel => [MINIMUM_LIGHT_LEVEL, MAXIMUM_LIGHT_LEVEL], where MAXIMUM_LIGHT_LEVEL is fully lit and
-        // MINIMUM_LIGHT_LEVEL is fully dark
-        static Color getColorDimmedByLightLevel(const std::string& initialColor, std::int16_t lightLevel);
-        // lightLevel => [MINIMUM_LIGHT_LEVEL, MAXIMUM_LIGHT_LEVEL], where MAXIMUM_LIGHT_LEVEL is fully lit and
-        // MINIMUM_LIGHT_LEVEL is fully dark
-        static Color getColorDimmedByLightLevel(Color* initialColor, std::int16_t lightLevel);
+        static Color applyLightToColor(const std::string& initialColor, const BetterColor& lightColor);
+        static Color applyLightToColor(Color* initialColor, const BetterColor& lightColor);
 };
 
 #endif

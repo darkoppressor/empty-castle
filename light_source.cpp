@@ -9,16 +9,6 @@ using namespace std;
 
 void LightSource::updateLightSource (LightTemplate* lightTemplate) {
     if (lightTemplate != 0) {
-        if (lightTemplate->flickerRateMin < 0 || lightTemplate->flickerRateMax < 0) {
-            if (lightSourceColor.length() == 0) {
-                lightSourceColor = lightTemplate->getRandomColor();
-            }
-        } else if (--flickerCounter < 0) {
-            flickerCounter = Game::getRng().random_range(lightTemplate->flickerRateMin, lightTemplate->flickerRateMax);
-
-            lightSourceColor = lightTemplate->getRandomColor();
-        }
-
         if (lightTemplate->glowRateMin < 0 || lightTemplate->glowRateMax < 0) {
             if (glow == -127) {
                 glow = lightTemplate->getRandomGlow();
@@ -36,12 +26,10 @@ int32_t LightSource::getLightRange (int32_t baseRange) const {
 }
 
 LightSource::LightSource () {
-    flickerCounter = 0;
     glowCounter = 0;
     glow = -127;
-    lightSourceColor = "";
 }
 
-string LightSource::getLightSourceColor () const {
-    return lightSourceColor;
+string LightSource::getColor (LightTemplate* lightTemplate) {
+    return lightTemplate != 0 ? lightTemplate->color : "white";
 }

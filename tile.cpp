@@ -33,8 +33,6 @@ Tile::Tile () {
     opaque = Game_Constants::MAP_CHARACTER_ERROR_OPAQUE;
     light = "";
     explored = false;
-    lightLevel = Game_Constants::MINIMUM_LIGHT_LEVEL;
-    lightColor = "";
 }
 
 void Tile::readFromMap (const vector<MapCharacter>& mapCharacters, unsigned char character) {
@@ -102,26 +100,35 @@ int32_t Tile::getLightRange () const {
     return LightSource::getLightRange(Game_Constants::TILE_LIGHT_RANGE);
 }
 
-int16_t Tile::getLightLevel () const {
-    return lightLevel;
-}
-
-void Tile::setLightLevel (int16_t lightLevel) {
-    this->lightLevel = lightLevel;
-}
-
-void Tile::applyLight (int16_t lightLevel, const string& color) {
-    if (lightLevel > this->lightLevel) {
-        this->lightLevel = lightLevel;
-    }
-
-    if (color.length() > 0 && (lightLevel > this->lightLevel || lightColor.length() == 0)) {
-        lightColor = color;
-    }
+bool Tile::isLit () const {
+    return lightColor.getAlpha() > 0;
 }
 
 void Tile::clearLightColor () {
-    lightColor = "";
+    appliedLightSources.clear();
+    lightColor.clear();
+}
+
+void Tile::applyLight (uint32_t lightSourceId, int16_t lightLevel, const string& colorName) {
+    if (!appliedLightSources.count(lightSourceId) && lightLevel > Game_Constants::MINIMUM_LIGHT_LEVEL &&
+        colorName.length() > 0) {
+        Color* color = Object_Manager::get_color(colorName);
+
+        if (color != 0) {
+            appliedLightSources.emplace(lightSourceId);
+
+            double lightLevelFactor = (double) lightLevel / (double) Game_Constants::MAXIMUM_LIGHT_LEVEL;
+
+            if (!isLit()) {
+                lightColor.set(color->get_red() * lightLevelFactor,
+                               color->get_green() * lightLevelFactor, color->get_blue() * lightLevelFactor, lightLevel);
+            } else {
+                lightColor.hdrAdd(color->get_red() * lightLevelFactor,
+                                  color->get_green() * lightLevelFactor,
+                                  color->get_blue() * lightLevelFactor, lightLevel);
+            }
+        }
+    }
 }
 
 void Tile::render (const Coords<int32_t>& tilePosition) const {
@@ -131,26 +138,30 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
     if (Collision::check_rect(boxRender * Game_Manager::camera_zoom, Game_Manager::camera)) {
         if (explored) {
             Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
-            string backgroundColorToUse = lightColor;
 
-            if (backgroundColorToUse.length() == 0) {
-                backgroundColorToUse = backgroundColor;
-            }
+            if (backgroundColor.length() > 0 && backgroundColor != "background") {
+                Color finalBackgroundColor;
+                Color* backgroundColorPtr = Object_Manager::get_color(backgroundColor);
 
-            if (backgroundColorToUse.length() > 0 && backgroundColorToUse != "background") {
-                Color modifiedBackgroundColor = Lighting::getColorDimmedByLightLevel(backgroundColorToUse, lightLevel);
+                if (isLit()) {
+                    finalBackgroundColor = Lighting::applyLightToColor(backgroundColorPtr, lightColor);
+                } else {
+                    finalBackgroundColor.set(backgroundColorPtr->get_red(),
+                                             backgroundColorPtr->get_green(), backgroundColorPtr->get_blue(),
+                                             backgroundColorPtr->get_alpha());
+                }
 
                 Render::render_rectangle(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
                                          box.y * Game_Manager::camera_zoom - Game_Manager::camera.y,
                                          box.w * Game_Manager::camera_zoom, box.h * Game_Manager::camera_zoom, 1.0,
-                                         &modifiedBackgroundColor);
+                                         &finalBackgroundColor);
             }
 
-            Color modifiedCharacterColor = Lighting::getColorDimmedByLightLevel(characterColor, lightLevel);
+            Color finalCharacterColor = Lighting::applyLightToColor(characterColor, lightColor);
 
             font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
                        box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
-                                                                                          character), &modifiedCharacterColor, 1.0, Game_Manager::camera_zoom,
+                                                                                          character), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
                        Game_Manager::camera_zoom);
         }
     }

@@ -9,24 +9,15 @@ using namespace std;
 
 LightTemplate::LightTemplate () {
     name = "";
-    flickerRateMin = -1;
-    flickerRateMax = -1;
+    color = "white";
     glowRateMin = -1;
     glowRateMax = -1;
 }
 
-string LightTemplate::getRandomColor () const {
-    if (colors.size() > 0) {
-        return colors[Game::getRng().random_range(0, colors.size() - 1)];
-    } else {
-        return "";
-    }
-}
-
 int32_t LightTemplate::getRandomGlow () const {
-    int32_t glow = Game::getRng().random_range(0, 1);
+    int32_t glow = Game::getRng().random_range(0u, 1u);
 
-    if (Game::getRng().random_range(0, 1) == 0) {
+    if (Game::getRng().random_range(0u, 1u) == 0u) {
         return glow;
     } else {
         return -glow;

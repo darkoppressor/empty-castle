@@ -3,6 +3,7 @@ project(empty-castle)
 
 set(SOURCE_FILES
 android_native_functions.cpp
+better_color.cpp
 button_events_game.cpp
 console_commands_defs.cpp
 creature.cpp
@@ -12,6 +13,7 @@ dev_info.cpp
 directories_defs.cpp
 engine_glue.cpp
 field_of_view.cpp
+field_of_view_source.cpp
 game.cpp
 game.rc
 game_constants.cpp

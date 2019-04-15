@@ -115,15 +115,19 @@ void Game::movement () {
 
     FieldOfView::prepareToComputeFov(cameraTileBox, worldWidth, worldHeight, tiles);
 
+    uint32_t lightSourceId = 0;
+
     for (int32_t x = cameraTileBox.x; x < cameraTileBox.w; x++) {
         for (int32_t y = cameraTileBox.y; y < cameraTileBox.h; y++) {
             if (x >= 0 && y >= 0 && x < worldWidth && y < worldHeight) {
                 LightTemplate* light = tiles[x][y].updateLightSource();
 
                 if (light != 0) {
-                    FieldOfView::computeFov(worldWidth, worldHeight, tiles, Coords<int32_t>(x,
-                                                                                            y),
-                                            tiles[x][y].getLightSourceColor(), tiles[x][y].getLightRange(), true);
+                    FieldOfView::computeFov(worldWidth, worldHeight, tiles,
+                                            FieldOfViewSource(Coords<int32_t>(x, y), tiles[x][y].getColor(light),
+                                                              lightSourceId,
+                                                              tiles[x][y].getLightRange()), true);
+                    lightSourceId++;
                 }
             }
         }
@@ -134,8 +138,10 @@ void Game::movement () {
 
         if (light != 0) {
             FieldOfView::computeFov(worldWidth, worldHeight, tiles,
-                                    creature.getTilePosition(), creature.getLightSourceColor(),
-                                    creature.getLightRange(), true);
+                                    FieldOfViewSource(creature.getTilePosition(), creature.getColor(light),
+                                                      lightSourceId,
+                                                      creature.getLightRange()), true);
+            lightSourceId++;
         }
     }
 }

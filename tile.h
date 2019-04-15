@@ -8,12 +8,14 @@
 #include "map_character.h"
 #include "light_template.h"
 #include "light_source.h"
+#include "better_color.h"
 
 #include <collision.h>
 
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <unordered_set>
 
 class Tile: public LightSource {
     private:
@@ -30,8 +32,9 @@ class Tile: public LightSource {
         bool explored;
 
         // ephemeral values:
-        std::int16_t lightLevel;
-        std::string lightColor;
+        std::unordered_set<uint32_t> appliedLightSources;
+        // alpha is used for brightness
+        BetterColor lightColor;
 
         // getters:
         LightTemplate* getLightTemplate() const;
@@ -56,11 +59,10 @@ class Tile: public LightSource {
         LightTemplate* updateLightSource();
         std::int32_t getLightRange() const;
 
-        // lighting
-        std::int16_t getLightLevel() const;
-        void setLightLevel(std::int16_t lightLevel);
-        void applyLight(std::int16_t lightLevel, const std::string& color);
+        // lighting:
+        bool isLit() const;
         void clearLightColor();
+        void applyLight(std::uint32_t lightSourceId, std::int16_t lightLevel, const std::string& colorName);
 
         void render(const Coords<std::int32_t>& tilePosition) const;
 };

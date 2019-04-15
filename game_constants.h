@@ -28,7 +28,7 @@ class Game_Constants {
     static std::int32_t TILE_LIGHT_SOURCE_CHECK_PADDING;
     static std::int16_t MAXIMUM_LIGHT_LEVEL;
     static std::int16_t MINIMUM_LIGHT_LEVEL;
-    static std::int16_t LIGHT_DIMMING_FACTOR;
+    static double MINIMUM_LIGHT_REDUCTION;
     static std::int32_t CREATURE_LIGHT_RANGE;
     static std::int32_t TILE_LIGHT_RANGE;
     /// END SCRIPT-GENERATED CONSTANT DECLARATIONS

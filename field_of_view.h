@@ -7,6 +7,7 @@
 #define field_of_view_h
 
 #include "tile.h"
+#include "field_of_view_source.h"
 
 #include <coords.h>
 #include <collision.h>
@@ -21,19 +22,18 @@ class FieldOfView {
         static std::int32_t minimum(std::int32_t a, std::int32_t b);
         static std::int16_t getLightLevel(std::int32_t radius, std::int32_t maximumRadius);
         static void castRay(std::int32_t worldWidth, std::int32_t worldHeight, std::vector<std::vector<Tile>>& tiles,
-                            const std::string& lightColor, std::int32_t xo, std::int32_t yo, std::int32_t xd,
+                            const FieldOfViewSource& source, std::int32_t xo, std::int32_t yo, std::int32_t xd,
                             std::int32_t yd, std::int32_t r2, bool lightWalls);
         static void postProcess(std::int32_t worldWidth, std::int32_t worldHeight,
-                                std::vector<std::vector<Tile>>& tiles, const Coords<std::int32_t>& sourcePosition,
-                                const std::string& lightColor, std::int32_t r2, std::int32_t x0, std::int32_t y0,
-                                std::int32_t x1, std::int32_t y1, std::int32_t dx, std::int32_t dy);
+                                std::vector<std::vector<Tile>>& tiles, const FieldOfViewSource& source, std::int32_t r2,
+                                std::int32_t x0, std::int32_t y0, std::int32_t x1, std::int32_t y1, std::int32_t dx,
+                                std::int32_t dy);
 
     public:
         static void prepareToComputeFov(const Collision_Rect<std::int32_t>& cameraTileBox, std::int32_t worldWidth,
                                         std::int32_t worldHeight, std::vector<std::vector<Tile>>& tiles);
         static void computeFov(std::int32_t worldWidth, std::int32_t worldHeight, std::vector<std::vector<Tile>>& tiles,
-                               const Coords<std::int32_t>& sourcePosition, const std::string& lightColor,
-                               std::int32_t maxRadius, bool lightWalls);
+                               const FieldOfViewSource& source, bool lightWalls);
 };
 
 #endif

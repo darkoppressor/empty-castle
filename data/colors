@@ -5,6 +5,8 @@
 	rgb:7,7,7
 </color>
 
+// Materials:
+
 <color>
 	name:stone
 	rgb:50,47,50
@@ -15,9 +17,18 @@
 	rgb:125,103,86
 </color>
 
+// Creatures:
+
 <color>
 	name:player
 	rgb:164,155,134
+</color>
+
+// Lights:
+
+<color>
+	name:light_player
+	rgb:7,7,7
 </color>
 
 <color>

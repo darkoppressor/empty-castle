@@ -29,83 +29,102 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+/* This file was taken from libtcod version 1.11.2 and modified by Kevin Wells */
+
 #include "bresenham.h"
 
 extern "C" {
-	/**
-	 *  \file bresenham_c.c
-	 *  \brief bresenham line drawing
-	 */
-	/**
-	 *  \brief Initialize a TCOD_bresenham_data_t struct.
-	 *
-	 *  \param xFrom The starting x position.
-	 *  \param yFrom The starting y position.
-	 *  \param xTo The ending x position.
-	 *  \param yTo The ending y position.
-	 *  \param data Pointer to a TCOD_bresenham_data_t struct.
-	 *
-	 *  After calling this function you use TCOD_line_step_mt to iterate
-	 *  over the individual points on the line.
-	 */
-	void TCOD_line_init_mt(int xFrom, int yFrom, int xTo, int yTo, TCOD_bresenham_data_t *data) {
-		data->origx=xFrom;
-		data->origy=yFrom;
-		data->destx=xTo;
-		data->desty=yTo;
-		data->deltax=xTo - xFrom;
-		data->deltay=yTo - yFrom;
-		if ( data->deltax > 0 ) {
-			data->stepx=1;
-		} else if ( data->deltax < 0 ){
-			data->stepx=-1;
-		} else data->stepx=0;
-		if ( data->deltay > 0 ) {
-			data->stepy=1;
-		} else if ( data->deltay < 0 ){
-			data->stepy=-1;
-		} else data->stepy = 0;
-		if ( data->stepx*data->deltax > data->stepy*data->deltay ) {
-			data->e = data->stepx*data->deltax;
-			data->deltax *= 2;
-			data->deltay *= 2;
-		} else {
-			data->e = data->stepy*data->deltay;
-			data->deltax *= 2;
-			data->deltay *= 2;
-		}
-	}
-	/**
-	 *  \brief Get the next point on a line, returns true once the line has ended.
-	 *
-	 *  \param xCur An int pointer to fill with the next x position.
-	 *  \param yCur An int pointer to fill with the next y position.
-	 *  \param data Pointer to a initialized TCOD_bresenham_data_t struct.
-	 *  \return true after the ending point has been reached.
-	 *
-	 *  The starting point is excluded by this function.
-	 *  After the ending point is reached, the next call will return true.
-	 */
-	bool TCOD_line_step_mt(int *xCur, int *yCur, TCOD_bresenham_data_t *data) {
-		if ( data->stepx*data->deltax > data->stepy*data->deltay ) {
-			if ( data->origx == data->destx ) return true;
-			data->origx+=data->stepx;
-			data->e -= data->stepy*data->deltay;
-			if ( data->e < 0) {
-				data->origy+=data->stepy;
-				data->e+=data->stepx*data->deltax;
-			}
-		} else {
-			if ( data->origy == data->desty ) return true;
-			data->origy+=data->stepy;
-			data->e -= data->stepx*data->deltax;
-			if ( data->e < 0) {
-				data->origx+=data->stepx;
-				data->e+=data->stepy*data->deltay;
-			}
-		}
-		*xCur=data->origx;
-		*yCur=data->origy;
-		return false;
-	}
+    /**
+     *  \file bresenham_c.c
+     *  \brief bresenham line drawing
+     */
+    /**
+     *  \brief Initialize a TCOD_bresenham_data_t struct.
+     *
+     *  \param xFrom The starting x position.
+     *  \param yFrom The starting y position.
+     *  \param xTo The ending x position.
+     *  \param yTo The ending y position.
+     *  \param data Pointer to a TCOD_bresenham_data_t struct.
+     *
+     *  After calling this function you use TCOD_line_step_mt to iterate
+     *  over the individual points on the line.
+     */
+    void TCOD_line_init_mt (int xFrom, int yFrom, int xTo, int yTo, TCOD_bresenham_data_t* data) {
+        data->origx = xFrom;
+        data->origy = yFrom;
+        data->destx = xTo;
+        data->desty = yTo;
+        data->deltax = xTo - xFrom;
+        data->deltay = yTo - yFrom;
+
+        if (data->deltax > 0) {
+            data->stepx = 1;
+        } else if (data->deltax < 0) {
+            data->stepx = -1;
+        } else {
+            data->stepx = 0;
+        }
+
+        if (data->deltay > 0) {
+            data->stepy = 1;
+        } else if (data->deltay < 0) {
+            data->stepy = -1;
+        } else {
+            data->stepy = 0;
+        }
+
+        if (data->stepx * data->deltax > data->stepy * data->deltay) {
+            data->e = data->stepx * data->deltax;
+            data->deltax *= 2;
+            data->deltay *= 2;
+        } else {
+            data->e = data->stepy * data->deltay;
+            data->deltax *= 2;
+            data->deltay *= 2;
+        }
+    }
+    /**
+     *  \brief Get the next point on a line, returns true once the line has ended.
+     *
+     *  \param xCur An int pointer to fill with the next x position.
+     *  \param yCur An int pointer to fill with the next y position.
+     *  \param data Pointer to a initialized TCOD_bresenham_data_t struct.
+     *  \return true after the ending point has been reached.
+     *
+     *  The starting point is excluded by this function.
+     *  After the ending point is reached, the next call will return true.
+     */
+    bool TCOD_line_step_mt (int* xCur, int* yCur, TCOD_bresenham_data_t* data) {
+        if (data->stepx * data->deltax > data->stepy * data->deltay) {
+            if (data->origx == data->destx) {
+                return true;
+            }
+
+            data->origx += data->stepx;
+            data->e -= data->stepy * data->deltay;
+
+            if (data->e < 0) {
+                data->origy += data->stepy;
+                data->e += data->stepx * data->deltax;
+            }
+        } else {
+            if (data->origy == data->desty) {
+                return true;
+            }
+
+            data->origy += data->stepy;
+            data->e -= data->stepx * data->deltax;
+
+            if (data->e < 0) {
+                data->origx += data->stepx;
+                data->e += data->stepy * data->deltay;
+            }
+        }
+
+        *xCur = data->origx;
+        *yCur = data->origy;
+
+        return false;
+    }
 }

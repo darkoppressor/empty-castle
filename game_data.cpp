@@ -223,22 +223,12 @@ void Game_Data::loadLightTemplate (File_IO_Load* load) {
 
         if (Data_Reader::check_prefix(line, "name:")) {
             lightTemplates.back().name = line;
-        } else if (Data_Reader::check_prefix(line, "flickerRateMin:")) {
-            lightTemplates.back().flickerRateMin = Strings::string_to_long(line);
-        } else if (Data_Reader::check_prefix(line, "flickerRateMax:")) {
-            lightTemplates.back().flickerRateMax = Strings::string_to_long(line);
+        } else if (Data_Reader::check_prefix(line, "color:")) {
+            lightTemplates.back().color = line;
         } else if (Data_Reader::check_prefix(line, "glowRateMin:")) {
             lightTemplates.back().glowRateMin = Strings::string_to_long(line);
         } else if (Data_Reader::check_prefix(line, "glowRateMax:")) {
             lightTemplates.back().glowRateMax = Strings::string_to_long(line);
-        } else if (Data_Reader::check_prefix(line, "colors:")) {
-            vector<string> colors;
-
-            boost::algorithm::split(colors, line, boost::algorithm::is_any_of(","));
-
-            for (const auto& color : colors) {
-                lightTemplates.back().colors.push_back(color);
-            }
         }
     }
 }

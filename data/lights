@@ -1,10 +1,11 @@
 <light>
     name:player
+    color:light_player
 </light>
 
 <light>
     name:torch
+    color:torch
     glowRateMin:120
     glowRateMax:240
-    colors:torch
 </light>
