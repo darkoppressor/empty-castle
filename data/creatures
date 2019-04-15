@@ -1,6 +1,6 @@
 <creature>
     name:player
-    character:@
+    character:'@'
     characterColor:player
     moveForce:3072
     mass:70

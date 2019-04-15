@@ -9,4 +9,4 @@ Player can "use" them to toggle their light state
 
 Creatures should be affected by lighting just like tiles
 
-Light color should have a separate range from fov range
+Consider issue of diagonal movement being slower

@@ -74,7 +74,14 @@ size_t Game_Data::loadMapCharacter (vector<string>& lines, size_t lineIndex) {
         if (Data_Reader::check_prefix(line, "character:")) {
             maps.back().mapCharacters.back().character = line[0];
         } else if (Data_Reader::check_prefix(line, "displayCharacter:")) {
-            maps.back().mapCharacters.back().displayCharacter = line[0];
+            if (boost::algorithm::starts_with(line, "'") && boost::algorithm::ends_with(line, "'")) {
+                boost::algorithm::erase_first(line, "'");
+                boost::algorithm::erase_last(line, "'");
+                maps.back().mapCharacters.back().displayCharacter = line[0];
+            } else {
+                maps.back().mapCharacters.back().displayCharacter = (unsigned char) Strings::string_to_unsigned_long(
+                    line);
+            }
         } else if (Data_Reader::check_prefix(line, "characterColor:")) {
             maps.back().mapCharacters.back().characterColor = line;
         } else if (Data_Reader::check_prefix(line, "backgroundColor:")) {
@@ -180,7 +187,13 @@ void Game_Data::loadCreatureTemplate (File_IO_Load* load) {
         if (Data_Reader::check_prefix(line, "name:")) {
             creatureTemplates.back().name = line;
         } else if (Data_Reader::check_prefix(line, "character:")) {
-            creatureTemplates.back().character = line[0];
+            if (boost::algorithm::starts_with(line, "'") && boost::algorithm::ends_with(line, "'")) {
+                boost::algorithm::erase_first(line, "'");
+                boost::algorithm::erase_last(line, "'");
+                creatureTemplates.back().character = line[0];
+            } else {
+                creatureTemplates.back().character = (unsigned char) Strings::string_to_unsigned_long(line);
+            }
         } else if (Data_Reader::check_prefix(line, "characterColor:")) {
             creatureTemplates.back().characterColor = line;
         } else if (Data_Reader::check_prefix(line, "moveForce:")) {
