@@ -2,8 +2,8 @@
     name:player
     character:@
     characterColor:player
-    moveForce:2048
+    moveForce:3072
     mass:70
-    maximumSpeed:96
+    maximumSpeed:144
     light:player
 </creature>
