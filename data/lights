@@ -1,11 +1,31 @@
 <light>
     name:player
     color:light_player
+    range:10
 </light>
 
 <light>
     name:torch
     color:torch
+    range:5
     glowRateMin:120
     glowRateMax:240
+</light>
+
+<light>
+    name:stainedGlassBlue
+    color:text_input_blue
+    range:15
+</light>
+
+<light>
+    name:stainedGlassRed
+    color:text_input_red
+    range:15
+</light>
+
+<light>
+    name:stainedGlassGreen
+    color:text_input_green
+    range:15
 </light>

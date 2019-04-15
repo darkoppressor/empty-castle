@@ -155,16 +155,16 @@
 
 <game_constant>
 	// tiles
-	// should be within [2, 15]
-	name:creature_light_range
-	value:10
+	// inclusive
+	name:minimum_light_range
+	value:2
 	type:int32_t
 </game_constant>
 
 <game_constant>
 	// tiles
-	// should be within [2, 15]
-	name:tile_light_range
-	value:5
+	// inclusive
+	name:maximum_light_range
+	value:15
 	type:int32_t
 </game_constant>

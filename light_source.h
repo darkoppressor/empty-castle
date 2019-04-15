@@ -19,7 +19,7 @@ class LightSource {
         std::int32_t glow;
 
         void updateLightSource(LightTemplate* lightTemplate);
-        std::int32_t getLightRange(std::int32_t baseRange) const;
+        std::int32_t getLightRange(LightTemplate* lightTemplate) const;
 
     public:
         LightSource ();

@@ -4,12 +4,14 @@
 
 #include "light_template.h"
 #include "game.h"
+#include "game_constants.h"
 
 using namespace std;
 
 LightTemplate::LightTemplate () {
     name = "";
     color = "white";
+    range = Game_Constants::MINIMUM_LIGHT_RANGE;
     glowRateMin = -1;
     glowRateMax = -1;
 }

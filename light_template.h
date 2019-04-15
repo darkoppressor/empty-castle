@@ -11,6 +11,9 @@ class LightTemplate {
     public:
         std::string name;
         std::string color;
+        // tiles
+        // should be within [2, 15]
+        std::int32_t range;
         // frames
         // a value < 0 disables glowing
         std::int32_t glowRateMin;

@@ -90,7 +90,7 @@ LightTemplate* Creature::updateLightSource () {
 }
 
 int32_t Creature::getLightRange () const {
-    return LightSource::getLightRange(Game_Constants::CREATURE_LIGHT_RANGE);
+    return LightSource::getLightRange(getLightTemplate());
 }
 
 void Creature::setThrustAngle (const string& direction) {

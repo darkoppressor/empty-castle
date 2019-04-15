@@ -97,7 +97,7 @@ LightTemplate* Tile::updateLightSource () {
 }
 
 int32_t Tile::getLightRange () const {
-    return LightSource::getLightRange(Game_Constants::TILE_LIGHT_RANGE);
+    return LightSource::getLightRange(getLightTemplate());
 }
 
 bool Tile::isLit () const {

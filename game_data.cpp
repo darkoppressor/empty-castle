@@ -238,6 +238,8 @@ void Game_Data::loadLightTemplate (File_IO_Load* load) {
             lightTemplates.back().name = line;
         } else if (Data_Reader::check_prefix(line, "color:")) {
             lightTemplates.back().color = line;
+        } else if (Data_Reader::check_prefix(line, "range:")) {
+            lightTemplates.back().range = Strings::string_to_long(line);
         } else if (Data_Reader::check_prefix(line, "glowRateMin:")) {
             lightTemplates.back().glowRateMin = Strings::string_to_long(line);
         } else if (Data_Reader::check_prefix(line, "glowRateMax:")) {

@@ -4,6 +4,7 @@
 
 #include "light_source.h"
 #include "game.h"
+#include "game_constants.h"
 
 using namespace std;
 
@@ -21,8 +22,9 @@ void LightSource::updateLightSource (LightTemplate* lightTemplate) {
     }
 }
 
-int32_t LightSource::getLightRange (int32_t baseRange) const {
-    return baseRange + (glow != -127 ? glow : 0);
+int32_t LightSource::getLightRange (LightTemplate* lightTemplate) const {
+    return (lightTemplate !=
+            0 ? lightTemplate->range : Game_Constants::MINIMUM_LIGHT_RANGE) + (glow != -127 ? glow : 0);
 }
 
 LightSource::LightSource () {
