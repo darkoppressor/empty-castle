@@ -8,6 +8,7 @@
 #include "creature_template.h"
 #include "light_template.h"
 #include "light_source.h"
+#include "better_color.h"
 
 #include <coords.h>
 #include <int_vector.h>
@@ -23,6 +24,10 @@ class Creature: public LightSource {
         Coords<std::int32_t> position;
         Int_Vector velocity;
         Int_Vector force;
+
+        // ephemeral values:
+        // alpha is used for brightness
+        BetterColor lightColor;
 
         // type getters:
         CreatureTemplate* getType() const;
@@ -45,9 +50,14 @@ class Creature: public LightSource {
 
         bool isAlive() const;
 
+        // light source:
         // Returns the light template for convenience
         LightTemplate* updateLightSource();
         std::int32_t getLightRange() const;
+
+        // lighting:
+        bool isLit() const;
+        void applyLight();
 
         void setThrustAngle(const std::string& direction);
         void brake();

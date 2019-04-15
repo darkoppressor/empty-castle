@@ -55,12 +55,14 @@ class Tile: public LightSource {
 
         void setExplored(bool explored);
 
+        // light source:
         // Returns the light template for convenience
         LightTemplate* updateLightSource();
         std::int32_t getLightRange() const;
 
         // lighting:
         bool isLit() const;
+        BetterColor getLightColor() const;
         void clearLightColor();
         void applyLight(std::uint32_t lightSourceId, std::int16_t lightLevel, const std::string& colorName);
 

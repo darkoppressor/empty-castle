@@ -31,6 +31,8 @@ int16_t Game_Constants::MINIMUM_LIGHT_LEVEL=0;
 double Game_Constants::MINIMUM_LIGHT_REDUCTION=0.0;
 int32_t Game_Constants::MINIMUM_LIGHT_RANGE=0;
 int32_t Game_Constants::MAXIMUM_LIGHT_RANGE=0;
+int32_t Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE=0;
+double Game_Constants::CREATURE_LIGHT_LEVEL_MAXIMUM=0.0;
 /// END SCRIPT-GENERATED CONSTANT INITIALIZATIONS
 
 void Game_Constants_Loader::set_game_constant (string name, string value) {
@@ -102,6 +104,12 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     }
     else if(name=="maximum_light_range"){
         Game_Constants::MAXIMUM_LIGHT_RANGE=Strings::string_to_long(value);
+    }
+    else if(name=="creature_light_receive_range"){
+        Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE=Strings::string_to_long(value);
+    }
+    else if(name=="creature_light_level_maximum"){
+        Game_Constants::CREATURE_LIGHT_LEVEL_MAXIMUM=Strings::string_to_double(value);
     }
     /// END SCRIPT-GENERATED CONSTANT SETUP
 }

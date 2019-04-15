@@ -6,6 +6,7 @@
 #include "game_constants.h"
 #include "game_data.h"
 #include "game.h"
+#include "lighting.h"
 
 #include <font.h>
 #include <object_manager.h>
@@ -91,6 +92,49 @@ LightTemplate* Creature::updateLightSource () {
 
 int32_t Creature::getLightRange () const {
     return LightSource::getLightRange(getLightTemplate());
+}
+
+bool Creature::isLit () const {
+    return lightColor.getAlpha() > 0;
+}
+
+void Creature::applyLight () {
+    lightColor.clear();
+
+    const vector<vector<Tile>>& tiles = Game::getTiles();
+    Coords<int32_t> tilePosition = getTilePosition();
+    Coords<int32_t> worldDimensions = Game::getWorldDimensions();
+
+    for (int32_t x = tilePosition.x - Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE;
+         x < tilePosition.x + Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE + 1; x++) {
+        for (int32_t y = tilePosition.y - Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE;
+             y < tilePosition.y + Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE + 1; y++) {
+            if (x >= 0 && y >= 0 && x < worldDimensions.x && y < worldDimensions.y) {
+                if (tiles[x][y].isLit()) {
+                    double lightLevelFactor = (double) tiles[x][y].getLightColor().getAlpha() /
+                                              (double) Game_Constants::MAXIMUM_LIGHT_LEVEL;
+
+                    if (lightLevelFactor > Game_Constants::CREATURE_LIGHT_LEVEL_MAXIMUM) {
+                        lightLevelFactor = Game_Constants::CREATURE_LIGHT_LEVEL_MAXIMUM;
+                    }
+
+                    if (!isLit()) {
+                        lightColor.set(
+                            tiles[x][y].getLightColor().getRed() * lightLevelFactor,
+                            tiles[x][y].getLightColor().getGreen() * lightLevelFactor,
+                            tiles[x][y].getLightColor().getBlue() * lightLevelFactor,
+                            tiles[x][y].getLightColor().getAlpha());
+                    } else {
+                        lightColor.hdrAdd(
+                            tiles[x][y].getLightColor().getRed() * lightLevelFactor,
+                            tiles[x][y].getLightColor().getGreen() * lightLevelFactor,
+                            tiles[x][y].getLightColor().getBlue() * lightLevelFactor,
+                            tiles[x][y].getLightColor().getAlpha());
+                    }
+                }
+            }
+        }
+    }
 }
 
 void Creature::setThrustAngle (const string& direction) {
@@ -231,10 +275,11 @@ void Creature::render () const {
 
     if (Collision::check_rect(boxRender * Game_Manager::camera_zoom, Game_Manager::camera)) {
         Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
+        Color finalCharacterColor = Lighting::applyLightToColor(getCharacterColor(), lightColor);
 
         font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
                    box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
-                                                                                      getCharacter()),
-                   getCharacterColor(), 1.0, Game_Manager::camera_zoom, Game_Manager::camera_zoom);
+                                                                                      getCharacter()), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
+                   Game_Manager::camera_zoom);
     }
 }

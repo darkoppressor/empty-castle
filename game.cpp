@@ -144,6 +144,10 @@ void Game::movement () {
             lightSourceId++;
         }
     }
+
+    for (auto& creature : creatures) {
+        creature.applyLight();
+    }
 }
 
 void Game::events () {

@@ -104,6 +104,10 @@ bool Tile::isLit () const {
     return lightColor.getAlpha() > 0;
 }
 
+BetterColor Tile::getLightColor () const {
+    return lightColor;
+}
+
 void Tile::clearLightColor () {
     appliedLightSources.clear();
     lightColor.clear();

@@ -168,3 +168,16 @@
 	value:15
 	type:int32_t
 </game_constant>
+
+<game_constant>
+	// tiles
+	name:creature_light_receive_range
+	value:1
+	type:int32_t
+</game_constant>
+
+<game_constant>
+	name:creature_light_level_maximum
+	value:0.5
+	type:double
+</game_constant>

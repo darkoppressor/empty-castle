@@ -7,6 +7,4 @@ Player light radius becomes exception, depends on equipped light item
 Tile light items have concept of being on or off
 Player can "use" them to toggle their light state
 
-Creatures should be affected by lighting just like tiles
-
 Consider issue of diagonal movement being slower
