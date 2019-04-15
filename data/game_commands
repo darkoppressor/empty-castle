@@ -107,3 +107,23 @@
 	controller_button:
 	controller_axis:leftx
 </game_command>
+
+<game_command>
+	name:text_parser
+	title:Recite
+	description:Toggle the recitation interface
+	developer:false
+	key:Return
+	controller_button:
+	controller_axis:
+</game_command>
+
+<game_command>
+	name:text_parser_close
+	title:Close recitation interface
+	description:Close the recitation interface
+	developer:false
+	key:Left Shift
+	controller_button:
+	controller_axis:
+</game_command>

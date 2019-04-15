@@ -25,6 +25,7 @@ int32_t Game::worldWidth = 0;
 int32_t Game::worldHeight = 0;
 vector<vector<Tile>> Game::tiles;
 vector<Creature> Game::creatures;
+TextParser Game::textParser;
 RNG& Game::getRng () {
     return rng;
 }
@@ -53,11 +54,20 @@ Creature& Game::getPlayer () {
     }
 }
 
+void Game::toggleTextParser (bool commit) {
+    textParser.toggle(commit);
+}
+
+void Game::setTextParser (bool state, bool commit) {
+    textParser.set(state, commit);
+}
+
 void Game::clear_world () {
     worldWidth = 0;
     worldHeight = 0;
     tiles.clear();
     creatures.clear();
+    textParser.set(false, false);
 }
 
 void Game::generate_world () {
@@ -171,6 +181,8 @@ void Game::render () {
     for (const auto& creature : creatures) {
         creature.render();
     }
+
+    textParser.render();
 }
 
 void Game::render_to_textures () {

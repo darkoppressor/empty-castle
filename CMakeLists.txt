@@ -29,6 +29,7 @@ map.cpp
 map_character.cpp
 network_game.cpp
 special_info.cpp
+text_parser.cpp
 tile.cpp
 version.cpp
 window_close_function.cpp

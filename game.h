@@ -7,6 +7,7 @@
 
 #include "tile.h"
 #include "creature.h"
+#include "text_parser.h"
 
 #include <coords.h>
 #include <collision.h>
@@ -26,6 +27,7 @@ class Game {
         static std::vector<std::vector<Tile>> tiles;
         // creatures[0] represets the player
         static std::vector<Creature> creatures;
+        static TextParser textParser;
 
     public:
         static RNG& getRng();
@@ -35,6 +37,8 @@ class Game {
         static Coords<std::int32_t> getWorldDimensionsPixels();
         static std::vector<std::vector<Tile>>& getTiles();
         static Creature& getPlayer();
+        static void toggleTextParser(bool commit);
+        static void setTextParser(bool state, bool commit);
         static void clear_world();
         static void generate_world();
         static void tick();

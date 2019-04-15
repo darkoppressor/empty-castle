@@ -203,12 +203,15 @@ bool Game_Manager::handle_game_command (string command_name) {
     ///END OF DEV COMMANDS
 
     if (!paused) {
-        // Example command
-        /**if(command_name=="some_command"){
-            ///Command here
+        if (command_name == "text_parser") {
+            Game::toggleTextParser(true);
 
             return true;
-           }*/
+        } else if (command_name == "text_parser_close") {
+            Game::setTextParser(false, false);
+
+            return true;
+        }
 
         // Example multiplayer command input
         /**if(command_name=="some_command"){
