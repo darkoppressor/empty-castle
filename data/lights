@@ -1,6 +1,6 @@
 <light>
     name:player
-    color:light_player
+    color:player_light
     range:10
 </light>
 
@@ -13,19 +13,19 @@
 </light>
 
 <light>
-    name:stainedGlassBlue
-    color:text_input_blue
-    range:15
-</light>
-
-<light>
     name:stainedGlassRed
-    color:text_input_red
+    color:stained_glass_red
     range:15
 </light>
 
 <light>
     name:stainedGlassGreen
-    color:text_input_green
+    color:stained_glass_green
+    range:15
+</light>
+
+<light>
+    name:stainedGlassBlue
+    color:stained_glass_blue
     range:15
 </light>

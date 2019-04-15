@@ -27,7 +27,7 @@
 // Lights:
 
 <color>
-	name:light_player
+	name:player_light
 	rgb:7,7,7
 </color>
 
@@ -36,41 +36,56 @@
 	rgb:245,60,15
 </color>
 
+<color>
+	name:stained_glass_red
+	rgb:220,5,10
+</color>
+
+<color>
+	name:stained_glass_green
+	rgb:148,220,5
+</color>
+
+<color>
+	name:stained_glass_blue
+	rgb:5,74,220
+</color>
+
 //** Engine Colors **//
 
 <color>
 	name:ui_white
-	rgb:230,230,230
+	rgb:248,248,248
 </color>
 
 <color>
 	name:ui_black
-	rgb:26,26,26
+	rgb:7,7,7
 </color>
 
 <color>
 	name:ui_gray
-	rgb:191,191,191
+	rgb:50,47,50
 </color>
 
 <color>
 	name:ui_0
-	rgb:230,230,230
+	rgb:248,248,248
 </color>
 
 <color>
 	name:ui_1
-	rgb:204,107,10
+	rgb:164,155,134
 </color>
 
 <color>
 	name:ui_2
-	rgb:166,87,8
+	rgb:125,103,86
 </color>
 
 <color>
 	name:ui_3
-	rgb:128,67,6
+	rgb:50,47,50
 </color>
 
 <color>

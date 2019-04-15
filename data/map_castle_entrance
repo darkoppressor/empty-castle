@@ -36,14 +36,6 @@
     </mapCharacter>
 
     <mapCharacter>
-        // blue stained glass
-        character:;
-        displayCharacter:' '
-        light:stainedGlassBlue
-        <solid>
-    </mapCharacter>
-
-    <mapCharacter>
         // red stained glass
         character::
         displayCharacter:' '
@@ -56,6 +48,14 @@
         character:'
         displayCharacter:' '
         light:stainedGlassGreen
+        <solid>
+    </mapCharacter>
+
+    <mapCharacter>
+        // blue stained glass
+        character:;
+        displayCharacter:' '
+        light:stainedGlassBlue
         <solid>
     </mapCharacter>
 
