@@ -50,6 +50,23 @@ int32_t Creature::getMaximumSpeed () const {
     return getType()->maximumSpeed;
 }
 
+void Creature::stop () {
+    velocity *= 0.0;
+    force *= 0.0;
+}
+
+void Creature::brake () {
+    Int_Vector brake_force(getMoveForce() * 2, velocity.direction + 180);
+
+    Int_Math::clamp_angle(brake_force.direction);
+
+    if (brake_force.magnitude / getMass() > velocity.magnitude) {
+        brake_force.magnitude = velocity.magnitude * getMass();
+    }
+
+    force += brake_force;
+}
+
 Creature::Creature (const string& type, const Coords<int32_t>& position) {
     this->type = type;
     this->position = position;
@@ -110,7 +127,8 @@ void Creature::applyLight () {
         for (int32_t y = tilePosition.y - Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE;
              y < tilePosition.y + Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE + 1; y++) {
             if (x >= 0 && y >= 0 && x < worldDimensions.x && y < worldDimensions.y) {
-                if (tiles[x][y].isLit()) {
+                if (tiles[x][y].isLit() &&
+                    Collision::check_rect(tiles[x][y].getBox(Coords<int32_t>(x, y)), getCollisionBox())) {
                     double lightLevelFactor = (double) tiles[x][y].getLightColor().getAlpha() /
                                               (double) Game_Constants::MAXIMUM_LIGHT_LEVEL;
 
@@ -165,18 +183,6 @@ void Creature::setThrustAngle (const string& direction) {
     }
 }
 
-void Creature::brake () {
-    Int_Vector brake_force(getMoveForce() * 2, velocity.direction + 180);
-
-    Int_Math::clamp_angle(brake_force.direction);
-
-    if (brake_force.magnitude / getMass() > velocity.magnitude) {
-        brake_force.magnitude = velocity.magnitude * getMass();
-    }
-
-    force += brake_force;
-}
-
 void Creature::accelerate () {
     if (isAlive()) {
         Int_Vector acceleration = force / getMass();
@@ -220,12 +226,12 @@ void Creature::movement () {
 
         if (position.x < 0) {
             position.x = 0;
-            brake();
+            stop();
         }
 
         if (position.y < 0) {
             position.y = 0;
-            brake();
+            stop();
         }
 
         Coords<int32_t> worldDimensionsPixels = Game::getWorldDimensionsPixels();
@@ -233,12 +239,12 @@ void Creature::movement () {
 
         if (box.x + box.w >= worldDimensionsPixels.x) {
             position.x = worldDimensionsPixels.x - box.w;
-            brake();
+            stop();
         }
 
         if (box.y + box.h >= worldDimensionsPixels.y) {
             position.y = worldDimensionsPixels.y - box.h;
-            brake();
+            stop();
         }
     }
 }
@@ -257,7 +263,7 @@ bool Creature::tileCollision (const Coords<int32_t>& oldPosition) {
                     if (tiles[x][y].isSolid()) {
                         position = oldPosition;
 
-                        brake();
+                        stop();
 
                         return true;
                     }

@@ -172,7 +172,7 @@
 <game_constant>
 	// tiles
 	name:creature_light_receive_range
-	value:1
+	value:0
 	type:int32_t
 </game_constant>
 

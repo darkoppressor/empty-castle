@@ -38,6 +38,9 @@ class Creature: public LightSource {
         std::int32_t getMass() const;
         std::int32_t getMaximumSpeed() const;
 
+        void stop();
+        void brake();
+
     public:
         Creature (const std::string& type, const Coords<std::int32_t>& position);
 
@@ -60,7 +63,6 @@ class Creature: public LightSource {
         void applyLight();
 
         void setThrustAngle(const std::string& direction);
-        void brake();
         void accelerate();
         void movement();
         // Returns true if collision detected
