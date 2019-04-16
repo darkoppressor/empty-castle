@@ -6,16 +6,20 @@
 #include "game.h"
 #include "game_constants.h"
 
+#include <engine.h>
+
 using namespace std;
 
 void LightSource::updateLightSource (LightTemplate* lightTemplate) {
     if (lightTemplate != 0) {
         if (lightTemplate->glowRateMin < 0 || lightTemplate->glowRateMax < 0) {
-            if (glow == -127) {
+            if (glow == GLOW_NOT_UPDATED) {
                 glow = lightTemplate->getRandomGlow();
             }
         } else if (--glowCounter < 0) {
-            glowCounter = Game::getRng().random_range(lightTemplate->glowRateMin, lightTemplate->glowRateMax);
+            glowCounter =
+                (Game::getRng().random_range(lightTemplate->glowRateMin,
+                                             lightTemplate->glowRateMax) / 1000u) * Engine::UPDATE_RATE;
 
             glow = lightTemplate->getRandomGlow();
         }
@@ -24,12 +28,12 @@ void LightSource::updateLightSource (LightTemplate* lightTemplate) {
 
 int32_t LightSource::getLightRange (LightTemplate* lightTemplate) const {
     return (lightTemplate !=
-            0 ? lightTemplate->range : Game_Constants::MINIMUM_LIGHT_RANGE) + (glow != -127 ? glow : 0);
+            0 ? lightTemplate->range : Game_Constants::MINIMUM_LIGHT_RANGE) + (glow != GLOW_NOT_UPDATED ? glow : 0);
 }
 
 LightSource::LightSource () {
     glowCounter = 0;
-    glow = -127;
+    glow = GLOW_NOT_UPDATED;
 }
 
 string LightSource::getColor (LightTemplate* lightTemplate) {

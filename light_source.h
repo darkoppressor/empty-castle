@@ -11,11 +11,14 @@
 #include <string>
 
 class LightSource {
+    private:
+        static const std::int32_t GLOW_NOT_UPDATED = -127;
+
     protected:
         // ephemeral values:
         // frames
         std::int32_t glowCounter;
-        // a value of -127 indicates that glow has not yet been updated
+        // a value of GLOW_NOT_UPDATED indicates that glow has not yet been updated
         std::int32_t glow;
 
         void updateLightSource(LightTemplate* lightTemplate);

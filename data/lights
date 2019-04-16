@@ -8,8 +8,8 @@
     name:torch
     color:torch
     range:5
-    glowRateMin:90
-    glowRateMax:180
+    glowRateMin:1500
+    glowRateMax:3000
 </light>
 
 <light>
