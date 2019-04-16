@@ -8,3 +8,53 @@ Tile light items have concept of being on or off
 Player can "use" them to toggle their light state
 
 Consider issue of diagonal movement being slower
+
+Only rerun fov in a given frame if lighting conditions have changed
+
+Maybe have passage of time
+Story stuff happens regardless of player's presence
+Could mean some stuff will be missed on first playthrough
+Big theme is knowledge
+
+Ambient light for map
+
+No Mana?
+Some spells have costs of various sorts
+gods are involved with magic
+Some spells might need to be repeated to take effect
+Little or no equipment items in game
+Equipment is created, and possibly maintained, through magic
+
+Various enemies or obstacles where magical knowledge, items, cleverness is needed
+
+Powerful enemies that fight you in essentially a magic duel
+
+The magic system should be logical
+Written spells in the world provide clues to the way magic works
+With knowledge of enough spells, the player can begin to be creative with magic
+
+Magic source material should be incomplete, maybe sometimes conflicting, to show that the source material itself is not a complete list of possibilities
+
+Primary mechanic will be "saying" spells aloud
+Secondary mechanics support this, e.g.:
+To cast some magic a circle must first be drawn
+Certain items placed around the caster in a certain way
+Time, weather, seasons, stars might affect some magic
+Time can be relative to an event as well as specifically something like a time of day
+Reputation with various gods affects various magic
+Cost might be applied for some spells, like need for a sacrifice, or permanently losing some of a stat
+Sanity might affect spell possibilities and effects, as well as be affected by magic, creating a sort of feedback loop
+
+Different types of sacrifices, e.g.:
+Cast over a dead body (or bodies!)
+Cast over a live creature (or creatures!)
+Type of creature or certain creature features affect possibilities or outcomes
+
+Mostly or entirely, player should be faster than other creatures
+Everyone should be pretty slow though
+
+Maybe one kind of magic uses up light, thus making it darker in the area/world as spells are cast
+Darkness carries its own dangers...
+
+Play with the player's perceptions
+Possibility of falling asleep and dreaming, and more adventure can happen in the dream state
