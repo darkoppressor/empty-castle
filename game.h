@@ -24,6 +24,7 @@ class Game {
         static std::int32_t worldWidth;
         // tiles
         static std::int32_t worldHeight;
+        static std::vector<MapCharacter> mapCharacters;
         static std::vector<std::vector<Tile>> tiles;
         // creatures[0] represets the player
         static std::vector<Creature> creatures;
@@ -35,6 +36,7 @@ class Game {
         static Coords<std::int32_t> getWorldDimensions();
         // pixel coordinates
         static Coords<std::int32_t> getWorldDimensionsPixels();
+        static const MapCharacter& getMapCharacter(std::uint32_t type);
         static std::vector<std::vector<Tile>>& getTiles();
         static Creature& getPlayer();
         static bool isTextParserOn();

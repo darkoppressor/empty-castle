@@ -15,7 +15,13 @@
 
 using namespace std;
 
+const MapCharacter& Tile::getType () const {
+    return Game::getMapCharacter(type);
+}
+
 LightTemplate* Tile::getLightTemplate () const {
+    string light = getType().light;
+
     if (light.length() > 0) {
         return Game_Data::getLightTemplate(light);
     } else {
@@ -24,40 +30,12 @@ LightTemplate* Tile::getLightTemplate () const {
 }
 
 Tile::Tile () {
-    character = Game_Constants::MAP_CHARACTER_ERROR;
-    characterColor = Game_Constants::MAP_CHARACTER_ERROR_COLOR;
-    backgroundColor = "";
-    playerSpawn = false;
-    doorTo = "";
-    solid = Game_Constants::MAP_CHARACTER_ERROR_SOLID;
-    opaque = Game_Constants::MAP_CHARACTER_ERROR_OPAQUE;
-    light = "";
+    type = 0;
     explored = false;
 }
 
-void Tile::readFromMap (const vector<MapCharacter>& mapCharacters, unsigned char character) {
-    for (const auto& mapCharacter : mapCharacters) {
-        if (mapCharacter.character == character) {
-            this->character = mapCharacter.displayCharacter;
-            characterColor = mapCharacter.characterColor;
-            backgroundColor = mapCharacter.backgroundColor;
-            playerSpawn = mapCharacter.playerSpawn;
-            doorTo = mapCharacter.doorTo;
-            solid = mapCharacter.solid;
-            opaque = mapCharacter.opaque;
-            light = mapCharacter.light;
-
-            return;
-        }
-    }
-}
-
-void Tile::setToPadding () {
-    character = Game_Constants::MAP_CHARACTER_PADDING;
-    characterColor = Game_Constants::MAP_CHARACTER_PADDING_COLOR;
-    backgroundColor = Game_Constants::MAP_CHARACTER_PADDING_BACKGROUND_COLOR;
-    solid = Game_Constants::MAP_CHARACTER_PADDING_SOLID;
-    opaque = Game_Constants::MAP_CHARACTER_PADDING_OPAQUE;
+void Tile::setType (uint32_t type) {
+    this->type = type;
 }
 
 Collision_Rect<int32_t> Tile::getBox (const Coords<int32_t>& tilePosition) {
@@ -69,19 +47,19 @@ Collision_Rect<int32_t> Tile::getBox (const Coords<int32_t>& tilePosition) {
 }
 
 bool Tile::isPlayerSpawn () const {
-    return playerSpawn;
+    return getType().playerSpawn;
 }
 
 string Tile::getDoorTo () const {
-    return doorTo;
+    return getType().doorTo;
 }
 
 bool Tile::isSolid () const {
-    return solid;
+    return getType().solid;
 }
 
 bool Tile::isOpaque () const {
-    return opaque;
+    return getType().opaque;
 }
 
 void Tile::setExplored (bool explored) {
@@ -141,11 +119,11 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
 
     if (Collision::check_rect(boxRender * Game_Manager::camera_zoom, Game_Manager::camera)) {
         if (explored) {
-            Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
+            const MapCharacter& type = getType();
 
-            if (backgroundColor.length() > 0 && backgroundColor != "background") {
+            if (type.backgroundColor.length() > 0 && type.backgroundColor != "background") {
                 Color finalBackgroundColor;
-                Color* backgroundColorPtr = Object_Manager::get_color(backgroundColor);
+                Color* backgroundColorPtr = Object_Manager::get_color(type.backgroundColor);
 
                 if (isLit()) {
                     finalBackgroundColor = Lighting::applyLightToColor(backgroundColorPtr, lightColor);
@@ -161,11 +139,12 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
                                          &finalBackgroundColor);
             }
 
-            Color finalCharacterColor = Lighting::applyLightToColor(characterColor, lightColor);
+            Color finalCharacterColor = Lighting::applyLightToColor(type.characterColor, lightColor);
+            Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
             font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
                        box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
-                                                                                          character), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
+                                                                                          type.displayCharacter), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
                        Game_Manager::camera_zoom);
         }
     }

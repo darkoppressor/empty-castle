@@ -18,3 +18,15 @@ MapCharacter::MapCharacter () {
     opaque = Game_Constants::MAP_CHARACTER_ERROR_OPAQUE;
     light = "";
 }
+
+MapCharacter::MapCharacter (const MapCharacter& mapCharacter) {
+    this->character = mapCharacter.character;
+    this->displayCharacter = mapCharacter.displayCharacter;
+    this->characterColor = mapCharacter.characterColor;
+    this->backgroundColor = mapCharacter.backgroundColor;
+    this->playerSpawn = mapCharacter.playerSpawn;
+    this->doorTo = mapCharacter.doorTo;
+    this->solid = mapCharacter.solid;
+    this->opaque = mapCharacter.opaque;
+    this->light = mapCharacter.light;
+}

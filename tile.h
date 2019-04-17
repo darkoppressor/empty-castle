@@ -19,14 +19,7 @@
 
 class Tile: public LightSource {
     private:
-        unsigned char character;
-        std::string characterColor;
-        std::string backgroundColor;
-        bool playerSpawn;
-        std::string doorTo;
-        bool solid;
-        bool opaque;
-        std::string light;
+        std::uint32_t type;
 
         // other saved values:
         bool explored;
@@ -37,13 +30,13 @@ class Tile: public LightSource {
         BetterColor lightColor;
 
         // getters:
+        const MapCharacter& getType() const;
         LightTemplate* getLightTemplate() const;
 
     public:
         Tile ();
 
-        void readFromMap(const std::vector<MapCharacter>& mapCharacters, unsigned char character);
-        void setToPadding();
+        void setType(std::uint32_t type);
 
         // pixel box
         static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);

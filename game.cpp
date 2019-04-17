@@ -17,12 +17,14 @@
 #include <button_events.h>
 #include <object_manager.h>
 #include <engine_data.h>
+#include <engine_strings.h>
 
 using namespace std;
 
 RNG Game::rng;
 int32_t Game::worldWidth = 0;
 int32_t Game::worldHeight = 0;
+vector<MapCharacter> Game::mapCharacters;
 vector<vector<Tile>> Game::tiles;
 vector<Creature> Game::creatures;
 TextParser Game::textParser;
@@ -38,6 +40,18 @@ Coords<int32_t> Game::getWorldDimensionsPixels () {
     Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
 
     return Coords<int32_t>(worldWidth * tileBox.w, worldHeight * tileBox.h);
+}
+
+const MapCharacter& Game::getMapCharacter (uint32_t type) {
+    if (type < mapCharacters.size()) {
+        return mapCharacters[type];
+    } else if (mapCharacters.size() > 0) {
+        return mapCharacters[0];
+    } else {
+        Log::add_error("Error accessing map character with index '" + Strings::num_to_string(type) + "'");
+
+        Engine::quit();
+    }
 }
 
 vector<vector<Tile>>& Game::getTiles () {
@@ -77,6 +91,7 @@ bool Game::handleTextParserInputEvents () {
 void Game::clear_world () {
     worldWidth = 0;
     worldHeight = 0;
+    mapCharacters.clear();
     tiles.clear();
     creatures.clear();
     textParser.set(false);
@@ -92,6 +107,21 @@ void Game::generate_world () {
 
     Map* map = Game_Data::getMap(Game_Constants::INITIAL_MAP);
 
+    mapCharacters.push_back(MapCharacter());
+
+    MapCharacter padding;
+    padding.character = Game_Constants::MAP_CHARACTER_PADDING;
+    padding.displayCharacter = Game_Constants::MAP_CHARACTER_PADDING;
+    padding.characterColor = Game_Constants::MAP_CHARACTER_PADDING_COLOR;
+    padding.backgroundColor = Game_Constants::MAP_CHARACTER_PADDING_BACKGROUND_COLOR;
+    padding.solid = Game_Constants::MAP_CHARACTER_PADDING_SOLID;
+    padding.opaque = Game_Constants::MAP_CHARACTER_PADDING_OPAQUE;
+    mapCharacters.push_back(padding);
+
+    for (const auto& mapCharacter : map->mapCharacters) {
+        mapCharacters.push_back(mapCharacter);
+    }
+
     worldWidth = map->tiles.size() + Game_Constants::MAP_PADDING * 2;
     worldHeight = map->tiles[0].size() + Game_Constants::MAP_PADDING * 2;
 
@@ -102,10 +132,20 @@ void Game::generate_world () {
             if (x < Game_Constants::MAP_PADDING || y < Game_Constants::MAP_PADDING ||
                 x >= map->tiles.size() + Game_Constants::MAP_PADDING ||
                 y >= map->tiles[0].size() + Game_Constants::MAP_PADDING) {
-                tiles[x][y].setToPadding();
+                tiles[x][y].setType(1);
             } else {
-                tiles[x][y].readFromMap(map->mapCharacters,
-                                        map->tiles[x - Game_Constants::MAP_PADDING][y - Game_Constants::MAP_PADDING]);
+                uint32_t tileType = 0;
+
+                for (uint32_t i = 0; i < mapCharacters.size(); i++) {
+                    if (mapCharacters[i].character ==
+                        map->tiles[x - Game_Constants::MAP_PADDING][y - Game_Constants::MAP_PADDING]) {
+                        tileType = i;
+
+                        break;
+                    }
+                }
+
+                tiles[x][y].setType(tileType);
 
                 if (creatures.size() == 0 && tiles[x][y].isPlayerSpawn()) {
                     Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(x, y));

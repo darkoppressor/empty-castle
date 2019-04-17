@@ -20,6 +20,7 @@ class MapCharacter {
         std::string light;
 
         MapCharacter ();
+        MapCharacter (const MapCharacter& mapCharacter);
 };
 
 #endif
