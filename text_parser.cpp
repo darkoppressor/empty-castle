@@ -93,11 +93,10 @@ void TextParser::commitText () {
     }
 
     if (words.size() > 0) {
-        ///QQQ handle commit
+        Game::addDisplayText("You speak aloud the words \"" + line + "\"");
+
         if (false) {
-            // If recognized spell
-        } else {
-            Game::addDisplayText("You speak aloud the words \"" + line + "\"");
+            ///QQQ If recognized spell
         }
     }
 }
