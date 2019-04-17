@@ -130,10 +130,10 @@ void Creature::applyLight () {
     Coords<int32_t> tilePosition = getTilePosition();
     Coords<int32_t> worldDimensions = Game::getWorldDimensions();
 
-    for (int32_t x = tilePosition.x - Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE;
-         x < tilePosition.x + Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE + 1; x++) {
-        for (int32_t y = tilePosition.y - Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE;
-             y < tilePosition.y + Game_Constants::CREATURE_LIGHT_RECEIVE_RANGE + 1; y++) {
+    for (int32_t x = tilePosition.x;
+         x < tilePosition.x + 1; x++) {
+        for (int32_t y = tilePosition.y;
+             y < tilePosition.y + 1; y++) {
             if (x >= 0 && y >= 0 && x < worldDimensions.x && y < worldDimensions.y) {
                 if (tiles[x][y].isLit() &&
                     Collision::check_rect(tiles[x][y].getBox(Coords<int32_t>(x, y)), getCollisionBox())) {

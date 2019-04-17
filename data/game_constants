@@ -46,7 +46,7 @@
 <game_constant>
 	// tiles
 	name:map_padding
-	value:256
+	value:128
 	type:int32_t
 </game_constant>
 
@@ -137,7 +137,7 @@
 <game_constant>
 	// tiles
 	name:tile_light_source_check_padding
-	value:16
+	value:8
 	type:int32_t
 </game_constant>
 
@@ -170,15 +170,9 @@
 <game_constant>
 	// tiles
 	// inclusive
+	// this NEEDS to be <= 15
 	name:maximum_light_range
-	value:15
-	type:int32_t
-</game_constant>
-
-<game_constant>
-	// tiles
-	name:creature_light_receive_range
-	value:0
+	value:12
 	type:int32_t
 </game_constant>
 

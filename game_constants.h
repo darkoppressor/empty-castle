@@ -32,7 +32,6 @@ class Game_Constants {
     static double MINIMUM_LIGHT_REDUCTION;
     static std::int32_t MINIMUM_LIGHT_RANGE;
     static std::int32_t MAXIMUM_LIGHT_RANGE;
-    static std::int32_t CREATURE_LIGHT_RECEIVE_RANGE;
     static double CREATURE_LIGHT_LEVEL_MAXIMUM;
     static std::int32_t MAXIMUM_TEXT_PARSER_LENGTH;
     static std::string TEXT_PARSER_FONT;

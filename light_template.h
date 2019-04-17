@@ -12,7 +12,7 @@ class LightTemplate {
         std::string name;
         std::string color;
         // tiles
-        // should be within [2, 15]
+        // should be within [MINIMUM_LIGHT_RANGE, MAXIMUM_LIGHT_RANGE]
         std::int32_t range;
         // ms
         // a value < 0 disables glowing
