@@ -99,6 +99,10 @@ Collision_Rect<int32_t> Creature::getCollisionBox () const {
                                    Game_Constants::CREATURE_COLLISION_REDUCTION* 2);
 }
 
+const Int_Vector& Creature::getVelocity () const {
+    return velocity;
+}
+
 bool Creature::isAlive () const {
     return true;
 }

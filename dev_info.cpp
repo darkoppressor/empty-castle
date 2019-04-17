@@ -29,6 +29,8 @@ void Engine::render_dev_info () {
                Strings::num_to_string(Game::getPlayer().getBox().y) + "\n";
         msg += "Player Dimensions: " + Strings::num_to_string(Game::getPlayer().getBox().w) + ", " +
                Strings::num_to_string(Game::getPlayer().getBox().h) + "\n";
+        msg += "Player Velocity: " + Strings::num_to_string(Game::getPlayer().getVelocity().magnitude) + " m/s, " +
+               Strings::num_to_string(Game::getPlayer().getVelocity().direction) + string(1, 167) + "\n";
     }
 
     if (msg.length() > 0) {

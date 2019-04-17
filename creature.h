@@ -55,6 +55,8 @@ class Creature: public LightSource {
         // pixel box
         Collision_Rect<std::int32_t> getCollisionBox() const;
 
+        const Int_Vector& getVelocity() const;
+
         bool isAlive() const;
 
         // light source:
