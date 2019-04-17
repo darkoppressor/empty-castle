@@ -6,8 +6,7 @@ Player light radius becomes exception, depends on equipped light item
 
 Tile light items have concept of being on or off
 Player can "use" them to toggle their light state
-
-Only rerun fov in a given frame if lighting conditions have changed
+Or maybe not? Maybe magic needed
 
 Maybe have passage of time
 Story stuff happens regardless of player's presence
@@ -60,3 +59,9 @@ Possibility of falling asleep and dreaming, and more adventure can happen in the
 Does order matter with words in spells?
 
 Tiles could affect movement speed potentially
+
+Technical:
+
+Tab completion for text parser, using known words
+
+Only rerun fov in a given frame if lighting conditions have changed

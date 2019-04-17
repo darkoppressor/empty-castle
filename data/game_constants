@@ -200,3 +200,29 @@
 	value:small
 	type:string
 </game_constant>
+
+<game_constant>
+	name:text_display_font
+	value:small
+	type:string
+</game_constant>
+
+<game_constant>
+	// lines
+	name:text_display_height
+	value:16
+	type:int32_t
+</game_constant>
+
+<game_constant>
+	// ms
+	name:text_display_timeout
+	value:10000
+	type:int32_t
+</game_constant>
+
+<game_constant>
+	name:maximum_text_display_lines
+	value:1024
+	type:uint32_t
+</game_constant>

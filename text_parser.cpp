@@ -4,6 +4,7 @@
 
 #include "text_parser.h"
 #include "game_constants.h"
+#include "game.h"
 
 #include <render.h>
 #include <game_window.h>
@@ -31,7 +32,7 @@ void TextParser::setup () {
     input.scroll_height = 1;
     input.set_dimensions();
     input.x = -1;
-    input.y = Game_Window::height() - 5.0 - 16.0;
+    input.y = Game_Window::height() - input.h;
     input.start_x = input.x;
     input.start_y = input.y;
     input.center_in_window(Game_Window::width(), Game_Window::height());
@@ -39,6 +40,10 @@ void TextParser::setup () {
 
 bool TextParser::isOn () const {
     return on;
+}
+
+int32_t TextParser::getHeight () const {
+    return input.h;
 }
 
 void TextParser::updateFocus () {
@@ -87,7 +92,14 @@ void TextParser::commitText () {
         }
     }
 
-    ///QQQ handle commit
+    if (words.size() > 0) {
+        ///QQQ handle commit
+        if (false) {
+            // If recognized spell
+        } else {
+            Game::addDisplayText("You speak aloud the words \"" + line + "\"");
+        }
+    }
 }
 
 void TextParser::handleInputStates () {

@@ -36,6 +36,10 @@ class Game_Constants {
     static double CREATURE_LIGHT_LEVEL_MAXIMUM;
     static std::int32_t MAXIMUM_TEXT_PARSER_LENGTH;
     static std::string TEXT_PARSER_FONT;
+    static std::string TEXT_DISPLAY_FONT;
+    static std::int32_t TEXT_DISPLAY_HEIGHT;
+    static std::int32_t TEXT_DISPLAY_TIMEOUT;
+    static std::uint32_t MAXIMUM_TEXT_DISPLAY_LINES;
     /// END SCRIPT-GENERATED CONSTANT DECLARATIONS
 };
 

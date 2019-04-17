@@ -161,6 +161,7 @@ void Game_Manager::handle_input_states () {
                 }
             } else {
                 Game::handleTextParserInputStates();
+                Game::handleTextDisplayInputStates();
 
                 Game::playerThrust("none");
             }
@@ -219,6 +220,14 @@ bool Game_Manager::handle_game_command (string command_name) {
             Game::toggleTextParser(false);
 
             return true;
+        } else if (command_name == "text_display_up") {
+            Game::scrollTextDisplay(true);
+
+            return true;
+        } else if (command_name == "text_display_down") {
+            Game::scrollTextDisplay(false);
+
+            return true;
         }
 
         // Example multiplayer command input
@@ -257,6 +266,10 @@ bool Game_Manager::handle_input_events () {
     if (in_progress) {
         if (!event_consumed) {
             event_consumed = Game::handleTextParserInputEvents();
+        }
+
+        if (!event_consumed) {
+            event_consumed = Game::handleTextDisplayInputEvents();
         }
 
         const vector<Game_Command>& game_commands = Object_Manager::get_game_commands();

@@ -31,6 +31,7 @@ material.cpp
 network_game.cpp
 special_info.cpp
 text_parser.cpp
+text_display.cpp
 tile.cpp
 version.cpp
 window_close_function.cpp

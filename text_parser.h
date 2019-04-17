@@ -20,6 +20,8 @@ class TextParser {
         void setup();
 
         bool isOn() const;
+        std::int32_t getHeight() const;
+
         void updateFocus();
         void toggle(bool commit);
         void set(bool state);

@@ -28,6 +28,7 @@ vector<MapCharacter> Game::mapCharacters;
 vector<vector<Tile>> Game::tiles;
 vector<Creature> Game::creatures;
 TextParser Game::textParser;
+TextDisplay Game::textDisplay;
 RNG& Game::getRng () {
     return rng;
 }
@@ -88,6 +89,22 @@ bool Game::handleTextParserInputEvents () {
     return textParser.handleInputEvents();
 }
 
+void Game::addDisplayText (const string& line) {
+    textDisplay.add(line);
+}
+
+void Game::scrollTextDisplay (bool up) {
+    textDisplay.scroll(up);
+}
+
+void Game::handleTextDisplayInputStates () {
+    textDisplay.handleInputStates();
+}
+
+bool Game::handleTextDisplayInputEvents () {
+    return textDisplay.handleInputEvents();
+}
+
 void Game::clear_world () {
     worldWidth = 0;
     worldHeight = 0;
@@ -95,12 +112,14 @@ void Game::clear_world () {
     tiles.clear();
     creatures.clear();
     textParser.set(false);
+    ///QQQ clear text display
 }
 
 void Game::generate_world () {
     clear_world();
 
     textParser.setup();
+    textDisplay.setup(textParser.getHeight());
 
     RNG rngSeeder;
     rng.seed(rngSeeder.random_range(0, numeric_limits<uint32_t>::max()));
@@ -220,6 +239,7 @@ void Game::events () {
 
 void Game::animate () {
     textParser.animate();
+    textDisplay.animate();
 }
 
 void Game::render () {
@@ -239,6 +259,7 @@ void Game::render () {
     }
 
     textParser.render();
+    textDisplay.render();
 }
 
 void Game::render_to_textures () {

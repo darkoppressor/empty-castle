@@ -8,6 +8,7 @@
 #include "tile.h"
 #include "creature.h"
 #include "text_parser.h"
+#include "text_display.h"
 
 #include <coords.h>
 #include <collision.h>
@@ -29,6 +30,7 @@ class Game {
         // creatures[0] represets the player
         static std::vector<Creature> creatures;
         static TextParser textParser;
+        static TextDisplay textDisplay;
 
     public:
         static RNG& getRng();
@@ -44,6 +46,10 @@ class Game {
         static void toggleTextParser(bool commit);
         static void handleTextParserInputStates();
         static bool handleTextParserInputEvents();
+        static void addDisplayText(const std::string& line);
+        static void scrollTextDisplay(bool up);
+        static void handleTextDisplayInputStates();
+        static bool handleTextDisplayInputEvents();
         static void clear_world();
         static void generate_world();
         static void tick();

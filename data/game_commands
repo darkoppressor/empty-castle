@@ -107,3 +107,23 @@
 	controller_button:
 	controller_axis:
 </game_command>
+
+<game_command>
+	name:text_display_up
+	title:Scroll text log up
+	description:Scroll the text log up
+	developer:false
+	key:PageDown
+	controller_button:
+	controller_axis:
+</game_command>
+
+<game_command>
+	name:text_display_down
+	title:Scroll text log down
+	description:Scroll the text log down
+	developer:false
+	key:PageUp
+	controller_button:
+	controller_axis:
+</game_command>
