@@ -16,16 +16,22 @@
     name:stainedGlassRed
     color:stained_glass_red
     range:12
+    glowRateMin:1000
+    glowRateMax:1500
 </light>
 
 <light>
     name:stainedGlassGreen
     color:stained_glass_green
     range:12
+    glowRateMin:1000
+    glowRateMax:1500
 </light>
 
 <light>
     name:stainedGlassBlue
     color:stained_glass_blue
     range:12
+    glowRateMin:1000
+    glowRateMax:1500
 </light>
