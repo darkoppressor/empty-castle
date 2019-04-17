@@ -51,10 +51,8 @@ void TextParser::toggle (bool commit) {
     onChanged(commit);
 }
 
-void TextParser::set (bool state, bool commit) {
+void TextParser::set (bool state) {
     on = state;
-
-    onChanged(commit);
 }
 
 void TextParser::onChanged (bool commit) {

@@ -66,10 +66,6 @@ void Game::toggleTextParser (bool commit) {
     textParser.toggle(commit);
 }
 
-void Game::setTextParser (bool state, bool commit) {
-    textParser.set(state, commit);
-}
-
 void Game::handleTextParserInputStates () {
     textParser.handleInputStates();
 }
@@ -83,7 +79,7 @@ void Game::clear_world () {
     worldHeight = 0;
     tiles.clear();
     creatures.clear();
-    textParser.set(false, false);
+    textParser.set(false);
 }
 
 void Game::generate_world () {

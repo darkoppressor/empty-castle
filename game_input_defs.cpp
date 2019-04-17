@@ -215,8 +215,8 @@ bool Game_Manager::handle_game_command (string command_name) {
             Game::toggleTextParser(true);
 
             return true;
-        } else if (command_name == "text_parser_close") {
-            Game::setTextParser(false, false);
+        } else if (command_name == "text_parser_no_commit") {
+            Game::toggleTextParser(false);
 
             return true;
         }

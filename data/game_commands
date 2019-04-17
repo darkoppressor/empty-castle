@@ -91,7 +91,7 @@
 <game_command>
 	name:text_parser
 	title:Recite
-	description:Toggle the recitation interface
+	description:Toggle the recitation interface (or speak words)
 	developer:false
 	key:Return
 	controller_button:
@@ -99,11 +99,11 @@
 </game_command>
 
 <game_command>
-	name:text_parser_close
-	title:Close recitation interface
-	description:Close the recitation interface
+	name:text_parser_no_commit
+	title:Toggle recitation interface
+	description:Toggle the recitation interface
 	developer:false
-	key:Left Shift
+	key:\
 	controller_button:
 	controller_axis:
 </game_command>

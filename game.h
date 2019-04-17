@@ -40,7 +40,6 @@ class Game {
         static bool isTextParserOn();
         static void updateTextParserFocus();
         static void toggleTextParser(bool commit);
-        static void setTextParser(bool state, bool commit);
         static void handleTextParserInputStates();
         static bool handleTextParserInputEvents();
         static void clear_world();

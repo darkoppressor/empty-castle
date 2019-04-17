@@ -22,7 +22,7 @@ class TextParser {
         bool isOn() const;
         void updateFocus();
         void toggle(bool commit);
-        void set(bool state, bool commit);
+        void set(bool state);
         void onChanged(bool commit);
 
         void commitText();
