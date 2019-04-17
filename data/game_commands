@@ -4,7 +4,7 @@
 	description:Pause the game
 	developer:false
 	key:Pause
-	controller_button:back
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -14,7 +14,7 @@
 	description:Move up
 	developer:false
 	key:Up
-	controller_button:dpup
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -24,7 +24,7 @@
 	description:Move down
 	developer:false
 	key:Down
-	controller_button:dpdown
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -34,7 +34,7 @@
 	description:Move left
 	developer:false
 	key:Left
-	controller_button:dpleft
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -44,7 +44,7 @@
 	description:Move right
 	developer:false
 	key:Right
-	controller_button:dpright
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -54,7 +54,7 @@
 	description:Move up
 	developer:false
 	key:k
-	controller_button:dpup
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -64,7 +64,7 @@
 	description:Move down
 	developer:false
 	key:j
-	controller_button:dpdown
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -74,7 +74,7 @@
 	description:Move left
 	developer:false
 	key:h
-	controller_button:dpleft
+	controller_button:
 	controller_axis:
 </game_command>
 
@@ -84,28 +84,8 @@
 	description:Move right
 	developer:false
 	key:l
-	controller_button:dpright
+	controller_button:
 	controller_axis:
-</game_command>
-
-<game_command>
-	name:move_stick_vertical
-	title:Vertical Stick
-	description:Move vertically via joystick
-	developer:false
-	key:
-	controller_button:
-	controller_axis:lefty
-</game_command>
-
-<game_command>
-	name:move_stick_horizontal
-	title:Horizontal Stick
-	description:Move horizontally via joystick
-	developer:false
-	key:
-	controller_button:
-	controller_axis:leftx
 </game_command>
 
 <game_command>
