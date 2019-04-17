@@ -37,8 +37,12 @@ class Game {
         static Coords<std::int32_t> getWorldDimensionsPixels();
         static std::vector<std::vector<Tile>>& getTiles();
         static Creature& getPlayer();
+        static bool isTextParserOn();
+        static void updateTextParserFocus();
         static void toggleTextParser(bool commit);
         static void setTextParser(bool state, bool commit);
+        static void handleTextParserInputStates();
+        static bool handleTextParserInputEvents();
         static void clear_world();
         static void generate_world();
         static void tick();

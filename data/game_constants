@@ -181,3 +181,16 @@
 	value:0.5
 	type:double
 </game_constant>
+
+<game_constant>
+	// characters
+	name:maximum_text_parser_length
+	value:181
+	type:int32_t
+</game_constant>
+
+<game_constant>
+	name:text_parser_font
+	value:small
+	type:string
+</game_constant>

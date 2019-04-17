@@ -54,12 +54,28 @@ Creature& Game::getPlayer () {
     }
 }
 
+bool Game::isTextParserOn () {
+    return textParser.isOn();
+}
+
+void Game::updateTextParserFocus () {
+    textParser.updateFocus();
+}
+
 void Game::toggleTextParser (bool commit) {
     textParser.toggle(commit);
 }
 
 void Game::setTextParser (bool state, bool commit) {
     textParser.set(state, commit);
+}
+
+void Game::handleTextParserInputStates () {
+    textParser.handleInputStates();
+}
+
+bool Game::handleTextParserInputEvents () {
+    return textParser.handleInputEvents();
 }
 
 void Game::clear_world () {
@@ -72,6 +88,8 @@ void Game::clear_world () {
 
 void Game::generate_world () {
     clear_world();
+
+    textParser.setup();
 
     RNG rngSeeder;
     rng.seed(rngSeeder.random_range(0, numeric_limits<uint32_t>::max()));
@@ -164,7 +182,9 @@ void Game::events () {
     ///Sound_Manager::set_listener(example_player.circle.x,example_player.circle.y,Game_Manager::camera_zoom);
 }
 
-void Game::animate () {}
+void Game::animate () {
+    textParser.animate();
+}
 
 void Game::render () {
     Collision_Rect<int32_t> cameraTileBox = getCameraTileBox(0);

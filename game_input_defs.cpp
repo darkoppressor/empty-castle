@@ -23,6 +23,8 @@ void Game_Manager::prepare_for_input () {
         command_states.clear();
 
         display_scoreboard = false;
+
+        Game::updateTextParserFocus();
     }
 }
 
@@ -90,70 +92,76 @@ void Game_Manager::handle_input_states () {
                 command_states.push_back("some_command");
                }*/
 
-            // Move the ship via directional keys
-            if (Game::moveInputState("left")) {
-                Game::playerThrust("left");
-            }
+            if (!Game::isTextParserOn()) {
+                // Move the ship via directional keys
+                if (Game::moveInputState("left")) {
+                    Game::playerThrust("left");
+                }
 
-            if (Game::moveInputState("up")) {
-                Game::playerThrust("up");
-            }
+                if (Game::moveInputState("up")) {
+                    Game::playerThrust("up");
+                }
 
-            if (Game::moveInputState("right")) {
-                Game::playerThrust("right");
-            }
+                if (Game::moveInputState("right")) {
+                    Game::playerThrust("right");
+                }
 
-            if (Game::moveInputState("down")) {
-                Game::playerThrust("down");
-            }
+                if (Game::moveInputState("down")) {
+                    Game::playerThrust("down");
+                }
 
-            if (Game::moveInputState("left") && Game::moveInputState("up")) {
-                Game::playerThrust("left_up");
-            }
+                if (Game::moveInputState("left") && Game::moveInputState("up")) {
+                    Game::playerThrust("left_up");
+                }
 
-            if (Game::moveInputState("up") && Game::moveInputState("right")) {
-                Game::playerThrust("right_up");
-            }
+                if (Game::moveInputState("up") && Game::moveInputState("right")) {
+                    Game::playerThrust("right_up");
+                }
 
-            if (Game::moveInputState("right") && Game::moveInputState("down")) {
-                Game::playerThrust("right_down");
-            }
+                if (Game::moveInputState("right") && Game::moveInputState("down")) {
+                    Game::playerThrust("right_down");
+                }
 
-            if (Game::moveInputState("down") && Game::moveInputState("left")) {
-                Game::playerThrust("left_down");
-            }
+                if (Game::moveInputState("down") && Game::moveInputState("left")) {
+                    Game::playerThrust("left_down");
+                }
 
-            if (Game::moveInputState("left") && Game::moveInputState("right")) {
-                Game::playerThrust("left");
-            }
+                if (Game::moveInputState("left") && Game::moveInputState("right")) {
+                    Game::playerThrust("left");
+                }
 
-            if (Game::moveInputState("up") && Game::moveInputState("down")) {
-                Game::playerThrust("up");
-            }
+                if (Game::moveInputState("up") && Game::moveInputState("down")) {
+                    Game::playerThrust("up");
+                }
 
-            if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("right")) {
-                Game::playerThrust("left_up");
-            }
+                if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("right")) {
+                    Game::playerThrust("left_up");
+                }
 
-            if (Game::moveInputState("left") && Game::moveInputState("down") && Game::moveInputState("right")) {
-                Game::playerThrust("left_down");
-            }
+                if (Game::moveInputState("left") && Game::moveInputState("down") && Game::moveInputState("right")) {
+                    Game::playerThrust("left_down");
+                }
 
-            if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("down")) {
-                Game::playerThrust("left_up");
-            }
+                if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("down")) {
+                    Game::playerThrust("left_up");
+                }
 
-            if (Game::moveInputState("up") && Game::moveInputState("right") && Game::moveInputState("down")) {
-                Game::playerThrust("right_up");
-            }
+                if (Game::moveInputState("up") && Game::moveInputState("right") && Game::moveInputState("down")) {
+                    Game::playerThrust("right_up");
+                }
 
-            if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("right") &&
-                Game::moveInputState("down")) {
-                Game::playerThrust("left_up");
-            }
+                if (Game::moveInputState("left") && Game::moveInputState("up") && Game::moveInputState("right") &&
+                    Game::moveInputState("down")) {
+                    Game::playerThrust("left_up");
+                }
 
-            if (!Game::moveInputState("left") && !Game::moveInputState("up") && !Game::moveInputState("right") &&
-                !Game::moveInputState("down")) {
+                if (!Game::moveInputState("left") && !Game::moveInputState("up") && !Game::moveInputState("right") &&
+                    !Game::moveInputState("down")) {
+                    Game::playerThrust("none");
+                }
+            } else {
+                Game::handleTextParserInputStates();
+
                 Game::playerThrust("none");
             }
         }
@@ -247,6 +255,10 @@ bool Game_Manager::handle_input_events () {
     bool event_consumed = false;
 
     if (in_progress) {
+        if (!event_consumed) {
+            event_consumed = Game::handleTextParserInputEvents();
+        }
+
         const vector<Game_Command>& game_commands = Object_Manager::get_game_commands();
 
         for (size_t i = 0; i < game_commands.size() && !event_consumed; i++) {
