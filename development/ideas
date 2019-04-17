@@ -7,8 +7,6 @@ Player light radius becomes exception, depends on equipped light item
 Tile light items have concept of being on or off
 Player can "use" them to toggle their light state
 
-Consider issue of diagonal movement being slower
-
 Only rerun fov in a given frame if lighting conditions have changed
 
 Maybe have passage of time
@@ -60,3 +58,5 @@ Play with the player's perceptions
 Possibility of falling asleep and dreaming, and more adventure can happen in the dream state
 
 Does order matter with words in spells?
+
+Tiles could affect movement speed potentially
