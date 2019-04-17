@@ -10,6 +10,8 @@
 #include <engine.h>
 #include <object_manager.h>
 
+#include <boost/algorithm/string.hpp>
+
 using namespace std;
 
 TextParser::TextParser () {
@@ -71,6 +73,19 @@ void TextParser::commitText () {
     string line = input.get_cursor_line();
 
     input.set_text("");
+
+    boost::algorithm::trim(line);
+
+    vector<string> words;
+    boost::algorithm::split(words, line, boost::algorithm::is_any_of(" "));
+
+    for (int32_t i = 0; i < words.size(); i++) {
+        if (words[i].length() == 0) {
+            words.erase(words.begin() + i);
+
+            i--;
+        }
+    }
 
     ///QQQ handle commit
 }
