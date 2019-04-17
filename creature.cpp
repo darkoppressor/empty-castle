@@ -20,22 +20,12 @@ CreatureTemplate* Creature::getType () const {
     return Game_Data::getCreatureTemplate(type);
 }
 
-LightTemplate* Creature::getLightTemplate () const {
-    string lightType = getType()->light;
-
-    if (lightType.length() > 0) {
-        return Game_Data::getLightTemplate(lightType);
-    } else {
-        return 0;
-    }
-}
-
 unsigned char Creature::getCharacter () const {
     return getType()->character;
 }
 
-string Creature::getCharacterColor () const {
-    return getType()->characterColor;
+Material* Creature::getMaterial () const {
+    return Game_Data::getMaterial(getType()->material);
 }
 
 int32_t Creature::getMoveForce () const {
@@ -48,6 +38,20 @@ int32_t Creature::getMass () const {
 
 int32_t Creature::getMaximumSpeed () const {
     return getType()->maximumSpeed;
+}
+
+LightTemplate* Creature::getLightTemplate () const {
+    string lightType = getType()->light;
+
+    if (lightType.length() > 0) {
+        return Game_Data::getLightTemplate(lightType);
+    } else {
+        return 0;
+    }
+}
+
+string Creature::getCharacterColor () const {
+    return getMaterial()->characterColor;
 }
 
 void Creature::stop () {

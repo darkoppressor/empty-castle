@@ -17,9 +17,10 @@ using namespace std;
 vector<Map> Game_Data::maps;
 vector<CreatureTemplate> Game_Data::creatureTemplates;
 vector<LightTemplate> Game_Data::lightTemplates;
+vector<Material> Game_Data::materials;
 
 ///Don't forget to increment this for each progress item in load_data_game() below
-const int Game_Data::game_data_load_item_count = 3;
+const int Game_Data::game_data_load_item_count = 4;
 void Game_Data::load_data_game (Progress_Bar& bar) {
     bar.progress("Loading maps");
     Data_Manager::load_data("map");
@@ -29,6 +30,9 @@ void Game_Data::load_data_game (Progress_Bar& bar) {
 
     bar.progress("Loading light templates");
     Data_Manager::load_data("light");
+
+    bar.progress("Loading materials");
+    Data_Manager::load_data("material");
 }
 
 void Game_Data::load_data_tag_game (string tag, File_IO_Load* load) {
@@ -38,6 +42,8 @@ void Game_Data::load_data_tag_game (string tag, File_IO_Load* load) {
         loadCreatureTemplate(load);
     } else if (tag == "light") {
         loadLightTemplate(load);
+    } else if (tag == "material") {
+        loadMaterial(load);
     }
 }
 
@@ -45,6 +51,7 @@ void Game_Data::unload_data_game () {
     maps.clear();
     creatureTemplates.clear();
     lightTemplates.clear();
+    materials.clear();
 }
 
 void Game_Data::loadMap (File_IO_Load* load) {
@@ -82,8 +89,8 @@ size_t Game_Data::loadMapCharacter (vector<string>& lines, size_t lineIndex) {
                 maps.back().mapCharacters.back().displayCharacter = (unsigned char) Strings::string_to_unsigned_long(
                     line);
             }
-        } else if (Data_Reader::check_prefix(line, "characterColor:")) {
-            maps.back().mapCharacters.back().characterColor = line;
+        } else if (Data_Reader::check_prefix(line, "material:")) {
+            maps.back().mapCharacters.back().material = line;
         } else if (Data_Reader::check_prefix(line, "backgroundColor:")) {
             maps.back().mapCharacters.back().backgroundColor = line;
         } else if (Data_Reader::check_prefix(line, "<playerSpawn>")) {
@@ -194,8 +201,8 @@ void Game_Data::loadCreatureTemplate (File_IO_Load* load) {
             } else {
                 creatureTemplates.back().character = (unsigned char) Strings::string_to_unsigned_long(line);
             }
-        } else if (Data_Reader::check_prefix(line, "characterColor:")) {
-            creatureTemplates.back().characterColor = line;
+        } else if (Data_Reader::check_prefix(line, "material:")) {
+            creatureTemplates.back().material = line;
         } else if (Data_Reader::check_prefix(line, "moveForce:")) {
             creatureTemplates.back().moveForce = Strings::string_to_long(line);
         } else if (Data_Reader::check_prefix(line, "mass:")) {
@@ -261,6 +268,40 @@ LightTemplate* Game_Data::getLightTemplate (string name) {
 
     if (ptr_object == 0) {
         Log::add_error("Error accessing light template '" + name + "'");
+    }
+
+    return ptr_object;
+}
+
+void Game_Data::loadMaterial (File_IO_Load* load) {
+    materials.push_back(Material());
+
+    vector<string> lines = Data_Reader::read_data(load, "</material>");
+
+    for (size_t i = 0; i < lines.size(); i++) {
+        string& line = lines[i];
+
+        if (Data_Reader::check_prefix(line, "name:")) {
+            materials.back().name = line;
+        } else if (Data_Reader::check_prefix(line, "characterColor:")) {
+            materials.back().characterColor = line;
+        }
+    }
+}
+
+Material* Game_Data::getMaterial (string name) {
+    Material* ptr_object = 0;
+
+    for (size_t i = 0; i < materials.size(); i++) {
+        if (materials[i].name == name) {
+            ptr_object = &materials[i];
+
+            break;
+        }
+    }
+
+    if (ptr_object == 0) {
+        Log::add_error("Error accessing material '" + name + "'");
     }
 
     return ptr_object;

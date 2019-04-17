@@ -19,14 +19,32 @@ const MapCharacter& Tile::getType () const {
     return Game::getMapCharacter(type);
 }
 
-LightTemplate* Tile::getLightTemplate () const {
-    string light = getType().light;
+unsigned char Tile::getCharacter () const {
+    return getType().displayCharacter;
+}
 
-    if (light.length() > 0) {
-        return Game_Data::getLightTemplate(light);
+Material* Tile::getMaterial () const {
+    return Game_Data::getMaterial(getType().material);
+}
+
+string Tile::getBackgroundColor () const {
+    return getType().backgroundColor;
+}
+
+string Tile::getDoorTo () const {
+    return getType().doorTo;
+}
+
+LightTemplate* Tile::getLightTemplate () const {
+    if (getType().light.length() > 0) {
+        return Game_Data::getLightTemplate(getType().light);
     } else {
         return 0;
     }
+}
+
+string Tile::getCharacterColor () const {
+    return getMaterial()->characterColor;
 }
 
 Tile::Tile () {
@@ -34,8 +52,16 @@ Tile::Tile () {
     explored = false;
 }
 
-void Tile::setType (uint32_t type) {
-    this->type = type;
+bool Tile::isPlayerSpawn () const {
+    return getType().playerSpawn;
+}
+
+bool Tile::isSolid () const {
+    return getType().solid;
+}
+
+bool Tile::isOpaque () const {
+    return getType().opaque;
 }
 
 Collision_Rect<int32_t> Tile::getBox (const Coords<int32_t>& tilePosition) {
@@ -46,20 +72,8 @@ Collision_Rect<int32_t> Tile::getBox (const Coords<int32_t>& tilePosition) {
         (int32_t) font->get_letter_width(), (int32_t) font->get_letter_height());
 }
 
-bool Tile::isPlayerSpawn () const {
-    return getType().playerSpawn;
-}
-
-string Tile::getDoorTo () const {
-    return getType().doorTo;
-}
-
-bool Tile::isSolid () const {
-    return getType().solid;
-}
-
-bool Tile::isOpaque () const {
-    return getType().opaque;
+void Tile::setType (uint32_t type) {
+    this->type = type;
 }
 
 void Tile::setExplored (bool explored) {
@@ -119,11 +133,9 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
 
     if (Collision::check_rect(boxRender * Game_Manager::camera_zoom, Game_Manager::camera)) {
         if (explored) {
-            const MapCharacter& type = getType();
-
-            if (type.backgroundColor.length() > 0 && type.backgroundColor != "background") {
+            if (getBackgroundColor().length() > 0 && getBackgroundColor() != "background") {
                 Color finalBackgroundColor;
-                Color* backgroundColorPtr = Object_Manager::get_color(type.backgroundColor);
+                Color* backgroundColorPtr = Object_Manager::get_color(getBackgroundColor());
 
                 if (isLit()) {
                     finalBackgroundColor = Lighting::applyLightToColor(backgroundColorPtr, lightColor);
@@ -139,12 +151,12 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
                                          &finalBackgroundColor);
             }
 
-            Color finalCharacterColor = Lighting::applyLightToColor(type.characterColor, lightColor);
+            Color finalCharacterColor = Lighting::applyLightToColor(getCharacterColor(), lightColor);
             Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
             font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
                        box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
-                                                                                          type.displayCharacter), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
+                                                                                          getCharacter()), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
                        Game_Manager::camera_zoom);
         }
     }

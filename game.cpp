@@ -112,7 +112,7 @@ void Game::generate_world () {
     MapCharacter padding;
     padding.character = Game_Constants::MAP_CHARACTER_PADDING;
     padding.displayCharacter = Game_Constants::MAP_CHARACTER_PADDING;
-    padding.characterColor = Game_Constants::MAP_CHARACTER_PADDING_COLOR;
+    padding.material = Game_Constants::MAP_CHARACTER_PADDING_MATERIAL;
     padding.backgroundColor = Game_Constants::MAP_CHARACTER_PADDING_BACKGROUND_COLOR;
     padding.solid = Game_Constants::MAP_CHARACTER_PADDING_SOLID;
     padding.opaque = Game_Constants::MAP_CHARACTER_PADDING_OPAQUE;

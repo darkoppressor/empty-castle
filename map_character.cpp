@@ -10,7 +10,7 @@ using namespace std;
 MapCharacter::MapCharacter () {
     character = Game_Constants::MAP_CHARACTER_ERROR;
     displayCharacter = Game_Constants::MAP_CHARACTER_ERROR;
-    characterColor = Game_Constants::MAP_CHARACTER_ERROR_COLOR;
+    material = Game_Constants::MAP_CHARACTER_ERROR_MATERIAL;
     backgroundColor = "";
     playerSpawn = false;
     doorTo = "";
@@ -22,7 +22,7 @@ MapCharacter::MapCharacter () {
 MapCharacter::MapCharacter (const MapCharacter& mapCharacter) {
     this->character = mapCharacter.character;
     this->displayCharacter = mapCharacter.displayCharacter;
-    this->characterColor = mapCharacter.characterColor;
+    this->material = mapCharacter.material;
     this->backgroundColor = mapCharacter.backgroundColor;
     this->playerSpawn = mapCharacter.playerSpawn;
     this->doorTo = mapCharacter.doorTo;

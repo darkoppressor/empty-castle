@@ -13,11 +13,12 @@ using namespace std;
 /// BEGIN SCRIPT-GENERATED CONSTANT INITIALIZATIONS
 int32_t Game_Constants::MAP_PADDING=0;
 uint8_t Game_Constants::MAP_CHARACTER_ERROR=0;
+string Game_Constants::MAP_CHARACTER_ERROR_MATERIAL="";
 string Game_Constants::MAP_CHARACTER_ERROR_COLOR="";
 bool Game_Constants::MAP_CHARACTER_ERROR_SOLID=false;
 bool Game_Constants::MAP_CHARACTER_ERROR_OPAQUE=false;
 uint8_t Game_Constants::MAP_CHARACTER_PADDING=0;
-string Game_Constants::MAP_CHARACTER_PADDING_COLOR="";
+string Game_Constants::MAP_CHARACTER_PADDING_MATERIAL="";
 string Game_Constants::MAP_CHARACTER_PADDING_BACKGROUND_COLOR="";
 bool Game_Constants::MAP_CHARACTER_PADDING_SOLID=false;
 bool Game_Constants::MAP_CHARACTER_PADDING_OPAQUE=false;
@@ -53,6 +54,9 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     else if(name=="map_character_error"){
         Game_Constants::MAP_CHARACTER_ERROR=Strings::string_to_unsigned_long(value);
     }
+    else if(name=="map_character_error_material"){
+        Game_Constants::MAP_CHARACTER_ERROR_MATERIAL=value;
+    }
     else if(name=="map_character_error_color"){
         Game_Constants::MAP_CHARACTER_ERROR_COLOR=value;
     }
@@ -65,8 +69,8 @@ void Game_Constants_Loader::set_game_constant (string name, string value) {
     else if(name=="map_character_padding"){
         Game_Constants::MAP_CHARACTER_PADDING=Strings::string_to_unsigned_long(value);
     }
-    else if(name=="map_character_padding_color"){
-        Game_Constants::MAP_CHARACTER_PADDING_COLOR=value;
+    else if(name=="map_character_padding_material"){
+        Game_Constants::MAP_CHARACTER_PADDING_MATERIAL=value;
     }
     else if(name=="map_character_padding_background_color"){
         Game_Constants::MAP_CHARACTER_PADDING_BACKGROUND_COLOR=value;

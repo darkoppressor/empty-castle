@@ -1,0 +1,29 @@
+<material>
+    name:error
+    characterColor:red
+</material>
+
+<material>
+    name:padding
+    characterColor:background
+</material>
+
+<material>
+    name:leather
+    characterColor:leather
+</material>
+
+<material>
+    name:stone
+    characterColor:stone
+</material>
+
+<material>
+    name:wood
+    characterColor:wood
+</material>
+
+<material>
+    name:glass
+    characterColor:background
+</material>

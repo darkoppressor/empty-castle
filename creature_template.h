@@ -11,7 +11,7 @@ class CreatureTemplate {
     public:
         std::string name;
         unsigned char character;
-        std::string characterColor;
+        std::string material;
         // newtons
         // Note that this should be > mass, because a force smaller than mass will be rounded down to 0
         // acceleration

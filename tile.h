@@ -9,6 +9,7 @@
 #include "light_template.h"
 #include "light_source.h"
 #include "better_color.h"
+#include "material.h"
 
 #include <collision.h>
 
@@ -20,32 +21,36 @@
 class Tile: public LightSource {
     private:
         std::uint32_t type;
-
-        // other saved values:
         bool explored;
 
-        // ephemeral values:
+        // Ephemeral values:
         std::unordered_set<uint32_t> appliedLightSources;
         // alpha is used for brightness
         BetterColor lightColor;
 
-        // getters:
+        // Derived from type:
         const MapCharacter& getType() const;
+        unsigned char getCharacter() const;
+        Material* getMaterial() const;
+        std::string getBackgroundColor() const;
+        std::string getDoorTo() const;
         LightTemplate* getLightTemplate() const;
+
+        // Derived from material:
+        std::string getCharacterColor() const;
 
     public:
         Tile ();
 
-        void setType(std::uint32_t type);
+        // Derived from type:
+        bool isPlayerSpawn() const;
+        bool isSolid() const;
+        bool isOpaque() const;
 
         // pixel box
         static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);
 
-        bool isPlayerSpawn() const;
-        std::string getDoorTo() const;
-        bool isSolid() const;
-        bool isOpaque() const;
-
+        void setType(std::uint32_t type);
         void setExplored(bool explored);
 
         // light source:

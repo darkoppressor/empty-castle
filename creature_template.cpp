@@ -10,7 +10,7 @@ using namespace std;
 CreatureTemplate::CreatureTemplate () {
     name = "";
     character = Game_Constants::MAP_CHARACTER_ERROR;
-    characterColor = Game_Constants::MAP_CHARACTER_ERROR_COLOR;
+    material = Game_Constants::MAP_CHARACTER_ERROR_MATERIAL;
     moveForce = 0;
     mass = 0;
     maximumSpeed = 0;

@@ -27,6 +27,7 @@ light_template.cpp
 main.cpp
 map.cpp
 map_character.cpp
+material.cpp
 network_game.cpp
 special_info.cpp
 text_parser.cpp

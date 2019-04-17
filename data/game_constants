@@ -57,6 +57,12 @@
 </game_constant>
 
 <game_constant>
+	name:map_character_error_material
+	value:error
+	type:string
+</game_constant>
+
+<game_constant>
 	name:map_character_error_color
 	value:red
 	type:string
@@ -81,8 +87,8 @@
 </game_constant>
 
 <game_constant>
-	name:map_character_padding_color
-	value:background
+	name:map_character_padding_material
+	value:padding
 	type:string
 </game_constant>
 

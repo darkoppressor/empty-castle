@@ -5,14 +5,14 @@
         // stone floor
         character:.
         displayCharacter:'.'
-        characterColor:stone
+        material:stone
     </mapCharacter>
 
     <mapCharacter>
         // stone wall
         character:#
         displayCharacter:'#'
-        characterColor:stone
+        material:stone
         <solid>
         <opaque>
     </mapCharacter>
@@ -21,7 +21,7 @@
         // wooden door
         character:+
         displayCharacter:'+'
-        characterColor:wood
+        material:wood
         <solid>
         <opaque>
     </mapCharacter>
@@ -30,7 +30,7 @@
         // wooden torch
         character:*
         displayCharacter:'*'
-        characterColor:wood
+        material:wood
         light:torch
         <solid>
     </mapCharacter>
@@ -39,6 +39,7 @@
         // red stained glass
         character::
         displayCharacter:' '
+        material:glass
         light:stainedGlassRed
         <solid>
     </mapCharacter>
@@ -47,6 +48,7 @@
         // green stained glass
         character:'
         displayCharacter:' '
+        material:glass
         light:stainedGlassGreen
         <solid>
     </mapCharacter>
@@ -55,6 +57,7 @@
         // blue stained glass
         character:;
         displayCharacter:' '
+        material:glass
         light:stainedGlassBlue
         <solid>
     </mapCharacter>
@@ -63,7 +66,7 @@
         // player spawn
         character:@
         displayCharacter:'.'
-        characterColor:stone
+        material:stone
         <playerSpawn>
     </mapCharacter>
 

@@ -11,7 +11,7 @@ class MapCharacter {
     public:
         unsigned char character;
         unsigned char displayCharacter;
-        std::string characterColor;
+        std::string material;
         std::string backgroundColor;
         bool playerSpawn;
         std::string doorTo;

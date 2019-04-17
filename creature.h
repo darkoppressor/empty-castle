@@ -9,6 +9,7 @@
 #include "light_template.h"
 #include "light_source.h"
 #include "better_color.h"
+#include "material.h"
 
 #include <coords.h>
 #include <int_vector.h>
@@ -25,18 +26,21 @@ class Creature: public LightSource {
         Int_Vector velocity;
         Int_Vector force;
 
-        // ephemeral values:
+        // Ephemeral values:
         // alpha is used for brightness
         BetterColor lightColor;
 
-        // type getters:
+        // Derived from type:
         CreatureTemplate* getType() const;
-        LightTemplate* getLightTemplate() const;
         unsigned char getCharacter() const;
-        std::string getCharacterColor() const;
+        Material* getMaterial() const;
         std::int32_t getMoveForce() const;
         std::int32_t getMass() const;
         std::int32_t getMaximumSpeed() const;
+        LightTemplate* getLightTemplate() const;
+
+        // Derived from material
+        std::string getCharacterColor() const;
 
         void stop();
         void brake();

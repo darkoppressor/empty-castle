@@ -1,7 +1,7 @@
 <creature>
     name:player
     character:'@'
-    characterColor:player
+    material:leather
     moveForce:3072
     mass:70
     maximumSpeed:144
