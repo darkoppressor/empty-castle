@@ -87,6 +87,49 @@ What the costs are depend on the spell effect
 Is the magic circle a component or an effect?
 Either way could protect the caster from some types of undead (e.g., spirits)
 
+No experience or leveling up
+I do want progression, but I want it to be focused on more specific things found (more magic information, a specific item allowing more powerful spells, armor, etc.)
+Absolutely nothing can be grinded for
+
+I DO NOT want permadeath
+This is more of an exploration game, with difficult sections
+Honestly I love the way Soulsborne games handle this
+There are specific save spots that are safe, fully heal you, and save your game
+The game should also be saved whenever you leave, so you can instantly resume your game
+I do want permanent consequences, just not death and the ending of the game
+This means that the player should NOT be able to get the game into an unwinnable state
+The game SHOULD have pausing support
+Respect the player's life and time
+Gameplay is mainly real time
+You can pause anywhere
+You CANNOT cast spells while paused
+You CAN look at your inventory, stats, etc. while paused
+So allow pausing, and allow any information to be seen while paused, but prevent any gameplay actions to be taken while paused
+Singleplayer only
+While the game has a lot of the hallmarks, it is in no way a Roguelike or Roguelite
+No character selection or creation
+
+For now at least, nothing is randomly generated
+
+Gods exist in the game, and your reputation with them should be easy to understand and influence
+They should all be neutral to most actions by the player, and positively influenced by specific player actions
+Things can anger them, but those things can't be simple repeatable things like "X god is angered every time you kill something"
+Instead, they can be angered by the player essentially choosing to anger them to please another god
+
+Maybe "general" or "natural" spells that don't require a god are actually secretly also calling on a god, just a specific one that hides behind the scenes
+So you can use magic based on various gods (some are mutually exclusive), or use "general" magic, but even that is actually secretly appealing a special very secretive god
+So magic based on all but one god MUST specifically call upon that god for the spell to work, that god must approve, and there are often other requirements
+But "general" magic works for anyone and appears to be simply natural
+However, in reality it too relies on a supportive god
+There should be ONE god that expects complete devotion with no other god worship
+This god basically represents something like a monotheistic religion
+
+Common actions like killing simple creatures have no effect on any god's relation to the player
+HOWEVER, the player can dedicate certain actions to a specific god, and this WILL affect the relation with that god
+
+Maybe knowing a specific thing's name might aid in targeting?
+I.e., you know the true name of a spirit, thus you can control it much more directly
+
 Magic design:
 -------------
 
