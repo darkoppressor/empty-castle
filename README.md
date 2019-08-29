@@ -1,5 +1,5 @@
 # empty-castle
-[![Build Status](http://wells-family.xyz:8080/jenkins/buildStatus/icon?job=empty-castle)](https://wells-family.xyz/jenkins/job/empty-castle/)
+[![Build Status](https://wells-family.xyz/jenkins/buildStatus/icon?job=empty-castle)](https://wells-family.xyz/jenkins/job/empty-castle/)
 
 A game in development by Cheese and Bacon Games
 http://cheeseandbacon.org/
