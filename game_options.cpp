@@ -13,7 +13,7 @@ bool Game_Options::get_option (string name, string& value) {
         value=Strings::num_to_string(example_option);
 
         return true;
-    }*/
+       }*/
 
     return false;
 }
@@ -21,5 +21,5 @@ bool Game_Options::get_option (string name, string& value) {
 void Game_Options::set_option (string name, string value) {
     /**if(name=="cl_example_option"){
         example_option=Strings::string_to_long(value);
-    }*/
+       }*/
 }

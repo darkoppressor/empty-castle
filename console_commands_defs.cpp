@@ -15,7 +15,7 @@ bool Console::handle_game_command (const string& command, const vector<string>& 
         ///Do something with the command
 
         return true;
-    }*/
+       }*/
 
     return false;
 }
