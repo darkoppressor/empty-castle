@@ -8,12 +8,12 @@
 #include "creature_template.h"
 #include "light_template.h"
 #include "light_source.h"
-#include "better_color.h"
 #include "material.h"
 
 #include <coords.h>
 #include <int_vector.h>
 #include <collision.h>
+#include <color2.h>
 
 #include <string>
 #include <cstdint>
@@ -28,7 +28,7 @@ class Creature: public LightSource {
 
         // Ephemeral values:
         // alpha is used for brightness
-        BetterColor lightColor;
+        Color2 lightColor;
 
         // Derived from type:
         CreatureTemplate* getType() const;

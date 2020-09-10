@@ -96,7 +96,7 @@ bool Tile::isLit () const {
     return lightColor.getAlpha() > 0;
 }
 
-BetterColor Tile::getLightColor () const {
+Color2 Tile::getLightColor () const {
     return lightColor;
 }
 
