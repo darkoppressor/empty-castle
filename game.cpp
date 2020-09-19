@@ -37,10 +37,10 @@ Coords<int32_t> Game::getWorldDimensions () {
     return Coords<int32_t>(worldWidth, worldHeight);
 }
 
-Coords<int32_t> Game::getWorldDimensionsPixels () {
-    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
+Coords<double> Game::getWorldDimensionsPixels () {
+    Collision_Rect<double> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
 
-    return Coords<int32_t>(worldWidth * tileBox.w, worldHeight * tileBox.h);
+    return Coords<double>(worldWidth * tileBox.w, worldHeight * tileBox.h);
 }
 
 const MapCharacter& Game::getMapCharacter (uint32_t type) {
@@ -167,8 +167,8 @@ void Game::generate_world () {
                 tiles[x][y].setType(tileType);
 
                 if (creatures.size() == 0 && tiles[x][y].isPlayerSpawn()) {
-                    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(x, y));
-                    creatures.push_back(Creature("player", Coords<int32_t>(tileBox.x, tileBox.y)));
+                    Collision_Rect<double> tileBox = Tile::getBox(Coords<int32_t>(x, y));
+                    creatures.push_back(Creature("player", Coords<double>(tileBox.x, tileBox.y)));
                 }
             }
         }
@@ -275,7 +275,7 @@ void Game::render_background () {
 }
 
 Collision_Rect<int32_t> Game::getCameraTileBox (int32_t padding) {
-    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
+    Collision_Rect<double> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
     int32_t cameraTileX = (int32_t) (Game_Manager::camera.x / (tileBox.w * Game_Manager::camera_zoom));
     int32_t cameraTileY = (int32_t) (Game_Manager::camera.y / (tileBox.h * Game_Manager::camera_zoom));
     int32_t endTileX = cameraTileX + (int32_t) (Game_Manager::camera.w / (tileBox.w * Game_Manager::camera_zoom)) + 2;

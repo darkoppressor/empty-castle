@@ -65,8 +65,7 @@ void Game_Manager::set_camera () {
 
     if (in_progress) {
         const Creature& player = Game::getPlayer();
-        Collision_Rect<int32_t> playerBox = player.getBox();
-        Collision_Rect<double> boxPlayer(playerBox.x, playerBox.y, playerBox.w, playerBox.h);
+        Collision_Rect<double> boxPlayer = player.getBox();
 
         center_camera(boxPlayer);
     } else {
@@ -93,7 +92,7 @@ void Game_Manager::set_camera () {
         }
     }
 
-    Coords<int32_t> worldDimensions = Game::getWorldDimensionsPixels();
+    Coords<double> worldDimensions = Game::getWorldDimensionsPixels();
 
     // If the camera goes past the bounds of the world, set it back in the bounds.
     if (camera.x < 0.0) {

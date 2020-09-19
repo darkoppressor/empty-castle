@@ -204,11 +204,11 @@ void Game_Data::loadCreatureTemplate (File_IO_Load* load) {
         } else if (Data_Reader::check_prefix(line, "material:")) {
             creatureTemplates.back().material = line;
         } else if (Data_Reader::check_prefix(line, "moveForce:")) {
-            creatureTemplates.back().moveForce = Strings::string_to_long(line);
+            creatureTemplates.back().moveForce = Strings::string_to_double(line);
         } else if (Data_Reader::check_prefix(line, "mass:")) {
-            creatureTemplates.back().mass = Strings::string_to_long(line);
+            creatureTemplates.back().mass = Strings::string_to_double(line);
         } else if (Data_Reader::check_prefix(line, "maximumSpeed:")) {
-            creatureTemplates.back().maximumSpeed = Strings::string_to_long(line);
+            creatureTemplates.back().maximumSpeed = Strings::string_to_double(line);
         } else if (Data_Reader::check_prefix(line, "light:")) {
             creatureTemplates.back().light = line;
         }

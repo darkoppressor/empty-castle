@@ -12,7 +12,6 @@
 #include <object_manager.h>
 #include <game_manager.h>
 #include <engine.h>
-#include <int_math.h>
 
 using namespace std;
 
@@ -28,15 +27,15 @@ Material* Creature::getMaterial () const {
     return Game_Data::getMaterial(getType()->material);
 }
 
-int32_t Creature::getMoveForce () const {
+double Creature::getMoveForce () const {
     return getType()->moveForce;
 }
 
-int32_t Creature::getMass () const {
+double Creature::getMass () const {
     return getType()->mass;
 }
 
-int32_t Creature::getMaximumSpeed () const {
+double Creature::getMaximumSpeed () const {
     return getType()->maximumSpeed;
 }
 
@@ -60,9 +59,9 @@ void Creature::stop () {
 }
 
 void Creature::brake () {
-    Int_Vector brake_force(getMoveForce() * 2, velocity.direction + 180);
+    Vector brake_force(getMoveForce() * 2.0, velocity.direction + 180.0);
 
-    Int_Math::clamp_angle(brake_force.direction);
+    Math::clamp_angle(brake_force.direction);
 
     if (brake_force.magnitude / getMass() > velocity.magnitude) {
         brake_force.magnitude = velocity.magnitude * getMass();
@@ -71,35 +70,33 @@ void Creature::brake () {
     force += brake_force;
 }
 
-Creature::Creature (const string& type, const Coords<int32_t>& position) {
+Creature::Creature (const string& type, const Coords<double>& position) {
     this->type = type;
     this->position = position;
 }
 
-Collision_Rect<int32_t> Creature::getBox () const {
+Collision_Rect<double> Creature::getBox () const {
     Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
-    return Collision_Rect<int32_t>(position.x, position.y,
-                                   (int32_t) font->get_letter_width(), (int32_t) font->get_letter_height());
+    return Collision_Rect<double>(position.x, position.y, font->get_letter_width(), font->get_letter_height());
 }
 
 Coords<int32_t> Creature::getTilePosition () const {
-    Collision_Rect<int32_t> box = getBox();
+    Collision_Rect<double> box = getBox();
 
     return Coords<int32_t>(box.x / box.w, box.y / box.h);
 }
 
-Collision_Rect<int32_t> Creature::getCollisionBox () const {
+Collision_Rect<double> Creature::getCollisionBox () const {
     Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
-    return Collision_Rect<int32_t>(position.x + Game_Constants::CREATURE_COLLISION_REDUCTION,
-                                   position.y + Game_Constants::CREATURE_COLLISION_REDUCTION,
-                                   (int32_t) font->get_letter_width() - Game_Constants::CREATURE_COLLISION_REDUCTION* 2,
-                                   (int32_t) font->get_letter_height() -
-                                   Game_Constants::CREATURE_COLLISION_REDUCTION* 2);
+    return Collision_Rect<double>(position.x + Game_Constants::CREATURE_COLLISION_REDUCTION,
+                                  position.y + Game_Constants::CREATURE_COLLISION_REDUCTION,
+                                  font->get_letter_width() - Game_Constants::CREATURE_COLLISION_REDUCTION* 2.0,
+                                  font->get_letter_height() - Game_Constants::CREATURE_COLLISION_REDUCTION* 2.0);
 }
 
-const Int_Vector& Creature::getVelocity () const {
+const Vector& Creature::getVelocity () const {
     return velocity;
 }
 
@@ -164,28 +161,28 @@ void Creature::applyLight () {
 }
 
 void Creature::setThrustAngle (const string& direction) {
-    int32_t angle = 0;
+    double angle = 0.0;
 
     if (direction != "none") {
         if (direction == "left") {
-            angle = 180;
+            angle = 180.0;
         } else if (direction == "right") {
-            angle = 0;
+            angle = 0.0;
         } else if (direction == "up") {
-            angle = 90;
+            angle = 90.0;
         } else if (direction == "down") {
-            angle = 270;
+            angle = 270.0;
         } else if (direction == "left_up") {
-            angle = 135;
+            angle = 135.0;
         } else if (direction == "right_up") {
-            angle = 45;
+            angle = 45.0;
         } else if (direction == "left_down") {
-            angle = 225;
+            angle = 225.0;
         } else if (direction == "right_down") {
-            angle = 315;
+            angle = 315.0;
         }
 
-        force += Int_Vector(getMoveForce(), angle);
+        force += Vector(getMoveForce(), angle);
     } else {
         brake();
     }
@@ -193,7 +190,7 @@ void Creature::setThrustAngle (const string& direction) {
 
 void Creature::accelerate () {
     if (isAlive()) {
-        Int_Vector acceleration = force / getMass();
+        Vector acceleration = force / getMass();
 
         velocity += acceleration;
 
@@ -203,17 +200,17 @@ void Creature::accelerate () {
             velocity.magnitude = -getMaximumSpeed();
         }
 
-        force *= 0;
+        force *= 0.0;
     }
 }
 
 void Creature::movement () {
     if (isAlive()) {
-        Int_Vector_Components vc = velocity.get_components();
-        int32_t movementX = vc.a / (int32_t) Engine::UPDATE_RATE;
+        Vector_Components vc = velocity.get_components();
+        double movementX = vc.a / Engine::UPDATE_RATE;
 
         for (int32_t i = 0; i < Game_Constants::CREATURE_COLLISION_STEPS; i++) {
-            Coords<int32_t> oldPosition = position;
+            Coords<double> oldPosition = position;
             position.x += movementX / Game_Constants::CREATURE_COLLISION_STEPS;
 
             if (tileCollision(oldPosition)) {
@@ -221,10 +218,10 @@ void Creature::movement () {
             }
         }
 
-        int32_t movementY = vc.b / (int32_t) Engine::UPDATE_RATE;
+        double movementY = vc.b / Engine::UPDATE_RATE;
 
         for (int32_t i = 0; i < Game_Constants::CREATURE_COLLISION_STEPS; i++) {
-            Coords<int32_t> oldPosition = position;
+            Coords<double> oldPosition = position;
             position.y += movementY / Game_Constants::CREATURE_COLLISION_STEPS;
 
             if (tileCollision(oldPosition)) {
@@ -232,18 +229,18 @@ void Creature::movement () {
             }
         }
 
-        if (position.x < 0) {
-            position.x = 0;
+        if (position.x < 0.0) {
+            position.x = 0.0;
             stop();
         }
 
-        if (position.y < 0) {
-            position.y = 0;
+        if (position.y < 0.0) {
+            position.y = 0.0;
             stop();
         }
 
-        Coords<int32_t> worldDimensionsPixels = Game::getWorldDimensionsPixels();
-        Collision_Rect<int32_t> box = getCollisionBox();
+        Coords<double> worldDimensionsPixels = Game::getWorldDimensionsPixels();
+        Collision_Rect<double> box = getCollisionBox();
 
         if (box.x + box.w >= worldDimensionsPixels.x) {
             position.x = worldDimensionsPixels.x - box.w;
@@ -257,7 +254,7 @@ void Creature::movement () {
     }
 }
 
-bool Creature::tileCollision (const Coords<int32_t>& oldPosition) {
+bool Creature::tileCollision (const Coords<double>& oldPosition) {
     const vector<vector<Tile>>& tiles = Game::getTiles();
     Coords<int32_t> tilePosition = getTilePosition();
     Coords<int32_t> worldDimensions = Game::getWorldDimensions();
@@ -265,7 +262,7 @@ bool Creature::tileCollision (const Coords<int32_t>& oldPosition) {
     for (int32_t x = tilePosition.x - 1; x < tilePosition.x + 2; x++) {
         for (int32_t y = tilePosition.y - 1; y < tilePosition.y + 2; y++) {
             if (x >= 0 && y >= 0 && x < worldDimensions.x && y < worldDimensions.y) {
-                Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(x, y));
+                Collision_Rect<double> tileBox = Tile::getBox(Coords<int32_t>(x, y));
 
                 if (Collision::check_rect(getCollisionBox(), tileBox)) {
                     if (tiles[x][y].isSolid()) {
@@ -284,10 +281,9 @@ bool Creature::tileCollision (const Coords<int32_t>& oldPosition) {
 }
 
 void Creature::render () const {
-    Collision_Rect<int32_t> box = getBox();
-    Collision_Rect<double> boxRender(box.x, box.y, box.w, box.h);
+    Collision_Rect<double> box = getBox();
 
-    if (Collision::check_rect(boxRender * Game_Manager::camera_zoom, Game_Manager::camera)) {
+    if (Collision::check_rect(box * Game_Manager::camera_zoom, Game_Manager::camera)) {
         Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
         Color finalCharacterColor = Lighting::applyLightToColor(getCharacterColor(), lightColor);
 

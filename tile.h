@@ -48,7 +48,7 @@ class Tile: public LightSource {
         bool isOpaque() const;
 
         // pixel box
-        static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);
+        static Collision_Rect<double> getBox(const Coords<std::int32_t>& tilePosition);
 
         void setType(std::uint32_t type);
         void setExplored(bool explored);
