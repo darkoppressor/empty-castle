@@ -13,14 +13,11 @@ class CreatureTemplate {
         unsigned char character;
         std::string material;
         // newtons
-        // Note that this should be > mass, because a force smaller than mass will be rounded down to 0
-        // acceleration
-        std::int32_t moveForce;
+        double moveForce;
         // kilograms
-        std::int32_t mass;
+        double mass;
         // meters/second
-        // Note that this needs to be >= the logic update rate, because speeds below it are rounded down to 0
-        std::int32_t maximumSpeed;
+        double maximumSpeed;
         std::string light;
 
         CreatureTemplate ();

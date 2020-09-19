@@ -64,10 +64,10 @@ bool Tile::isOpaque () const {
     return getType().opaque;
 }
 
-Collision_Rect<int32_t> Tile::getBox (const Coords<int32_t>& tilePosition) {
+Collision_Rect<double> Tile::getBox (const Coords<int32_t>& tilePosition) {
     Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
-    return Collision_Rect<int32_t>(
+    return Collision_Rect<double>(
         tilePosition.x * (int32_t) font->get_letter_width(), tilePosition.y * (int32_t) font->get_letter_height(),
         (int32_t) font->get_letter_width(), (int32_t) font->get_letter_height());
 }
@@ -96,7 +96,7 @@ bool Tile::isLit () const {
     return lightColor.getAlpha() > 0;
 }
 
-BetterColor Tile::getLightColor () const {
+Color2 Tile::getLightColor () const {
     return lightColor;
 }
 
@@ -128,10 +128,9 @@ void Tile::applyLight (uint32_t lightSourceId, int16_t lightLevel, const string&
 }
 
 void Tile::render (const Coords<int32_t>& tilePosition) const {
-    Collision_Rect<int32_t> box = getBox(tilePosition);
-    Collision_Rect<double> boxRender(box.x, box.y, box.w, box.h);
+    Collision_Rect<double> box = getBox(tilePosition);
 
-    if (Collision::check_rect(boxRender * Game_Manager::camera_zoom, Game_Manager::camera)) {
+    if (Collision::check_rect(box * Game_Manager::camera_zoom, Game_Manager::camera)) {
         if (explored) {
             if (getBackgroundColor().length() > 0 && getBackgroundColor() != "background") {
                 Color finalBackgroundColor;

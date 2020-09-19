@@ -27,6 +27,8 @@ void Engine::render_dev_info () {
 
         msg += "\nPlayer Position: " + Strings::num_to_string(Game::getPlayer().getBox().x) + ", " +
                Strings::num_to_string(Game::getPlayer().getBox().y) + "\n";
+        msg += "Player Tile Position: " + Strings::num_to_string(Game::getPlayer().getTilePosition().x) + ", " +
+               Strings::num_to_string(Game::getPlayer().getTilePosition().y) + "\n";
         msg += "Player Dimensions: " + Strings::num_to_string(Game::getPlayer().getBox().w) + ", " +
                Strings::num_to_string(Game::getPlayer().getBox().h) + "\n";
         msg += "Player Velocity: " + Strings::num_to_string(Game::getPlayer().getVelocity().magnitude) + " m/s, " +

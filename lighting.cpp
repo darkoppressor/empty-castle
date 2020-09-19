@@ -9,13 +9,13 @@
 
 using namespace std;
 
-Color Lighting::applyLightToColor (const string& initialColor, const BetterColor& lightColor) {
+Color Lighting::applyLightToColor (const string& initialColor, const Color2& lightColor) {
     return applyLightToColor(Object_Manager::get_color(initialColor), lightColor);
 }
 
-Color Lighting::applyLightToColor (Color* initialColor, const BetterColor& lightColor) {
-    BetterColor baseColor(initialColor->get_red(), initialColor->get_green(),
-                          initialColor->get_blue(), BetterColor::MINIMUM_CHANNEL_VALUE);
+Color Lighting::applyLightToColor (Color* initialColor, const Color2& lightColor) {
+    Color2 baseColor(initialColor->get_red(), initialColor->get_green(), initialColor->get_blue(),
+                     Color2::MINIMUM_CHANNEL_VALUE);
 
     if (lightColor.getAlpha() > 0) {
         baseColor.hdrAdd(lightColor.getRed(), lightColor.getGreen(), lightColor.getBlue(), lightColor.getAlpha());

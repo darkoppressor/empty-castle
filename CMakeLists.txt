@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.2.2)
 project(empty-castle)
 
 set(SOURCE_FILES
-better_color.cpp
 button_events_game.cpp
 console_commands_defs.cpp
 creature.cpp

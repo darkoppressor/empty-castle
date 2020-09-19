@@ -8,10 +8,10 @@
 #include "map_character.h"
 #include "light_template.h"
 #include "light_source.h"
-#include "better_color.h"
 #include "material.h"
 
 #include <collision.h>
+#include <color2.h>
 
 #include <string>
 #include <vector>
@@ -26,7 +26,7 @@ class Tile: public LightSource {
         // Ephemeral values:
         std::unordered_set<uint32_t> appliedLightSources;
         // alpha is used for brightness
-        BetterColor lightColor;
+        Color2 lightColor;
 
         // Derived from type:
         const MapCharacter& getType() const;
@@ -48,7 +48,7 @@ class Tile: public LightSource {
         bool isOpaque() const;
 
         // pixel box
-        static Collision_Rect<std::int32_t> getBox(const Coords<std::int32_t>& tilePosition);
+        static Collision_Rect<double> getBox(const Coords<std::int32_t>& tilePosition);
 
         void setType(std::uint32_t type);
         void setExplored(bool explored);
@@ -60,7 +60,7 @@ class Tile: public LightSource {
 
         // lighting:
         bool isLit() const;
-        BetterColor getLightColor() const;
+        Color2 getLightColor() const;
         void clearLightColor();
         void applyLight(std::uint32_t lightSourceId, std::int16_t lightLevel, const std::string& colorName);
 

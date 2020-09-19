@@ -8,12 +8,12 @@
 #include "creature_template.h"
 #include "light_template.h"
 #include "light_source.h"
-#include "better_color.h"
 #include "material.h"
 
 #include <coords.h>
-#include <int_vector.h>
+#include <math_vector.h>
 #include <collision.h>
+#include <color2.h>
 
 #include <string>
 #include <cstdint>
@@ -22,21 +22,21 @@
 class Creature: public LightSource {
     private:
         std::string type;
-        Coords<std::int32_t> position;
-        Int_Vector velocity;
-        Int_Vector force;
+        Coords<double> position;
+        Vector velocity;
+        Vector force;
 
         // Ephemeral values:
         // alpha is used for brightness
-        BetterColor lightColor;
+        Color2 lightColor;
 
         // Derived from type:
         CreatureTemplate* getType() const;
         unsigned char getCharacter() const;
         Material* getMaterial() const;
-        std::int32_t getMoveForce() const;
-        std::int32_t getMass() const;
-        std::int32_t getMaximumSpeed() const;
+        double getMoveForce() const;
+        double getMass() const;
+        double getMaximumSpeed() const;
         LightTemplate* getLightTemplate() const;
 
         // Derived from material
@@ -46,16 +46,16 @@ class Creature: public LightSource {
         void brake();
 
     public:
-        Creature (const std::string& type, const Coords<std::int32_t>& position);
+        Creature (const std::string& type, const Coords<double>& position);
 
         // pixel box
-        Collision_Rect<std::int32_t> getBox() const;
+        Collision_Rect<double> getBox() const;
         // tile coordinates
         Coords<std::int32_t> getTilePosition() const;
         // pixel box
-        Collision_Rect<std::int32_t> getCollisionBox() const;
+        Collision_Rect<double> getCollisionBox() const;
 
-        const Int_Vector& getVelocity() const;
+        const Vector& getVelocity() const;
 
         bool isAlive() const;
 
@@ -72,7 +72,7 @@ class Creature: public LightSource {
         void accelerate();
         void movement();
         // Returns true if collision detected
-        bool tileCollision(const Coords<std::int32_t>& oldPosition);
+        bool tileCollision(const Coords<double>& oldPosition);
 
         void render() const;
 };

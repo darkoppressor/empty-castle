@@ -5,16 +5,15 @@
 #ifndef lighting_h
 #define lighting_h
 
-#include "better_color.h"
-
 #include <color.h>
+#include <color2.h>
 
 #include <string>
 
 class Lighting {
     public:
-        static Color applyLightToColor(const std::string& initialColor, const BetterColor& lightColor);
-        static Color applyLightToColor(Color* initialColor, const BetterColor& lightColor);
+        static Color applyLightToColor(const std::string& initialColor, const Color2& lightColor);
+        static Color applyLightToColor(Color* initialColor, const Color2& lightColor);
 };
 
 #endif
