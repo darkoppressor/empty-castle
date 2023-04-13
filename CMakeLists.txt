@@ -55,7 +55,7 @@ dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/linux-x86_64/SDL2/include/
 /home/tails/build-server/linux-x86_64/SDL2_image/
-/home/tails/build-server/linux-x86_64/SDL2_mixer/
+/home/tails/build-server/linux-x86_64/SDL2_mixer/include/
 /home/tails/build-server/linux-x86_64/boost/
 /home/tails/build-server/linux-x86_64/raknet/
 /home/tails/build-server/linux-x86_64/zlib/
@@ -76,8 +76,8 @@ target_link_libraries(Release-Linux-x86_64
 /home/tails/build-server/linux-x86_64/SDL2/build/.libs/libSDL2main.a
 /usr/lib/x86_64-linux-gnu/libGL.so
 /usr/lib/x86_64-linux-gnu/libGLU.so
-/usr/lib/x86_64-linux-gnu/libpthread.so
-/usr/lib/x86_64-linux-gnu/libdl.so
+/usr/lib/x86_64-linux-gnu/libpthread.a
+/usr/lib/x86_64-linux-gnu/libdl.a
 /home/tails/build-server/linux-x86_64/boost/stage/lib/libboost_system.a
 /home/tails/build-server/linux-x86_64/boost/stage/lib/libboost_filesystem.a
 /home/tails/build-server/linux-x86_64/raknet/raknet/Lib/LibStatic/Lib/libRakNetLibStatic.a
@@ -103,7 +103,7 @@ dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/linux-x86_64/SDL2/include/
 /home/tails/build-server/linux-x86_64/SDL2_image/
-/home/tails/build-server/linux-x86_64/SDL2_mixer/
+/home/tails/build-server/linux-x86_64/SDL2_mixer/include/
 /home/tails/build-server/linux-x86_64/boost/
 /home/tails/build-server/linux-x86_64/raknet/
 /home/tails/build-server/linux-x86_64/zlib/
@@ -124,8 +124,8 @@ target_link_libraries(Debug-Linux-x86_64
 /home/tails/build-server/linux-x86_64/SDL2/build/.libs/libSDL2main.a
 /usr/lib/x86_64-linux-gnu/libGL.so
 /usr/lib/x86_64-linux-gnu/libGLU.so
-/usr/lib/x86_64-linux-gnu/libpthread.so
-/usr/lib/x86_64-linux-gnu/libdl.so
+/usr/lib/x86_64-linux-gnu/libpthread.a
+/usr/lib/x86_64-linux-gnu/libdl.a
 /home/tails/build-server/linux-x86_64/boost/stage/lib/libboost_system.a
 /home/tails/build-server/linux-x86_64/boost/stage/lib/libboost_filesystem.a
 /home/tails/build-server/linux-x86_64/raknet/raknet/Lib/LibStatic/Lib/libRakNetLibStatic.a
@@ -153,7 +153,7 @@ dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/windows-x86_64/SDL2/include/
 /home/tails/build-server/windows-x86_64/SDL2_image/
-/home/tails/build-server/windows-x86_64/SDL2_mixer/
+/home/tails/build-server/windows-x86_64/SDL2_mixer/include/
 /home/tails/build-server/windows-x86_64/boost/
 /home/tails/build-server/windows-x86_64/raknet/
 /home/tails/build-server/windows-x86_64/zlib/
@@ -210,7 +210,7 @@ dependencies/
 /home/tails/build-server/steamworks-sdk/public/steam/
 /home/tails/build-server/osx-x86_64/SDL2/include/
 /home/tails/build-server/osx-x86_64/SDL2_image/
-/home/tails/build-server/osx-x86_64/SDL2_mixer/
+/home/tails/build-server/osx-x86_64/SDL2_mixer/include/
 /home/tails/build-server/osx-x86_64/boost/
 /home/tails/build-server/osx-x86_64/raknet/
 /home/tails/build-server/osx-x86_64/zlib/
@@ -233,7 +233,7 @@ target_link_libraries(Release-macOS-x86_64
 /home/tails/build-server/osx-x86_64/boost/stage/lib/libboost_filesystem.a
 /home/tails/build-server/osx-x86_64/raknet/raknet/Lib/LibStatic/Lib/libRakNetLibStatic.a
 /home/tails/build-server/steamworks-sdk/redistributable_bin/osx/libsteam_api.dylib
-"-m64 -arch x86_64 -mmacosx-version-min=10.9 -stdlib=libc++ -liconv -framework CoreFoundation -framework ApplicationServices -framework IOKit -framework AppKit -framework Carbon -framework ForceFeedback -framework CoreAudio -framework AudioUnit -framework AudioToolbox -framework OpenGL -framework CoreVideo"
+"-m64 -arch x86_64 -mmacosx-version-min=10.11 -stdlib=libc++ -liconv -framework CoreFoundation -framework ApplicationServices -framework IOKit -framework AppKit -framework Carbon -framework ForceFeedback -framework CoreAudio -framework AudioUnit -framework AudioToolbox -framework OpenGL -framework CoreVideo -framework CoreHaptics -framework GameController"
 )
 
 endif()
@@ -257,7 +257,7 @@ target_include_directories(Android-NoBuild PRIVATE
 dependencies/
 /home/tails/build-server/android/SDL2/include/
 /home/tails/build-server/android/SDL2_image/
-/home/tails/build-server/android/SDL2_mixer/
+/home/tails/build-server/android/SDL2_mixer/include/
 /home/tails/build-server/linux-x86_64/boost/
 /home/tails/build-server/android/raknet/
 )
