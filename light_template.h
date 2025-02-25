@@ -6,6 +6,7 @@
 #define light_template_h
 
 #include <string>
+#include <cstdint>
 
 class LightTemplate {
     public:
