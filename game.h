@@ -37,9 +37,11 @@ class Game {
         // tile coordinates
         static Coords<std::int32_t> getWorldDimensions();
         // pixel coordinates
-        static Coords<std::int32_t> getWorldDimensionsPixels();
+        static Coords<double> getWorldDimensionsPixels();
         static const MapCharacter& getMapCharacter(std::uint32_t type);
+
         static std::vector<std::vector<Tile>>& getTiles();
+
         static Creature& getPlayer();
         static bool isTextParserOn();
         static void updateTextParserFocus();

@@ -6,6 +6,7 @@
 #define light_template_h
 
 #include <string>
+#include <cstdint>
 
 class LightTemplate {
     public:
@@ -22,6 +23,7 @@ class LightTemplate {
         std::int32_t glowRateMax;
 
         LightTemplate ();
+
         std::int32_t getRandomGlow() const;
 };
 

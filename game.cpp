@@ -29,6 +29,7 @@ vector<vector<Tile>> Game::tiles;
 vector<Creature> Game::creatures;
 TextParser Game::textParser;
 TextDisplay Game::textDisplay;
+
 RNG& Game::getRng () {
     return rng;
 }
@@ -37,10 +38,10 @@ Coords<int32_t> Game::getWorldDimensions () {
     return Coords<int32_t>(worldWidth, worldHeight);
 }
 
-Coords<int32_t> Game::getWorldDimensionsPixels () {
-    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
+Coords<double> Game::getWorldDimensionsPixels () {
+    Collision_Rect<double> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
 
-    return Coords<int32_t>(worldWidth * tileBox.w, worldHeight * tileBox.h);
+    return Coords<double>(worldWidth * tileBox.w, worldHeight * tileBox.h);
 }
 
 const MapCharacter& Game::getMapCharacter (uint32_t type) {
@@ -112,7 +113,7 @@ void Game::clear_world () {
     tiles.clear();
     creatures.clear();
     textParser.set(false);
-    ///QQQ clear text display
+    // TODO clear text display
 }
 
 void Game::generate_world () {
@@ -122,6 +123,7 @@ void Game::generate_world () {
     textDisplay.setup(textParser.getHeight());
 
     RNG rngSeeder;
+
     rng.seed(rngSeeder.random_range(0, numeric_limits<uint32_t>::max()));
 
     Map* map = Game_Data::getMap(Game_Constants::INITIAL_MAP);
@@ -129,6 +131,7 @@ void Game::generate_world () {
     mapCharacters.push_back(MapCharacter());
 
     MapCharacter padding;
+
     padding.character = Game_Constants::MAP_CHARACTER_PADDING;
     padding.displayCharacter = Game_Constants::MAP_CHARACTER_PADDING;
     padding.material = Game_Constants::MAP_CHARACTER_PADDING_MATERIAL;
@@ -167,8 +170,9 @@ void Game::generate_world () {
                 tiles[x][y].setType(tileType);
 
                 if (creatures.size() == 0 && tiles[x][y].isPlayerSpawn()) {
-                    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(x, y));
-                    creatures.push_back(Creature("player", Coords<int32_t>(tileBox.x, tileBox.y)));
+                    Collision_Rect<double> tileBox = Tile::getBox(Coords<int32_t>(x, y));
+
+                    creatures.push_back(Creature("player", Coords<double>(tileBox.x, tileBox.y)));
                 }
             }
         }
@@ -181,9 +185,11 @@ void Game::generate_world () {
     }
 }
 
-void Game::tick () {}
+void Game::tick () {
+}
 
-void Game::ai () {}
+void Game::ai () {
+}
 
 void Game::movement () {
     for (auto& creature : creatures) {
@@ -208,8 +214,7 @@ void Game::movement () {
                 if (light != 0) {
                     FieldOfView::computeFov(worldWidth, worldHeight, tiles,
                                             FieldOfViewSource(Coords<int32_t>(x, y), tiles[x][y].getColor(light),
-                                                              lightSourceId,
-                                                              tiles[x][y].getLightRange()), true);
+                                                              lightSourceId, tiles[x][y].getLightRange()), true);
                     lightSourceId++;
                 }
             }
@@ -222,8 +227,7 @@ void Game::movement () {
         if (light != 0) {
             FieldOfView::computeFov(worldWidth, worldHeight, tiles,
                                     FieldOfViewSource(creature.getTilePosition(), creature.getColor(light),
-                                                      lightSourceId,
-                                                      creature.getLightRange()), true);
+                                                      lightSourceId, creature.getLightRange()), true);
             lightSourceId++;
         }
     }
@@ -234,7 +238,7 @@ void Game::movement () {
 }
 
 void Game::events () {
-    ///Sound_Manager::set_listener(example_player.circle.x,example_player.circle.y,Game_Manager::camera_zoom);
+    // Sound_Manager::set_listener(example_player.circle.x,example_player.circle.y,Game_Manager::camera_zoom);
 }
 
 void Game::animate () {
@@ -264,18 +268,18 @@ void Game::render () {
 
 void Game::render_to_textures () {
     /**Rtt_Manager::set_render_target("example");
-       ///Render something here
-       Rtt_Manager::reset_render_target();*/
+       // Render something here Rtt_Manager::reset_render_target();*/
 }
 
-void Game::update_background () {}
+void Game::update_background () {
+}
 
 void Game::render_background () {
     Render::render_rectangle(0.0, 0.0, Game_Window::width(), Game_Window::height(), 1.0, "background");
 }
 
 Collision_Rect<int32_t> Game::getCameraTileBox (int32_t padding) {
-    Collision_Rect<int32_t> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
+    Collision_Rect<double> tileBox = Tile::getBox(Coords<int32_t>(0, 0));
     int32_t cameraTileX = (int32_t) (Game_Manager::camera.x / (tileBox.w * Game_Manager::camera_zoom));
     int32_t cameraTileY = (int32_t) (Game_Manager::camera.y / (tileBox.h * Game_Manager::camera_zoom));
     int32_t endTileX = cameraTileX + (int32_t) (Game_Manager::camera.w / (tileBox.w * Game_Manager::camera_zoom)) + 2;
