@@ -67,9 +67,9 @@ bool Tile::isOpaque () const {
 Collision_Rect<double> Tile::getBox (const Coords<int32_t>& tilePosition) {
     Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
-    return Collision_Rect<double>(
-        tilePosition.x * (int32_t) font->get_letter_width(), tilePosition.y * (int32_t) font->get_letter_height(),
-        (int32_t) font->get_letter_width(), (int32_t) font->get_letter_height());
+    return Collision_Rect<double>(tilePosition.x * (int32_t) font->get_letter_width(),
+                                  tilePosition.y * (int32_t) font->get_letter_height(),
+                                  (int32_t) font->get_letter_width(), (int32_t) font->get_letter_height());
 }
 
 void Tile::setType (uint32_t type) {
@@ -116,11 +116,10 @@ void Tile::applyLight (uint32_t lightSourceId, int16_t lightLevel, const string&
             double lightLevelFactor = (double) lightLevel / (double) Game_Constants::MAXIMUM_LIGHT_LEVEL;
 
             if (!isLit()) {
-                lightColor.set(color->get_red() * lightLevelFactor,
-                               color->get_green() * lightLevelFactor, color->get_blue() * lightLevelFactor, lightLevel);
+                lightColor.set(color->get_red() * lightLevelFactor, color->get_green() * lightLevelFactor,
+                               color->get_blue() * lightLevelFactor, lightLevel);
             } else {
-                lightColor.hdrAdd(color->get_red() * lightLevelFactor,
-                                  color->get_green() * lightLevelFactor,
+                lightColor.hdrAdd(color->get_red() * lightLevelFactor, color->get_green() * lightLevelFactor,
                                   color->get_blue() * lightLevelFactor, lightLevel);
             }
         }
@@ -139,9 +138,8 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
                 if (isLit()) {
                     finalBackgroundColor = Lighting::applyLightToColor(backgroundColorPtr, lightColor);
                 } else {
-                    finalBackgroundColor.set(backgroundColorPtr->get_red(),
-                                             backgroundColorPtr->get_green(), backgroundColorPtr->get_blue(),
-                                             backgroundColorPtr->get_alpha());
+                    finalBackgroundColor.set(backgroundColorPtr->get_red(), backgroundColorPtr->get_green(),
+                                             backgroundColorPtr->get_blue(), backgroundColorPtr->get_alpha());
                 }
 
                 Render::render_rectangle(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
@@ -154,9 +152,8 @@ void Tile::render (const Coords<int32_t>& tilePosition) const {
             Bitmap_Font* font = Object_Manager::get_font(Game_Constants::DISPLAY_FONT);
 
             font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
-                       box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
-                                                                                          getCharacter()), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
-                       Game_Manager::camera_zoom);
+                       box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1, getCharacter()),
+                       &finalCharacterColor, 1.0, Game_Manager::camera_zoom, Game_Manager::camera_zoom);
         }
     }
 }

@@ -34,13 +34,14 @@ void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vecto
     TCOD_bresenham_data_t bresenham_data;
 
     TCOD_line_init_mt(xo, yo, xd, yd, &bresenham_data);
+
     int32_t offset = curx + cury * worldWidth;
     int32_t tileCount = worldWidth * worldHeight;
 
     if (0 <= offset && offset < tileCount) {
         in = true;
-        tiles[curx][cury].applyLight(
-            source.getLightSourceId(), Game_Constants::MAXIMUM_LIGHT_LEVEL, source.getLightColor());
+        tiles[curx][cury].applyLight(source.getLightSourceId(), Game_Constants::MAXIMUM_LIGHT_LEVEL,
+                                     source.getLightColor());
         tiles[curx][cury].setExplored(true);
     }
 
@@ -48,6 +49,7 @@ void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vecto
         // Reached xd, yd
         end = TCOD_line_step_mt(&curx, &cury, &bresenham_data);
         offset = curx + cury * worldWidth;
+
         // Check radius
         int32_t cur_radius = (curx - xo) * (curx - xo) + (cury - yo) * (cury - yo);
 
@@ -63,18 +65,16 @@ void FieldOfView::castRay (int32_t worldWidth, int32_t worldHeight, vector<vecto
             if (!blocked && tiles[curx][cury].isOpaque()) {
                 blocked = true;
             } else if (blocked) {
-
                 // Wall
                 return;
             }
 
             if (lightWalls || !blocked) {
-                tiles[curx][cury].applyLight(source.getLightSourceId(), getLightLevel(cur_radius,
-                                                                                      r2), source.getLightColor());
+                tiles[curx][cury].applyLight(source.getLightSourceId(), getLightLevel(cur_radius, r2),
+                                             source.getLightColor());
                 tiles[curx][cury].setExplored(true);
             }
         } else if (in) {
-
             // Ray out of map
             return;
         }
@@ -99,8 +99,8 @@ void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<v
                     uint32_t offset2 = x2 + cy * worldWidth;
 
                     if (offset2 < (uint32_t) (tileCount) && tiles[x2][cy].isOpaque()) {
-                        tiles[x2][cy].applyLight(source.getLightSourceId(), getLightLevel(cur_radius,
-                                                                                          r2), source.getLightColor());
+                        tiles[x2][cy].applyLight(source.getLightSourceId(), getLightLevel(cur_radius, r2),
+                                                 source.getLightColor());
                         tiles[x2][cy].setExplored(true);
                     }
                 }
@@ -109,8 +109,8 @@ void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<v
                     uint32_t offset2 = cx + y2 * worldWidth;
 
                     if (offset2 < (uint32_t) (tileCount) && tiles[cx][y2].isOpaque()) {
-                        tiles[cx][y2].applyLight(source.getLightSourceId(), getLightLevel(cur_radius,
-                                                                                          r2), source.getLightColor());
+                        tiles[cx][y2].applyLight(source.getLightSourceId(), getLightLevel(cur_radius, r2),
+                                                 source.getLightColor());
                         tiles[cx][y2].setExplored(true);
                     }
                 }
@@ -119,8 +119,8 @@ void FieldOfView::postProcess (int32_t worldWidth, int32_t worldHeight, vector<v
                     uint32_t offset2 = x2 + y2 * worldWidth;
 
                     if (offset2 < (uint32_t) (tileCount) && tiles[x2][y2].isOpaque()) {
-                        tiles[x2][y2].applyLight(source.getLightSourceId(), getLightLevel(cur_radius,
-                                                                                          r2), source.getLightColor());
+                        tiles[x2][y2].applyLight(source.getLightSourceId(), getLightLevel(cur_radius, r2),
+                                                 source.getLightColor());
                         tiles[x2][y2].setExplored(true);
                     }
                 }
@@ -160,42 +160,42 @@ void FieldOfView::computeFov (int32_t worldWidth, int32_t worldHeight, vector<ve
     int32_t yo = ymin;
 
     while (xo < xmax) {
-        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x,
-                source.getSourcePosition().y, xo++, yo, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x, source.getSourcePosition().y,
+                xo++, yo, r2, lightWalls);
     }
 
     xo = xmax - 1;
     yo = ymin + 1;
 
     while (yo < ymax) {
-        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x,
-                source.getSourcePosition().y, xo, yo++, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x, source.getSourcePosition().y, xo,
+                yo++, r2, lightWalls);
     }
 
     xo = xmax - 2;
     yo = ymax - 1;
 
     while (xo >= 0) {
-        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x,
-                source.getSourcePosition().y, xo--, yo, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x, source.getSourcePosition().y,
+                xo--, yo, r2, lightWalls);
     }
 
     xo = xmin;
     yo = ymax - 2;
 
     while (yo > 0) {
-        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x,
-                source.getSourcePosition().y, xo, yo--, r2, lightWalls);
+        castRay(worldWidth, worldHeight, tiles, source, source.getSourcePosition().x, source.getSourcePosition().y, xo,
+                yo--, r2, lightWalls);
     }
 
     if (lightWalls) {
         // Post-processing artifact fix
-        postProcess(worldWidth, worldHeight, tiles, source, r2, xmin, ymin,
-                    source.getSourcePosition().x, source.getSourcePosition().y, -1, -1);
-        postProcess(worldWidth, worldHeight, tiles, source, r2,
-                    source.getSourcePosition().x, ymin, xmax - 1, source.getSourcePosition().y, 1, -1);
-        postProcess(worldWidth, worldHeight, tiles, source, r2, xmin,
-                    source.getSourcePosition().y, source.getSourcePosition().x, ymax - 1, -1, 1);
+        postProcess(worldWidth, worldHeight, tiles, source, r2, xmin, ymin, source.getSourcePosition().x,
+                    source.getSourcePosition().y, -1, -1);
+        postProcess(worldWidth, worldHeight, tiles, source, r2, source.getSourcePosition().x, ymin, xmax - 1,
+                    source.getSourcePosition().y, 1, -1);
+        postProcess(worldWidth, worldHeight, tiles, source, r2, xmin, source.getSourcePosition().y,
+                    source.getSourcePosition().x, ymax - 1, -1, 1);
         postProcess(worldWidth, worldHeight, tiles, source, r2, source.getSourcePosition().x,
                     source.getSourcePosition().y, xmax - 1, ymax - 1, 1, 1);
     }

@@ -30,7 +30,9 @@ class Tile: public LightSource {
 
         // Derived from type:
         const MapCharacter& getType() const;
+
         unsigned char getCharacter() const;
+
         Material* getMaterial() const;
         std::string getBackgroundColor() const;
         std::string getDoorTo() const;
