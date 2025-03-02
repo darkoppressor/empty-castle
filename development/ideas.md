@@ -1,3 +1,5 @@
+# Ideas
+
 No enemies for now
 Mostly or entirely, player should be faster than other creatures
 Everyone should be pretty slow though

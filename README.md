@@ -23,6 +23,7 @@ When an updated version has been pushed to main, tag the commit locally and remo
 
 ## License
 
-This game's source code is licensed under the MIT License. See [LICENSE.txt](docs/LICENSE.txt) for the full license text.
+This game's source code is licensed under the MIT License. See [LICENSE.md](docs/LICENSE.md) for the full license text.
 
-This game's data is not under the same license as the source code. See [CONTENT-LICENSE.txt](docs/CONTENT-LICENSE.txt) for game data licensing details.
+This game's data is not under the same license as the source code. See [contentLicense.md](docs/contentLicense.md) for
+game data licensing details.
