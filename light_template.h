@@ -23,6 +23,7 @@ class LightTemplate {
         std::int32_t glowRateMax;
 
         LightTemplate ();
+
         std::int32_t getRandomGlow() const;
 };
 

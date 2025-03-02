@@ -32,7 +32,9 @@ class Creature: public LightSource {
 
         // Derived from type:
         CreatureTemplate* getType() const;
+
         unsigned char getCharacter() const;
+
         Material* getMaterial() const;
         double getMoveForce() const;
         double getMass() const;

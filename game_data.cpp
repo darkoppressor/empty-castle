@@ -19,8 +19,9 @@ vector<CreatureTemplate> Game_Data::creatureTemplates;
 vector<LightTemplate> Game_Data::lightTemplates;
 vector<Material> Game_Data::materials;
 
-///Don't forget to increment this for each progress item in load_data_game() below
+// Don't forget to increment this for each progress item in load_data_game() below
 const int Game_Data::game_data_load_item_count = 4;
+
 void Game_Data::load_data_game (Progress_Bar& bar) {
     bar.progress("Loading maps");
     Data_Manager::load_data("map");
@@ -86,8 +87,8 @@ size_t Game_Data::loadMapCharacter (vector<string>& lines, size_t lineIndex) {
                 boost::algorithm::erase_last(line, "'");
                 maps.back().mapCharacters.back().displayCharacter = line[0];
             } else {
-                maps.back().mapCharacters.back().displayCharacter = (unsigned char) Strings::string_to_unsigned_long(
-                    line);
+                maps.back().mapCharacters.back().displayCharacter =
+                    (unsigned char) Strings::string_to_unsigned_long(line);
             }
         } else if (Data_Reader::check_prefix(line, "material:")) {
             maps.back().mapCharacters.back().material = line;
@@ -132,6 +133,7 @@ size_t Game_Data::loadMapTiles (vector<string>& lines, size_t lineIndex) {
     }
 
     vector<vector<unsigned char>> mapTiles;
+
     mapTiles.resize(tilesWidth, vector<unsigned char>(tilesHeight));
 
     for (size_t x = 0; x < tilesWidth; x++) {

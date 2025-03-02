@@ -82,6 +82,7 @@ void TextParser::commitText () {
     boost::algorithm::trim(line);
 
     vector<string> words;
+
     boost::algorithm::split(words, line, boost::algorithm::is_any_of(" "));
 
     for (int32_t i = 0; i < words.size(); i++) {
@@ -96,7 +97,7 @@ void TextParser::commitText () {
         Game::addDisplayText("You speak aloud the words \"" + line + "\"");
 
         if (false) {
-            ///QQQ If recognized spell
+            // TODO If recognized spell
         }
     }
 }

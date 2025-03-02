@@ -22,7 +22,8 @@
 
 using namespace std;
 
-void Game_Manager::on_startup () {}
+void Game_Manager::on_startup () {
+}
 
 bool Game_Manager::effect_allowed () {
     uint32_t effects = /**Game_Data::effects_example.size()*/ 0;
@@ -123,13 +124,15 @@ string Game_Manager::get_game_window_caption () {
     return msg;
 }
 
-void Game_Manager::clear_title () {}
+void Game_Manager::clear_title () {
+}
 
 void Game_Manager::setup_title () {
     clear_title();
 }
 
-void Game_Manager::update_title_background () {}
+void Game_Manager::update_title_background () {
+}
 
 void Game_Manager::render_scoreboard () {
     if (display_scoreboard) {
@@ -139,11 +142,10 @@ void Game_Manager::render_scoreboard () {
 
         Render::render_rectangle(0.0, 0.0, Game_Window::width(), Game_Window::height(), 0.5, "ui_black");
 
-        font->show(72.0, (Game_Window::height() - (Strings::newline_count(
-                                                       name_list) + 1) * font->spacing_y) / 2.0, name_list, "ui_white");
-        font->show(168.0, (Game_Window::height() - (Strings::newline_count(
-                                                        ping_list) + 1) * font->spacing_y) / 2.0, ping_list,
-                   "ui_white");
+        font->show(72.0, (Game_Window::height() - (Strings::newline_count(name_list) + 1) * font->spacing_y) / 2.0,
+                   name_list, "ui_white");
+        font->show(168.0, (Game_Window::height() - (Strings::newline_count(ping_list) + 1) * font->spacing_y) / 2.0,
+                   ping_list, "ui_white");
     }
 }
 
@@ -153,8 +155,8 @@ void Game_Manager::render_title_background () {
     Render::render_rectangle(0.0, 0.0, Game_Window::width(), Game_Window::height(), 1.0, "ui_black");
 
     font->show(0.0, Game_Window::height() - font->spacing_y * 2.0,
-               "Version: " + Engine_Version::get_version() + " " + Engine_Version::get_status() + "\nChecksum: " + Engine::CHECKSUM,
-               "ui_white");
+               "Version: " + Engine_Version::get_version() + " " + Engine_Version::get_status() + "\nChecksum: " +
+               Engine::CHECKSUM, "ui_white");
 
     Image_Data* logo = Image_Manager::get_image("logo");
     double logo_scale_x = (double) Game_Window::width() / (double) 1280.0;
@@ -173,8 +175,9 @@ void Game_Manager::render_pause () {
 }
 
 void Game_Manager::render_fps (int render_rate, double ms_per_frame, int logic_frame_rate) {
-    Object_Manager::get_font("small")->show(2.0, 2.0, "FPS: " + Strings::num_to_string(
-                                                render_rate) + "\n" + Network_Engine::get_stats(), "ui_white");
+    Object_Manager::get_font("small")->show(2.0, 2.0,
+                                            "FPS: " + Strings::num_to_string(render_rate) + "\n" +
+                                            Network_Engine::get_stats(), "ui_white");
 }
 
 void Game_Manager::render_loading_screen (const Progress_Bar& bar, string message) {
@@ -182,7 +185,7 @@ void Game_Manager::render_loading_screen (const Progress_Bar& bar, string messag
         Game_Window::clear_renderer(Color(0, 0, 0, 255));
 
         if (Data_Manager::are_images_loaded()) {
-            ///Render::render_texture(0,0,Image_Manager::get_image("loading_screen"),0.25);
+            // Render::render_texture(0,0,Image_Manager::get_image("loading_screen"),0.25);
         } else if (Data_Manager::are_colors_loaded()) {
             Render::render_rectangle(0, 0, Game_Window::width(), Game_Window::height(), 1.0, "ui_2");
         }
@@ -207,12 +210,10 @@ void Game_Manager::render_loading_screen (const Progress_Bar& bar, string messag
                 Bitmap_Font* font = Object_Manager::get_font("small");
                 string msg = Strings::num_to_string((int) (percentage * 100.0)) + "%";
 
-                font->show(
-                    (screen_width - (double) msg.length() * (double) font->spacing_x) / 2.0, screen_height - offset, msg,
-                    "ui_0");
-                font->show(
-                    (screen_width - (double) message.length() * (double) font->spacing_x) / 2.0, screen_height - offset + back_thickness * 2.0 + font->spacing_y, message,
-                    "ui_0");
+                font->show((screen_width - (double) msg.length() * (double) font->spacing_x) / 2.0,
+                           screen_height - offset, msg, "ui_0");
+                font->show((screen_width - (double) message.length() * (double) font->spacing_x) / 2.0,
+                           screen_height - offset + back_thickness * 2.0 + font->spacing_y, message, "ui_0");
             }
         }
 

@@ -92,8 +92,8 @@ Collision_Rect<double> Creature::getCollisionBox () const {
 
     return Collision_Rect<double>(position.x + Game_Constants::CREATURE_COLLISION_REDUCTION,
                                   position.y + Game_Constants::CREATURE_COLLISION_REDUCTION,
-                                  font->get_letter_width() - Game_Constants::CREATURE_COLLISION_REDUCTION* 2.0,
-                                  font->get_letter_height() - Game_Constants::CREATURE_COLLISION_REDUCTION* 2.0);
+                                  font->get_letter_width() - Game_Constants::CREATURE_COLLISION_REDUCTION * 2.0,
+                                  font->get_letter_height() - Game_Constants::CREATURE_COLLISION_REDUCTION * 2.0);
 }
 
 const Vector& Creature::getVelocity () const {
@@ -132,8 +132,8 @@ void Creature::applyLight () {
         for (int32_t y = tilePosition.y;
              y < tilePosition.y + 1; y++) {
             if (x >= 0 && y >= 0 && x < worldDimensions.x && y < worldDimensions.y) {
-                if (tiles[x][y].isLit() &&
-                    Collision::check_rect(tiles[x][y].getBox(Coords<int32_t>(x, y)), getCollisionBox())) {
+                if (tiles[x][y].isLit() && Collision::check_rect(tiles[x][y].getBox(Coords<int32_t>(x, y)),
+                                                                 getCollisionBox())) {
                     double lightLevelFactor = (double) tiles[x][y].getLightColor().getAlpha() /
                                               (double) Game_Constants::MAXIMUM_LIGHT_LEVEL;
 
@@ -142,17 +142,15 @@ void Creature::applyLight () {
                     }
 
                     if (!isLit()) {
-                        lightColor.set(
-                            tiles[x][y].getLightColor().getRed() * lightLevelFactor,
-                            tiles[x][y].getLightColor().getGreen() * lightLevelFactor,
-                            tiles[x][y].getLightColor().getBlue() * lightLevelFactor,
-                            tiles[x][y].getLightColor().getAlpha());
+                        lightColor.set(tiles[x][y].getLightColor().getRed() * lightLevelFactor,
+                                       tiles[x][y].getLightColor().getGreen() * lightLevelFactor,
+                                       tiles[x][y].getLightColor().getBlue() * lightLevelFactor,
+                                       tiles[x][y].getLightColor().getAlpha());
                     } else {
-                        lightColor.hdrAdd(
-                            tiles[x][y].getLightColor().getRed() * lightLevelFactor,
-                            tiles[x][y].getLightColor().getGreen() * lightLevelFactor,
-                            tiles[x][y].getLightColor().getBlue() * lightLevelFactor,
-                            tiles[x][y].getLightColor().getAlpha());
+                        lightColor.hdrAdd(tiles[x][y].getLightColor().getRed() * lightLevelFactor,
+                                          tiles[x][y].getLightColor().getGreen() * lightLevelFactor,
+                                          tiles[x][y].getLightColor().getBlue() * lightLevelFactor,
+                                          tiles[x][y].getLightColor().getAlpha());
                     }
                 }
             }
@@ -211,6 +209,7 @@ void Creature::movement () {
 
         for (int32_t i = 0; i < Game_Constants::CREATURE_COLLISION_STEPS; i++) {
             Coords<double> oldPosition = position;
+
             position.x += movementX / Game_Constants::CREATURE_COLLISION_STEPS;
 
             if (tileCollision(oldPosition)) {
@@ -222,6 +221,7 @@ void Creature::movement () {
 
         for (int32_t i = 0; i < Game_Constants::CREATURE_COLLISION_STEPS; i++) {
             Coords<double> oldPosition = position;
+
             position.y += movementY / Game_Constants::CREATURE_COLLISION_STEPS;
 
             if (tileCollision(oldPosition)) {
@@ -288,8 +288,7 @@ void Creature::render () const {
         Color finalCharacterColor = Lighting::applyLightToColor(getCharacterColor(), lightColor);
 
         font->show(box.x * Game_Manager::camera_zoom - Game_Manager::camera.x,
-                   box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1,
-                                                                                      getCharacter()), &finalCharacterColor, 1.0, Game_Manager::camera_zoom,
-                   Game_Manager::camera_zoom);
+                   box.y * Game_Manager::camera_zoom - Game_Manager::camera.y, string(1, getCharacter()),
+                   &finalCharacterColor, 1.0, Game_Manager::camera_zoom, Game_Manager::camera_zoom);
     }
 }

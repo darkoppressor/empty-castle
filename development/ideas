@@ -144,7 +144,7 @@ Strength (what this does depends on the spell's effect, could be range, damage, 
 Components:
 Magic circle
 Items placed around the circle in a certain way
-Words spoken aloud (using the text parser) (does order of words matter? QQQ)
+Words spoken aloud (using the text parser) (does order of words matter? TODO)
 Conditions such as time, weather?, seasons?, stars? (time can be relative to an event, e.g., within X minutes of something happening, as well as specifically something like a time of day)
 Dead body nearby for sacrifice purposes
 Light source nearby (includes ambient light)
