@@ -7,7 +7,17 @@ https://cheeseandbacon.org/
 
 This is the source code for a game currently being developed by Cheese and Bacon Games.
 
-## Updating the version
+## For players
+
+[System requirements](docs/systemRequirements.md)
+[Changelog](docs/changelog.md)
+
+## For developers
+
+[Ideas](development/ideas.md)
+[To do](development/toDo.md)
+
+### Updating the version
 
     ~/build-server/cheese-engine/tools/version <PROJECT-DIRECTORY> <VERSION-COMPONENT> [STATUS]
     ~/build-server/cheese-engine/tools/build-date <PROJECT-DIRECTORY>
@@ -27,3 +37,5 @@ This game's source code is licensed under the MIT License. See [LICENSE.md](docs
 
 This game's data is not under the same license as the source code. See [contentLicense.md](docs/contentLicense.md) for
 game data licensing details.
+
+For third party licenses for dependencies, see [the thirdPartyLicenses directory](docs/thirdPartyLicenses).
