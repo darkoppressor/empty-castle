@@ -4,7 +4,7 @@
 #include "field_of_view.h"
 #include "game_constants.h"
 
-#include "libtcod/bresenham.h"
+#include "dependencies/libtcod/bresenham.h"
 
 using namespace std;
 
