@@ -14,8 +14,10 @@ This is the source code for a game currently being developed by Cheese and Bacon
 
 ## For developers
 
-* [Ideas](development/ideas.md)
 * [To do](development/toDo.md)
+
+* [Ideas](development/design/ideas.md)
+* [New ideas](development/design/newIdeas.md)
 
 ### Updating the version
 
