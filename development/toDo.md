@@ -1,5 +1,7 @@
 # To do
 
+Bug: Player's lighting color is wonky. It looks like certain positions cause the player to show as fully in darkness.
+
 Need ability to link tiles to other maps, allowing travel between maps
 
 Ambient light for map
