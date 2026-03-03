@@ -1,4 +1,4 @@
-/* Copyright (c) Cheese and Bacon Games, LLC. See docs/LICENSE.md for details. */
+/* Copyright (c) Cheese and Bacon Games. See docs/LICENSE.md for details. */
 /* This file incorporates code from libtcod. See the file docs/thirdPartyLicenses/libtcod.txt. */
 
 #include "field_of_view.h"
